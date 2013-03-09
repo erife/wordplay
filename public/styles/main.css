@@ -37,7 +37,10 @@ ul{
 }
 
 .kitty{
-   display: none
+   clear: both;
+   width: 200px;
+   height: 40%;
+   padding: 5%;
 }
 
 .display{
