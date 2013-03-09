@@ -1,0 +1,45 @@
+h1 {
+    text-align: center;
+}
+
+/* div, ul, dl, img, li{ */
+/*     outline: 1px dashed green; */
+
+/* } */
+
+.section {
+    width: 45%;
+    float: left;
+
+}
+
+.display {
+    height: 1.5em;
+}
+
+ul{
+    list-style-type: none;
+}
+
+.word{
+    clear: both;
+    outline: 1px dashed red;
+}
+
+.display li {
+    float: left;
+    width: 45%;
+    padding: 2.5%;
+}
+
+.word li{
+    float: left;
+}
+
+.kitty{
+   display: none
+}
+
+.display{
+    clear: both;
+}
