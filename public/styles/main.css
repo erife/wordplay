@@ -1,29 +1,46 @@
+body{
+    background-image:url('../images/wordplay_bg1.jpg');
+}
+
 h1 {
     text-align: center;
-}
+    font-size:  4em;
+    color: #2e2e2e;
+    text-shadow: 0.1em 0.1em .1em grey;
 
-/* div, ul, dl, img, li{ */
-/*     outline: 1px dashed green; */
-
-/* } */
-
-.section {
-    width: 45%;
-    float: left;
-
-}
-
-.display {
-    height: 1.5em;
 }
 
 ul{
     list-style-type: none;
 }
 
-.word{
+ul li{
+display: inline;
+}
+
+label {
+    font-size: 1.5em;
+}
+
+dd{
+border-style: groove;
+margin-left: 0;
+text-align: center;
+font-size: 3em;
+}
+
+dt{
+font-size: 1.5em;
+}
+
+.section {
+    width: 45%;
+    float: left;
+}
+
+.display {
+    height: 1.5em;
     clear: both;
-    outline: 1px dashed red;
 }
 
 .display li {
@@ -32,17 +49,40 @@ ul{
     padding: 2.5%;
 }
 
+#words > li{
+clear: both;
+padding: 0 16;
+}
+
+#words .word{
+border: groove;
+padding: 5px;
+font-size: 4em;
+}
+
+.word {
+    clear: both;
+    letter-spacing: .7em;
+    text-align: center;
+}
+
 .word li{
-    float: left;
+    border:solid 3px;
+    margin: 2px;
+}
+
+.fword li{
+    border:solid 1px;
 }
 
 .kitty{
    clear: both;
    width: 200px;
-   height: 40%;
+   height: 200px;
    padding: 5%;
 }
 
-.display{
-    clear: both;
-}
+/* #words ul{ */
+/*     border: solid; */
+/*     float: right; */
+/* } */
