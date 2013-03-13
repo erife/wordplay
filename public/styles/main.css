@@ -90,7 +90,8 @@ font-size: 4em;
 /* } */
 
 
-.fword li{
+#found li{
+    background-color: white;
     border:solid 1px;
 }
 
