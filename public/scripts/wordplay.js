@@ -1,6 +1,7 @@
 
 $(document).data("maxwordlength", 6);
 
+
 function initialword(words)
 {
     var maxwordlength = $(document).data("maxwordlength");
@@ -21,13 +22,13 @@ function subwords(availableletters, words)
 	    }
 	    else{
 		myavailable.splice(foundpos, 1);
-		console.log(myavailable);
 	    }
 	    
 	}
 	return true;
     });
 }
+
 
 var words = [
     "qfat",   
@@ -38,7 +39,6 @@ var words = [
 ];
 
 var arr = $.makeArray(words);
-console.log(arr);
 
 function fillfound(words)
 {
@@ -48,6 +48,16 @@ function fillfound(words)
 	fillsingle(word, i);
     });
 }
+
+function fillword(guessword, words)
+{
+    var j = null;
+    $.map(words, function(word, i){
+	j = words.indexOf(guessword);
+	});
+    fillsingle(guessword, j, false);
+}
+
 
 function fillsingle(word, index, blank=true)
 {
@@ -60,12 +70,10 @@ function fillsingle(word, index, blank=true)
     $("#word_" + index).html(word_display);
 }
 
-
-
-
 $(function () {
     var availableletters = 'faster'.split("");
     var resultwords = subwords(availableletters, words);
+    $(document).data("resultwords", subwords(availableletters, words));
     fillfound(resultwords);
 })
 
