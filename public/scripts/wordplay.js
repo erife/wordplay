@@ -66,14 +66,13 @@ function fillsingle(word, index, blank=true)
 	    var filler= (blank) ? "_" : letter;
 	    letter_display += "<li>" + filler + "</li>";
 	});
-    var word_display = letter_display;
-    $("#word_" + index).html(word_display);
+    $("#word_" + index).html(letter_display);
 }
 
 $(function () {
     var availableletters = 'faster'.split("");
     var resultwords = subwords(availableletters, words);
-    $(document).data("resultwords", subwords(availableletters, words));
+    $(document).data("resultwords", resultwords);
     fillfound(resultwords);
 })
 
