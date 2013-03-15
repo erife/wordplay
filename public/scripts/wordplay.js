@@ -1,4 +1,3 @@
-console.log("I'm awesome");
 
 $(document).data("maxwordlength", 6);
 
@@ -44,16 +43,29 @@ console.log(arr);
 function fillfound(words)
 {
     $.map(words, function(word, i){
-	var letter_display = "";
-	$.map(word.split(""), function(letter){
-	    letter_display += "<li>_</li>";
-	});
-	      var word_display = "<ul>" + letter_display + "</ul>";
-	$("#found").append("<li>" + word_display + "</li>");
+	var word_id = "word_" + i;
+	$("#found").append("<li> <ul id='" + word_id + "'> </ul> </li>");
+	fillsingle(word, i);
     });
 }
 
+function fillsingle(word, index, blank=true)
+{
+	var letter_display = "";
+	$.map(word.split(""), function(letter){
+	    var filler= (blank) ? "_" : letter;
+	    letter_display += "<li>" + filler + "</li>";
+	});
+    var word_display = letter_display;
+    $("#word_" + index).html(word_display);
+}
+
+
+
+
 $(function () {
-    fillfound(words);
+    var availableletters = 'faster'.split("");
+    var resultwords = subwords(availableletters, words);
+    fillfound(resultwords);
 })
 
