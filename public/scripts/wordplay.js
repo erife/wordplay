@@ -38,7 +38,10 @@ var words = [
     "fat"   
 ];
 
-var arr = $.makeArray(words);
+function validguess(guessword, words)
+{
+    return words.indexOf(guessword) != -1 ? true : false;
+};
 
 function fillfound(words)
 {
@@ -51,10 +54,7 @@ function fillfound(words)
 
 function fillword(guessword, words)
 {
-    var j = null;
-    $.map(words, function(word, i){
-	j = words.indexOf(guessword);
-	});
+    var j = words.indexOf(guessword);
     fillsingle(guessword, j, false);
 }
 
