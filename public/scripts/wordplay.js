@@ -159,6 +159,7 @@ function handlekey(event){
     if (event.which == 8 || event.which == 46) 
     {
 	removeguessletter();
+	return false;
     }
     else if(event.which >=65 && event.which <=90){
 	var guessletter = String.fromCharCode(event.which).toLowerCase();
@@ -204,6 +205,7 @@ function submitword(guessword){
 $(function () {
     var availableletters = 'faster'.split("");
     var resultwords = subwords(availableletters, words);
+    console.log("Available Letters = " + availableletters);
     $(document).data("availableletters", availableletters);
     $(document).data("resultwords", resultwords);
     $(document).data("guessword", []);
