@@ -9,7 +9,7 @@ function initialword(words)
 
 function subwords(availableletters, words)
 {
-    return $.grep(words, function(word,i){
+    return $.grep(words, function(word){
 	var myavailable = availableletters.slice();
 	var letters = word.split("");
 	for(var x = word.length-1; x >= 0; x--){
@@ -126,7 +126,7 @@ var words = [
 
 function validguess(guessword, words)
 {
-    return words.indexOf(guessword) != -1 ? true : false;
+    return words.indexOf(guessword) != -1
 };
 
 function fillfound(words)
