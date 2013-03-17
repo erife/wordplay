@@ -13,7 +13,7 @@ function subwords(availableletters, words)
 	var myavailable = availableletters.slice();
 	var letters = word.split("");
 	for(var x = word.length-1; x >= 0; x--){
-	    var letter = letters.splice(0,1)[0];
+	    var letter = letters.pop();
 	    var foundpos = myavailable.indexOf(letter);
 	    if(foundpos  == -1)
 	    {
@@ -169,14 +169,14 @@ function handlekey(event){
 	    remainingletters.splice(letterpos, 1);
 	}
 	else{
-	    console.log('InvalidLetter');
+	    console.log('Unavailable Letter');
 	}
     }
     else if(event.which == 13){
 	submitword($(document).data("guessword").join(""));
 	$(document).data("guessword").length = 0;
     }
-    else{console.log('InvalidLetter');}
+    else{console.log('Not A Valid Input');}
 }
 
 function addguessletter(letter){
@@ -194,7 +194,7 @@ function submitword(guessword){
 	fillword(guessword, $(document).data("resultwords"));
     }
     else{
-	console.log("invalidword");
+	console.log("invalidword: " + guessword);
     }
     var guessword = [];
     $(document).data("remainingletters", $(document).data("availableletters").slice(0));
