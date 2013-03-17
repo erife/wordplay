@@ -168,6 +168,7 @@ function handlekey(event){
 	if(letterpos != -1){ 
 	    addguessletter(guessletter);
 	    remainingletters.splice(letterpos, 1);
+	    $("#letter").html($(document).data("remainingletters"));
 	}
 	else{
 	    console.log('Unavailable Letter');
@@ -182,11 +183,14 @@ function handlekey(event){
 
 function addguessletter(letter){
     $(document).data("guessword").push(letter);
+    $("#guess").html($(document).data("guessword"));
     console.log("guessword = " +  $(document).data("guessword"));
     }
 
 function removeguessletter(){
     $(document).data("remainingletters").push($(document).data("guessword").pop());
+    $("#guess").html($(document).data("guessword"));
+    $("#letter").html($(document).data("remainingletters"));
     console.log("guessword = " + $(document).data("guessword"));
 }
 
@@ -198,7 +202,9 @@ function submitword(guessword){
 	console.log("invalidword: " + guessword);
     }
     var guessword = [];
+    $("#guess").html("");
     $(document).data("remainingletters", $(document).data("availableletters").slice(0));
+    $("#letter").html($(document).data("remainingletters"));
 }
 
 
@@ -210,6 +216,7 @@ $(function () {
     $(document).data("resultwords", resultwords);
     $(document).data("guessword", []);
     $(document).data("remainingletters", availableletters.slice(0));
+    $("#letter").html($(document).data("remainingletters"));
     fillfound(resultwords);
     $(document).keydown(handlekey);
 })
