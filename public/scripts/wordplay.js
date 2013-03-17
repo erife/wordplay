@@ -156,7 +156,7 @@ function fillsingle(word, index, blank=true)
 }
 
 function handlekey(event){
-    if (event.which == 8) 
+    if (event.which == 8 || event.which == 46) 
     {
 	removeguessletter();
     }
