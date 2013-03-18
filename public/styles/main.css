@@ -23,8 +23,8 @@ ul{
     list-style-type: none;
 }
 
-ul li{
-display: inline;
+{
+
 }
 
 label {
@@ -76,13 +76,10 @@ height: 65px;
 .word li{
     border:solid 3px;
     margin: 2px;
-    /* padding: 0px, 10px, 0px; */
-    width: 200px;
-    /* height: 20%; */
-    color: red;
-    /* letter-spacing: .7em; */
-    /* text-align: center; */
-
+    text-align: center;
+    float: left;
+    width: 60px;
+    height: 60px;
 }
 
 /* table{ */
@@ -91,9 +88,18 @@ height: 65px;
 /* } */
 
 
-#found li{
+#found > li{
+    clear: left;
+}
+
+#found li ul  li{
     background-color: white;
     border:solid 1px;
+    float: left;
+    height: 1em;
+    width: 1em;
+    font-size: 2em;
+  	text-align: center;
 }
 
 .kitty{
@@ -107,3 +113,5 @@ height: 65px;
 /*     border: solid; */
 /*     float: right; */
 /* } */
+
+

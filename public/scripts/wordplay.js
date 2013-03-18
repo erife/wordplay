@@ -149,7 +149,7 @@ function fillsingle(word, index, blank=true)
 {
     var letter_display = "";
     $.map(word.split(""), function(letter){
-	var filler= (blank) ? "_" : letter;
+	var filler= (blank) ? " " : letter;
 	letter_display += "<li>" + filler + "</li>";
     });
     $("#word_" + index).html(letter_display);
