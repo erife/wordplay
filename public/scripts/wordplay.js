@@ -114,11 +114,6 @@ var words = [
     "tears",
     "trap",
     "traps",
-    "qfat",   
-    "fatfatfat",
-    "faster",
-    "father",
-    "fat"   
 ];
 
 
