@@ -126,7 +126,14 @@ var words = [
 
 function validguess(guessword, words)
 {
-    return words.indexOf(guessword) != -1
+    var pos = words.indexOf(guessword);
+    if (pos != -1){
+	words.splice(pos, 1);
+	return true;
+	}
+    else{
+	return false;
+    }
 };
 
 function fillfound(words)
@@ -201,8 +208,12 @@ function removeguessletter(){
 }
 
 function submitword(guessword){
-    if(validguess(guessword, $(document).data("resultwords"))){
+    if(validguess(guessword, $(document).data("wordcopy"))){
 	fillword(guessword, $(document).data("resultwords"));
+	var incrementscore =  $(document).data("score")
+	incrementscore++;
+	$(document).data("score", incrementscore)
+	$("#dynamicscore").html(incrementscore);
     }
     else{
 	console.log("invalidword: " + guessword);
@@ -214,12 +225,10 @@ function submitword(guessword){
 }
 
 function showletters(id, string){
-   printstring = "";
+    $(id).children().remove();
     $.map(string, function(letter){
-	printstring += "<li>" + letter + "</li>";
-    console.log(letter);
+	$("<li>").html(letter).appendTo(id)
     });
-    $(id).html(printstring);
 }
 
 
@@ -232,7 +241,10 @@ $(function () {
     $(document).data("resultwords", resultwords);
     $(document).data("guessword", []);
     $(document).data("remainingletters", availableletters.slice(0));
+    $(document).data("wordcopy", resultwords.slice(0));
     showletters("#letter", $(document).data("remainingletters"));
+    $(document).data("score", 0);
+    $("#dynamicscore").html($(document).data("score"));
     fillfound(resultwords);
     $(document).keydown(handlekey);
 })
