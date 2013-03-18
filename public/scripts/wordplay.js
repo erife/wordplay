@@ -188,10 +188,16 @@ function addguessletter(letter){
     }
 
 function removeguessletter(){
-    $(document).data("remainingletters").push($(document).data("guessword").pop());
-    showletters("#guess", $(document).data("guessword"));
-    showletters("#letter", $(document).data("remainingletters"));
-    console.log("guessword = " + $(document).data("guessword"));
+    var removed = $(document).data("guessword").pop();
+    if (removed != undefined){
+	$(document).data("remainingletters").push(removed);
+	showletters("#guess", $(document).data("guessword"));
+	showletters("#letter", $(document).data("remainingletters"));
+	console.log("guessword = " + $(document).data("guessword"));
+    }
+    else{
+	return false;
+    }
 }
 
 function submitword(guessword){
@@ -202,13 +208,18 @@ function submitword(guessword){
 	console.log("invalidword: " + guessword);
     }
     var guessword = [];
-    showletters("#guess");
+    showletters("#guess","");
     $(document).data("remainingletters", $(document).data("availableletters").slice(0));
     showletters("#letter", $(document).data("remainingletters"));
 }
 
 function showletters(id, string){
-    $(id).html(string);
+   printstring = "";
+    $.map(string, function(letter){
+	printstring += "<li>" + letter + "</li>";
+    console.log(letter);
+    });
+    $(id).html(printstring);
 }
 
 
