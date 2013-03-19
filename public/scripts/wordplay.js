@@ -202,14 +202,34 @@ function removeguessletter(){
     }
 }
 
+function displayfound(){
+    $('#foundcount').html(foundcount());
+}
+
+function foundcount(){
+    return $(document).data("foundwords").length;
+}
+
+function displayrem(){
+    var remdisplay = remcount() + " / " + wordtotal();
+    $('#remcount').html(remdisplay);
+}
+
+function remcount(){
+    return  wordtotal() - foundcount();
+}
+
+function wordtotal(){
+    return  $(document).data("resultwords").length;
+}
+
 function submitword(guessword){
     if(validguess(guessword, $(document).data("wordcopy"))){
 	fillword(guessword, $(document).data("resultwords"));
-	$(document).data("score", scorecalc(guessword, $(document).data("score")));
-	$(document).data("increment", increment($(document).data("increment")));
-	$("#dynamicscore").html($(document).data("score"));
-	$("#foundcount").html($(document).data("increment"));
-	$("#remcount").html($(document).data("foundtotal") - $(document).data("increment") + " / " + $(document).data("foundtotal"));
+	$(document).data("foundwords").push(guessword);
+	scorecalc(guessword);
+	displayfound();
+	displayrem();
     }
     else{
 	console.log("invalidword: " + guessword);
@@ -220,14 +240,12 @@ function submitword(guessword){
     showletters("#letter", $(document).data("remainingletters"));
 }
 
-function scorecalc(word, score){
+function scorecalc(word){
+    var score = $(document).data("score");
     var scoreincrease = word.length;
-    return score += scoreincrease;
-}
-
-function increment(increment){
-    increment++;
-    return increment;
+    score += scoreincrease;
+    $(document).data("score", score);
+    $("#dynamicscore").html($(document).data("score"));
 }
 
 function showletters(id, string){
@@ -237,12 +255,9 @@ function showletters(id, string){
     });
 }
 
-
-
 $(function () {
     var availableletters = 'faster'.split("");
     var resultwords = subwords(availableletters, words);
-    $(document).data("increment", 0);    
     console.log("Available Letters = " + availableletters);
     $(document).data("availableletters", availableletters);
     $(document).data("resultwords", resultwords);
@@ -252,11 +267,9 @@ $(function () {
     showletters("#letter", $(document).data("remainingletters"));
     $(document).data("score", 0);
     $("#dynamicscore").html($(document).data("score"));
-    $(document).data("foundcount", 0);
-    $("#foundcount").html($(document).data("foundcount"));
-    $(document).data("wordtotal", resultwords.length);
-    $(document).data("foundtotal", resultwords.length);
-    $("#remcount").html($(document).data("foundtotal") + " / " + $(document).data("wordtotal"));
+    $(document).data("foundwords", []);
+    displayfound();
+    displayrem();
     fillfound(resultwords);
     $(document).keydown(handlekey);
 })
