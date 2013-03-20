@@ -3,9 +3,7 @@ require 'sinatra/json'
 require 'multi_json'
 
 set :static => true
-set :public_folder, File.dirname(__FILE__) + 'public'
-puts '==================ER'
-puts File.dirname(__FILE__) + 'public'
+set :public_folder, File.expand_path(File.dirname(__FILE__) + '/public')
 
 WORDS = 
 %w(

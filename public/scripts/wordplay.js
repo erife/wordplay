@@ -29,92 +29,92 @@ function subwords(availableletters, words)
 }
 
 
-var words = [
-    "after",
-    "are",
-    "art",
-    "arts",
-    "ate",
-    "ear",
-    "ears",
-    "east",
-    "eat",
-    "eats",
-    "far",
-    "fare",
-    "fares",
-    "farts",
-    "fast",
-    "faster",
-    "fat",
-    "fate",
-    "fates",
-    "fear",
-    "fears",
-    "feast",
-    "feat",
-    "fret",
-    "par",
-    "pare",
-    "pares",
-    "parse",
-    "part",
-    "parts",
-    "past",
-    "paste",
-    "pat",
-    "pats",
-    "pea",
-    "pear",
-    "pears",
-    "peas",
-    "pert",
-    "pest",
-    "pet",
-    "pets",
-    "raft",
-    "rafts",
-    "rap",
-    "rapt",
-    "rat",
-    "rate",
-    "rates",
-    "rats",
-    "ref",
-    "rep",
-    "rest",
-    "safe",
-    "safer",
-    "sap",
-    "sat",
-    "sea",
-    "sear",
-    "seat",
-    "set",
-    "spa",
-    "spar",
-    "spare",
-    "spat",
-    "spear",
-    "star",
-    "stare",
-    "step",
-    "strafe",
-    "strap",
-    "tap",
-    "tape",
-    "taper",
-    "tapers",
-    "tapes",
-    "tar",
-    "tarp",
-    "tarps",
-    "tea",
-    "tear",
-    "tears",
-    "trap",
-    "traps",
-];
+// var words = [
+//     "after",
+//     "are",
+//     "art",
+//     "arts",
+//     "ate",
+//     "ear",
+//     "ears",
+//     "east",
+//     "eat",
+//     "eats",
+//     "far",
+//     "fare",
+//     "fares",
+//     "farts",
+//     "fast",
+//     "faster",
+//     "fat",
+//     "fate",
+//     "fates",
+//     "fear",
+//     "fears",
+//     "feast",
+//     "feat",
+//     "fret",
+//     "par",
+//     "pare",
+//     "pares",
+//     "parse",
+//     "part",
+//     "parts",
+//     "past",
+//     "paste",
+//     "pat",
+//     "pats",
+//     "pea",
+//     "pear",
+//     "pears",
+//     "peas",
+//     "pert",
+//     "pest",
+//     "pet",
+//     "pets",
+//     "raft",
+//     "rafts",
+//     "rap",
+//     "rapt",
+//     "rat",
+//     "rate",
+//     "rates",
+//     "rats",
+//     "ref",
+//     "rep",
+//     "rest",
+//     "safe",
+//     "safer",
+//     "sap",
+//     "sat",
+//     "sea",
+//     "sear",
+//     "seat",
+//     "set",
+//     "spa",
+//     "spar",
+//     "spare",
+//     "spat",
+//     "spear",
+//     "star",
+//     "stare",
+//     "step",
+//     "strafe",
+//     "strap",
+//     "tap",
+//     "tape",
+//     "taper",
+//     "tapers",
+//     "tapes",
+//     "tar",
+//     "tarp",
+//     "tarps",
+//     "tea",
+//     "tear",
+//     "tears",
+//     "trap",
+//     "traps",
+// ];
 
 
 
@@ -220,7 +220,7 @@ function remcount(){
 }
 
 function wordtotal(){
-    return  $(document).data("resultwords").length;
+return  $(document).data("resultwords").length;
 }
 
 function submitword(guessword){
@@ -256,21 +256,21 @@ function showletters(id, string){
 }
 
 $(function () {
-    var availableletters = 'faster'.split("");
-    var resultwords = subwords(availableletters, words);
-    console.log("Available Letters = " + availableletters);
-    $(document).data("availableletters", availableletters);
-    $(document).data("resultwords", resultwords);
-    $(document).data("guessword", []);
-    $(document).data("remainingletters", availableletters.slice(0));
-    $(document).data("wordcopy", resultwords.slice(0));
-    showletters("#letter", $(document).data("remainingletters"));
-    $(document).data("score", 0);
-    $("#dynamicscore").html($(document).data("score"));
-    $(document).data("foundwords", []);
-    displayfound();
-    displayrem();
-    fillfound(resultwords);
-    $(document).keydown(handlekey);
-})
+    $.getJSON("data",function(result){
+	$(document).data("availableletters", result["availableletters"]);
+	var resultwords = subwords(result["availableletters"], result["words"]);
+	$(document).data("resultwords", resultwords);
+	$(document).data("remainingletters", result["availableletters"].slice(0));
+	$(document).data("wordcopy", resultwords.slice(0));
+	fillfound(resultwords);
+	showletters("#letter", $(document).data("remainingletters"));
+	$(document).data("guessword", []);
+	$(document).data("score", 0);
+	$("#dynamicscore").html($(document).data("score"));
+	$(document).data("foundwords", []);
+	displayfound();
+	displayrem();
+	$(document).keydown(handlekey);   
+	});
+   })
 
