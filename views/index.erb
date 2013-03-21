@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Wordplay</title>
+    <link rel="stylesheet" href="styles/reset.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" />
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/json2.js"></script>
@@ -10,69 +11,61 @@
   <body>
     <div id="main">
       <h1>Wordplay</h1>
-      <div id="interface" class="section">
-        <ul id="result" class="display">
-          <li>
-            <dl id="time">
-
-              <dt>Time</dt>
-              <dd>5:00</dd>
-            </dl>
-          </li>
-          <li>
-            <dl id="score">
-              <dt>Score</dt>
-	      <dd id = "dynamicscore"></dd>
-            </dl>
-          </li>
-        </ul>
-	<ul id="words">
-	  <li>
-	   <label for="letters"> Available Letters</label>
-	   <ul id="letter" class="word">
-   	    </ul>
-	  </li>
-	  <li>
-	    <label for="guess"> Guessed Letters</label>
-            <ul id="guess" class="word">
-            </ul>
-	  </li>
-	</ul>
-        <ul id="status" class="display">
-          <li>
-            <dl id="count">
-              <dt>Words Found</dt>
-              <dd id="foundcount"></dd>
-            </dl>
-          </li>
-          <li>
-            <dl id="remaining">
-              <dt>Remaining</dt>
-              <dd id="remcount"></dd>
-            </dl>
-          </li>
-        </ul>
-
-        <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" />
-      </div>
       <div id="report" class="section">
-        <ul id="found">
-        </ul>
-        <!-- <ul id="status" class="display"> -->
-        <!--   <li> -->
-        <!--     <dl id="count"> -->
-        <!--       <dt>Words Found</dt> -->
-        <!--       <dd id="foundcount"></dd> -->
-        <!--     </dl> -->
-        <!--   </li> -->
-        <!--   <li> -->
-        <!--     <dl id="remaining"> -->
-        <!--       <dt>Remaining</dt> -->
-        <!--       <dd id="remcount"></dd> -->
-        <!--     </dl> -->
-        <!--   </li> -->
-        <!-- </ul> -->
+        <div id="found">
+	  <% 8.times.each do |j| %>
+          <ul>
+	  <% 10.times.each do |i| %>
+	  <li> word_<%= (j*10)+i %> </li>
+	  <% end %>
+	</ul>
+	  <% end %>
+	</div>
       </div>
+    </div>
+    <div id="interface" class="section">
+      <ul id="result" class="display">
+        <li>
+          <dl id="time">
+	    <dt>Time</dt>
+            <dd>5:00</dd>
+          </dl>
+        </li>
+        <li>
+          <dl id="score">
+            <dt>Score</dt>
+	    <dd id = "dynamicscore"></dd>
+          </dl>
+        </li>
+      </ul>
+      <ul id="words">
+	<li>
+	  <label for="letters"> Available Letters</label>
+	  <ul id="letter" class="word">
+   	  </ul>
+	</li>
+	<li>
+	  <label for="guess"> Guessed Letters</label>
+          <ul id="guess" class="word">
+          </ul>
+	</li>
+      </ul>
+      <ul id="status" class="display">
+        <li>
+          <dl id="count">
+            <dt>Words Found</dt>
+            <dd id="foundcount"></dd>
+          </dl>
+        </li>
+        <li>
+          <dl id="remaining">
+            <dt>Remaining</dt>
+            <dd id="remcount"></dd>
+          </dl>
+        </li>
+      </ul>
+
+      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" />
     </div>
   </body>
 </html>
