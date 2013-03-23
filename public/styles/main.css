@@ -23,10 +23,6 @@ ul{
     list-style-type: none;
 }
 
-{
-
-}
-
 label {
     padding: 2.5%;
 }
@@ -40,10 +36,6 @@ font-family: "MV Boli", cursive;
 color: #3a3a3a;
 }
 
-.section {
-    width: 45%;
-}
-
 .display {
     height: 1.5em;
     clear: both;
@@ -51,7 +43,6 @@ color: #3a3a3a;
 
 .display li {
     float: left;
-    width: 45%;
     padding: 2.5%;
 }
 
@@ -66,11 +57,6 @@ padding: 2.5%;
 font-size: 4em;
 height: 65px;
 }
-
-/* .word {  */
-/*     padding: 0 16; */
-/*     margin: 0 16 */
-/* } */
 
 .word li{
     border:solid 3px;
@@ -88,28 +74,29 @@ height: 65px;
 #found {
 	outline: 1px dashed green;
 	width: 1250px;
-
 }
 
-#found > li{
-    clear: left;
-}
-
-#found ul{
+#found > ul{
     outline: 1px dashed red;
+		clear left;
   	width: 12%;
+		float: left;
+}
+
+#found ul li ul li{
+    background-color: white;
+    border:solid 1px;
+    height: 1em;
+    width: 1em;
+    font-size: 1em;
+    text-align: center;
   	float: left;
 }
 
-#found li ul  li{
-    background-color: white;
-    border:solid 1px;
-    float: left;
-    height: 1em;
-    width: 1em;
-    font-size: 2em;
-    text-align: center;
+#found ul li ul {
+  clear: left;
 }
+
 
 .kitty{
    clear: both;
@@ -122,6 +109,9 @@ height: 65px;
 /*     border: solid; */
 /*     float: right; */
 /* } */
+
+
+
 
 
 

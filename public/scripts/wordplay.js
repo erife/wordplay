@@ -1,4 +1,5 @@
 
+
 $(document).data("maxwordlength", 6);
 
 function initialword(words)
@@ -134,8 +135,8 @@ function validguess(guessword, words)
 function fillfound(words)
 {
     $.map(words, function(word, i){
-	var word_id = "word_" + i;
-	$("#found").append("<li> <ul id='" + word_id + "'> </ul> </li>");
+	// var word_id = "word_" + i;
+	// $("#found").append("<li> <ul id='" + word_id + "'> </ul> </li>");
 	fillsingle(word, i);
     });
 }
