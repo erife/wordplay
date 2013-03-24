@@ -4,6 +4,10 @@
 * Javascript
 ** timer
 ** win condition
+*** DONE check for valid word
+*** DONE increment score
+*** DONE check score value to see if it's greater than 'winscore'
+*** DONE sets css display to visible for kitten object
 ** end condition
 ** kitty
 *** speaks congratulations

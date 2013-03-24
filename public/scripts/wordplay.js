@@ -263,6 +263,28 @@ function showletters(id, string){
     });
 }
 
+function timedisplay(seconds){
+    var minute = Math.floor(seconds/60);
+    var second = seconds%60 < 10 ? "0" + seconds%60 : seconds%60;
+    console.log(minute);
+    console.log(second);
+    $("#timer").html(minute + ":" + second);    
+}
+
+function timecountdown(){
+    var timer = $(document).data("time");
+    timer --;
+    $(document).data("time", timer);
+    if(timer >= 0){
+    timedisplay(timer);
+	}
+else{
+    clearInterval(time);
+    $("#kitten").removeClass("invisible");
+}
+}
+
+
 $(function () {
     $.getJSON("data",function(result){
 	$(document).data("availableletters", result["availableletters"]);
@@ -280,6 +302,9 @@ $(function () {
 	displayrem();
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 10);
+	$(document).data("time", 5);
+	timedisplay($(document).data("time"));
+	var time = setInterval(timecountdown, 1000);
 	});
    })
 
