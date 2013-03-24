@@ -231,6 +231,7 @@ function submitword(guessword){
 	scorecalc(guessword);
 	displayfound();
 	displayrem();
+	wincheck();
     }
     else{
 	console.log("invalidword: " + guessword);
@@ -239,6 +240,12 @@ function submitword(guessword){
     showletters("#guess","");
     $(document).data("remainingletters", $(document).data("availableletters").slice(0));
     showletters("#letter", $(document).data("remainingletters"));
+}
+
+function wincheck(){
+ if($(document).data("score") > $(document).data("winscore")){
+	$("#kitten").removeClass("invisible");
+		}
 }
 
 function scorecalc(word){
@@ -271,7 +278,8 @@ $(function () {
 	$(document).data("foundwords", []);
 	displayfound();
 	displayrem();
-	$(document).keydown(handlekey);   
+	$(document).keydown(handlekey);
+	$(document).data("winscore", 10);
 	});
    })
 

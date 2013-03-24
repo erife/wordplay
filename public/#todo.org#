@@ -1,0 +1,40 @@
+* CSS
+** styling for window resize
+** shadows on the tiles
+* Javascript
+** timer
+** win condition
+*** check for valid word
+*** increment score
+*** check score value to see if it's greater than 'winscore'
+*** sets css display to visible for kitten object
+** end condition
+** kitty
+*** speaks congratulations
+*** speaks derision
+** error messaging (html)
+** sound effects
+*** correct word
+*** incorrect word
+*** incorrect letter
+*** win
+*** lose
+*** valid letter
+*** timer (out?)
+** <5 seconds remaining
+*** animation
+*** sound
+* Ruby
+** boxes categorized and sorted
+*** Load word list from file (download file)
+*** alphabatize words
+*** unique list
+*** bucket by length
+*** iterate from 3 to max letters
+** randomize initial word
+*** select word with max letters (randomly)
+*** choose subwords
+** comprehensive word list
+
+
+

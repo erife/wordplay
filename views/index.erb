@@ -15,29 +15,15 @@
         <div id="found">
 	  <% 8.times.each do |j| %>
           <ul>
-	  <% 10.times.each do |i| %>
-	  <li><ul id= word_<%= (j*10)+i %>></ul> </li>
-	  <% end %>
-	</ul>
+	    <% 10.times.each do |i| %>
+	    <li><ul id= word_<%= (j*10)+i %>></ul> </li>
+	    <% end %>
+	  </ul>
 	  <% end %>
 	</div>
       </div>
     </div>
     <div id="interface" class="section">
-      <ul id="result" class="display">
-        <li>
-          <dl id="time">
-	    <dt>Time</dt>
-            <dd>5:00</dd>
-          </dl>
-        </li>
-        <li>
-          <dl id="score">
-            <dt>Score</dt>
-	    <dd id = "dynamicscore"></dd>
-          </dl>
-        </li>
-      </ul>
       <ul id="words">
 	<li>
 	  <label for="letters"> Available Letters</label>
@@ -49,6 +35,20 @@
           <ul id="guess" class="word">
           </ul>
 	</li>
+      </ul>
+      <ul id="result" class="display">
+        <li>
+          <dl id="time">
+	    <dt>Time</dt>
+            <dd>5:00</dd>
+          </dl>
+        </li> 
+        <li>
+          <dl id="score">
+            <dt>Score</dt>
+	    <dd id = "dynamicscore"></dd>
+          </dl>
+        </li>
       </ul>
       <ul id="status" class="display">
         <li>
@@ -64,8 +64,10 @@
           </dl>
         </li>
       </ul>
-
-      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" />
+      <dl id = "kitten" class = "invisible">
+	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" /></dt>
+	<dd>Meow</dd>
+      </dl>
     </div>
   </body>
 </html>
