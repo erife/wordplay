@@ -159,6 +159,7 @@ function fillsingle(word, index, blank=true)
 }
 
 function handlekey(event){
+    clearerror();
     if (event.which == 8 || event.which == 46) 
     {
 	removeguessletter();
@@ -174,15 +175,24 @@ function handlekey(event){
 	    showletters("#letter", $(document).data("remainingletters"));
 	}
 	else{
-	    console.log('Unavailable Letter');
+	    displayerror("Unavailable Letter");
 	}
     }
     else if(event.which == 13){
 	submitword($(document).data("guessword").join(""));
 	$(document).data("guessword").length = 0;
     }
-    else{console.log('Not A Valid Input');}
+    else{displayerror("Not A Valid Input");}
 }
+
+function displayerror(message){
+    $("#error").html(message);
+}
+
+function clearerror(){
+    displayerror("");
+}
+
 
 function addguessletter(letter){
     $(document).data("guessword").push(letter);
@@ -266,8 +276,6 @@ function showletters(id, string){
 function timedisplay(seconds){
     var minute = Math.floor(seconds/60);
     var second = seconds%60 < 10 ? "0" + seconds%60 : seconds%60;
-    console.log(minute);
-    console.log(second);
     $("#timer").html(minute + ":" + second);    
 }
 
@@ -279,10 +287,28 @@ function timecountdown(){
     timedisplay(timer);
 	}
 else{
+    var time = $(document).data("interval");
     clearInterval(time);
+    endgame();
+}
+}
+
+function endgame(){
+    $(".kitty").attr("src", "/images/angrycat.jpeg");
     $("#kitten").removeClass("invisible");
+    playsound("beep-2.mp3");
 }
+
+ function playsound(soundname){
+	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
+     console.log(soundfile);
+     soundfile.appendTo('body');
 }
+
+
+
+
+
 
 
 $(function () {
@@ -301,10 +327,11 @@ $(function () {
 	displayfound();
 	displayrem();
 	$(document).keydown(handlekey);
-	$(document).data("winscore", 10);
-	$(document).data("time", 5);
+	$(document).data("winscore", 50);
+	$(document).data("time", 300);
 	timedisplay($(document).data("time"));
 	var time = setInterval(timecountdown, 1000);
-	});
+	$(document).data("interval", time);
+});
    })
 

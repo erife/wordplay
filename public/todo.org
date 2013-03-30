@@ -1,40 +1,41 @@
-* CSS
-** styling for window resize
-** shadows on the tiles
-* Javascript
-** timer
-** win condition
-*** DONE check for valid word
-*** DONE increment score
-*** DONE check score value to see if it's greater than 'winscore'
-*** DONE sets css display to visible for kitten object
-** end condition
-** kitty
-*** speaks congratulations
-*** speaks derision
-** error messaging (html)
-** sound effects
-*** correct word
-*** incorrect word
-*** incorrect letter
-*** win
-*** lose
-*** valid letter
-*** timer (out?)
-** <5 seconds remaining
-*** animation
-*** sound
-* Ruby
-** boxes categorized and sorted
-*** Load word list from file (download file)
-*** alphabatize words
-*** unique list
-*** bucket by length
-*** iterate from 3 to max letters
-** randomize initial word
-*** select word with max letters (randomly)
-*** choose subwords
-** comprehensive word list
-
+* To do
+** CSS
+*** styling for window resize
+*** DONE shadows on the tiles
+** Javascript
+*** DONE timer
+*** DONE win condition
+**** DONE check for valid word
+**** DONE increment score
+**** DONE check score value to see if it's greater than 'winscore'
+**** DONE sets css display to visible for kitten object
+*** end condition
+*** kitty
+**** speaks congratulations
+**** speaks derision
+*** DONE error messaging (html)
+*** sound effects
+**** correct word
+**** incorrect word
+**** incorrect letter
+**** win
+**** lose
+**** valid letter
+**** timer (out?)
+*** <5 seconds remaining
+**** animation
+**** sound
+** Ruby
+*** boxes categorized and sorted
+**** Load word list from file (download file)
+**** alphabatize words
+**** unique list
+**** bucket by length
+**** iterate from 3 to max letters
+*** randomize initial word
+**** select word with max letters (randomly)
+**** choose subwords
+*** comprehensive word list
+*
 
 
