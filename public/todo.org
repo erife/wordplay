@@ -27,15 +27,16 @@
 **** sound
 ** Ruby
 *** boxes categorized and sorted
-**** Load word list from file (download file)
-**** alphabatize words
-**** unique list
-**** bucket by length
-**** iterate from 3 to max letters
+**** DONE Load word list from file (download file)
+**** DONE alphabatize words
+**** DONE unique list
+**** DONE bucket by length
+**** DONE iterate from 3 to max letters
 *** randomize initial word
-**** select word with max letters (randomly)
-**** choose subwords
-*** comprehensive word list
-*
+**** DONE select word with max letters (randomly)
+**** DONE choose subwords
+**** DONE comprehensive word list
+*** refactor
+*** optimize
 
 

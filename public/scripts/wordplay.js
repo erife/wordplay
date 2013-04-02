@@ -313,8 +313,10 @@ function endgame(){
 
 $(function () {
     $.getJSON("data",function(result){
+	console.log(result["availableletters"]);
+	console.log(result["result_words"]);
+	var resultwords = result["result_words"]
 	$(document).data("availableletters", result["availableletters"]);
-	var resultwords = subwords(result["availableletters"], result["words"]);
 	$(document).data("resultwords", resultwords);
 	$(document).data("remainingletters", result["availableletters"].slice(0));
 	$(document).data("wordcopy", resultwords.slice(0));
