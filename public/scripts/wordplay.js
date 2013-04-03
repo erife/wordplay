@@ -166,9 +166,9 @@ function handlekey(event){
 	return false;
     }
     else if(event.which >=65 && event.which <=90){
-	var guessletter = String.fromCharCode(event.which).toLowerCase();
+	var guessletter = String.fromCharCode(event.which);
 	var remainingletters = $(document).data("remainingletters");
-	var letterpos = remainingletters.indexOf(guessletter);
+	var letterpos = remainingletters.indexOf(guessletter.toUpperCase());
 	if(letterpos != -1){ 
 	    addguessletter(guessletter);
 	    remainingletters.splice(letterpos, 1);
@@ -313,8 +313,6 @@ function endgame(){
 
 $(function () {
     $.getJSON("data",function(result){
-	console.log(result["availableletters"]);
-	console.log(result["result_words"]);
 	var resultwords = result["result_words"]
 	$(document).data("availableletters", result["availableletters"]);
 	$(document).data("resultwords", resultwords);
