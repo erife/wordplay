@@ -12,7 +12,7 @@ function initialword(words)
 function validguess(guessword, words)
 {
     var pos = words.indexOf(guessword);
-    if (pos != -1){
+    if (pos != -1 && !$(document).data("end")){
 	words.splice(pos, 1);
 	return true;
 	}
@@ -203,6 +203,7 @@ function endgame(){
 	console.log("lose");
 	// playsound("beep-2.mp3");
     }
+    $(document).data("end", true);
     var remaining = $(document).data("wordcopy");
     $.map(remaining, function(word, i){
 	fillword(word, $(document).data("resultwords"));
@@ -220,6 +221,7 @@ $(function () {
     $.getJSON("data",function(result){
 	var resultwords = result["result_words"]
 	$(document).data("win", false);
+	$(document).data("end", false);
 	$(document).data("availableletters", result["availableletters"]);
 	$(document).data("resultwords", resultwords);
 	$(document).data("remainingletters", result["availableletters"].slice(0));
@@ -234,7 +236,7 @@ $(function () {
 	displayrem();
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 50);
-	$(document).data("time", 300);
+	$(document).data("time", 10);
 	timedisplay($(document).data("time"));
 	var time = setInterval(timecountdown, 1000);
 	$(document).data("interval", time);
