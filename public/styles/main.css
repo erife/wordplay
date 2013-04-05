@@ -30,7 +30,7 @@ border-radius: 5px;
 text-align: center;
 font-size: 2em;
 font-family: "MV Boli", cursive;
-color: #3a3a3a;
+/*color: #3a3a3a;*/
 width: 200px;
 height: 30px;
 }
@@ -38,6 +38,7 @@ height: 30px;
 .display li {
 	float: left;
   padding: 25px;
+  color: #3a3a3a;
 }
 
 #error {
@@ -137,6 +138,11 @@ width: 245px;
 
 .foundword{
  	color: black; 
+}
+
+.timeout{
+    text-decoration: blink;
+    color: red;
 }
 
 

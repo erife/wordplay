@@ -169,24 +169,32 @@ function showletters(id, string){
     });
 }
 
-function timedisplay(seconds){
+function timedisplay(seconds, blinking = false){
     var minute = Math.floor(seconds/60);
     var second = seconds%60 < 10 ? "0" + seconds%60 : seconds%60;
-    $("#timer").html(minute + ":" + second);    
+    if(blinking){
+	$("#timer").html(minute + ":" + second).addClass("timeout");
+    }
+    else{
+	$("#timer").html(minute + ":" + second).removeClass("timeout");    
+    }
 }
 
 function timecountdown(){
     var timer = $(document).data("time");
     timer --;
     $(document).data("time", timer);
-    if(timer >= 0){
-    timedisplay(timer);
-	}
-else{
-    var time = $(document).data("interval");
-    clearInterval(time);
-    endgame();
-}
+    if(timer <= 5 && timer >0){
+	timedisplay(timer, true);
+    }
+    else if(timer >= 0){
+	timedisplay(timer);
+    }
+        else{
+	var time = $(document).data("interval");
+	clearInterval(time);
+	endgame();
+    }
 }
 
 function endgame(){
