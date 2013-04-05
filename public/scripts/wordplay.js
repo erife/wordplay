@@ -102,6 +102,7 @@ function removeguessletter(){
 
 function displayfound(){
     $('#foundcount').html(foundcount());
+   
 }
 
 function foundcount(){
@@ -123,6 +124,7 @@ return  $(document).data("resultwords").length;
 
 function submitword(guessword){
     if(validguess(guessword, $(document).data("wordcopy"))){
+	setcorrectclass(guessword, $(document).data("resultwords"));
 	fillword(guessword, $(document).data("resultwords"));
 	$(document).data("foundwords").push(guessword);
 	scorecalc(guessword);
@@ -139,9 +141,15 @@ function submitword(guessword){
     showletters("#letter", $(document).data("remainingletters"));
 }
 
+function setcorrectclass(guessword, words){
+    var index = words.indexOf(guessword);
+    console.log(index);
+    $("#word_" + index).addClass("foundword");
+}
+
 function wincheck(){
- if($(document).data("score") > $(document).data("winscore")){
-	$("#kitten").removeClass("invisible");
+ if($(document).data("score") >= $(document).data("winscore")){
+	$("#winkitten").removeClass("invisible");
      $(document).data("win", true);
 		}
 }
@@ -183,23 +191,21 @@ else{
 
 function endgame(){
     if(!$(document).data("win")){
-	$(".kitty").attr("src", "/images/angrycat.jpeg");
-	$("#kitten").removeClass("invisible");
+	$("#losekitten").removeClass("invisible");
 	console.log("lose");
-	playsound("beep-2.mp3");
+	// playsound("beep-2.mp3");
     }
+    var remaining = $(document).data("wordcopy");
+    $.map(remaining, function(word, i){
+	fillword(word, $(document).data("resultwords"));
+    });
 }
 
- function playsound(soundname){
-	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
-     console.log(soundfile);
-     soundfile.appendTo('body');
-}
-
-
-
-
-
+//  function playsound(soundname){
+// 	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
+//      console.log(soundfile);
+//      soundfile.appendTo('body');
+// }
 
 
 $(function () {
@@ -210,7 +216,7 @@ $(function () {
 	$(document).data("resultwords", resultwords);
 	$(document).data("remainingletters", result["availableletters"].slice(0));
 	$(document).data("wordcopy", resultwords.slice(0));
-	fillfound(resultwords);
+	fillfound(resultwords, true);
 	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("guessword", []);
 	$(document).data("score", 0);

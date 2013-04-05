@@ -81,7 +81,6 @@ width: 245px;
 #found {
   width: 1250px;
   margin: 35px;
-	color:red;
 }
 
 #found > ul{
@@ -103,33 +102,26 @@ width: 245px;
 
 #found ul li ul {
   clear: left;
+  color: red;
 }
 
 .kitty{
    clear: both;
-   width: 150px;
-   height: 150px;
-   position: absolute;
-   left: 200px;
-   top: 10px;
+   width: 200px;
+   height: 200px;
+   padding: 5%;
 }
 
-#losekitten dd, #winkitten dd{
+#kitten{
     position: absolute;
-		top: 165;
-  	left: 200;
-  	font-size: 2em;
-		font-weight: bold;
+    outline: 1px dashed purple;
+    left: 750px;
+    top: 300px;
 }
 
-#winkitten dd{
-    color: green;
-}  
-
-#losekitten dd{
-    color: red;
+#kitten dd{
+    position: absolute;
 }
-
 
 .invisible {
     display: none;
@@ -138,9 +130,6 @@ width: 245px;
 .foundword{
  	color: black; 
 }
-
-
-
 
 
 

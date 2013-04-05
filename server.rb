@@ -119,12 +119,14 @@ def valid_subword(available_letters, word)
   return true
 end
 
+ALLWORDS = File.new("TWL_2006_ALPHA.txt").to_a.map{|word| word.chomp}
+
+
 def get_resultwords(maxwordlength)
-  all_words = File.new("TWL_2006_ALPHA.txt").to_a.map{|word| word.chomp}
-  seed_words = all_words.select{|word| word.length == maxwordlength}
+  seed_words = ALLWORDS.select{|word| word.length == maxwordlength}
   seed_word = seed_words.sample(1).first
   available_letters = seed_word.split("")
-  subwords = all_words.select do |word|
+  subwords = ALLWORDS.select do |word|
     valid_subword(available_letters, word)
   end
   return [available_letters, subwords]
@@ -138,7 +140,7 @@ get "/data" do
   max_word = 6
   available_letters,  resultwords = get_resultwords(max_word)
   available_letters = available_letters.shuffle
-  resultwords = resultwords.sort.sort_by(&:length)
+  resultwords = resultwords.sort_by{|x| [x.length, x]}
   json :result_words => resultwords, :availableletters => available_letters
 end
 
