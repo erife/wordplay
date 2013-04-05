@@ -213,13 +213,13 @@ $(function () {
 	fillfound(resultwords);
 	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("guessword", []);
-	$(document).data("score", 45);
+	$(document).data("score", 0);
 	$("#dynamicscore").html($(document).data("score"));
 	$(document).data("foundwords", []);
 	displayfound();
 	displayrem();
 	$(document).keydown(handlekey);
-	$(document).data("winscore", 0);
+	$(document).data("winscore", 50);
 	$(document).data("time", 300);
 	timedisplay($(document).data("time"));
 	var time = setInterval(timecountdown, 1000);
