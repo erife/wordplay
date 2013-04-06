@@ -45,12 +45,30 @@ function fillsingle(word, index, blank=true)
     $("#word_" + index).html(letter_display);
 }
 
+function Random(X) {
+    return Math.floor(X*(Math.random()%1)) }
+
+function shuffle(remletters){
+    for (J=remletters.length-1 ; J>0 ; J--){
+	K = Random(J+1) ; 
+	T = remletters[J] ; 
+	remletters[J] = remletters[K] ; 
+	remletters[K] = T 
+   }
+    return remletters;
+}
+
 function handlekey(event){
     clearerror();
     if (event.which == 8 || event.which == 46) 
     {
 	removeguessletter();
 	return false;
+    }
+    else if(event.which == 32){
+	var letters = $(document).data("remainingletters");
+	shuffle(letters);
+	showletters("#letter", $(document).data("remainingletters"));
     }
     else if(event.which >=65 && event.which <=90){
 	var guessletter = String.fromCharCode(event.which);
