@@ -143,7 +143,6 @@ function submitword(guessword){
 
 function setcorrectclass(guessword, words){
     var index = words.indexOf(guessword);
-    console.log(index);
     $("#word_" + index).addClass("foundword");
 }
 
@@ -205,7 +204,7 @@ function endgame(){
     }
     $(document).data("end", true);
     var remaining = $(document).data("wordcopy");
-    $.map(remaining, function(word, i){
+    $.map(remaining, function(word){
 	fillword(word, $(document).data("resultwords"));
     });
 }
@@ -226,7 +225,7 @@ $(function () {
 	$(document).data("resultwords", resultwords);
 	$(document).data("remainingletters", result["availableletters"].slice(0));
 	$(document).data("wordcopy", resultwords.slice(0));
-	fillfound(resultwords, true);
+	fillfound(resultwords);
 	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("guessword", []);
 	$(document).data("score", 0);
@@ -236,7 +235,7 @@ $(function () {
 	displayrem();
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 50);
-	$(document).data("time", 180);
+	$(document).data("time", 5);
 	timedisplay($(document).data("time"));
 	var time = setInterval(timecountdown, 1000);
 	$(document).data("interval", time);

@@ -17,7 +17,7 @@ def get_resultwords()
   (2..available_letters.length).each do |n|
     permutation_words += available_letters.permutation(n+1).to_a.map(&:join)
   end
-  subwords = permutation_words.select do |word|
+  subwords = permutation_words.uniq.select do |word|
     ALLWORDS.include?(word)
   end
   return [available_letters, subwords]
@@ -34,6 +34,7 @@ get "/data" do
   end
   available_letters = available_letters.shuffle
   resultwords = resultwords.sort_by{|x| [x.length, x]}
+  puts resultwords
   json :result_words => resultwords, :availableletters => available_letters
 end
 

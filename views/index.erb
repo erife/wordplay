@@ -14,10 +14,10 @@
       <h1>Wordplay</h1>
       <div id="report" class="section">
         <div id="found">
-	  <% 10.times.each do |j| %>
+	  <% 12.times.each do |j| %>
           <ul>
-	    <% 12.times.each do |i| %>
-	    <li><ul id= word_<%= (j*12)+i %>></ul> </li>
+	    <% 10.times.each do |i| %>
+	    <li><ul id= word_<%= (j*10)+i %>></ul> </li>
 	    <% end %>
 	  </ul>
 	  <% end %>
