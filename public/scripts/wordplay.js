@@ -236,7 +236,7 @@ $(function () {
 	displayrem();
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 50);
-	$(document).data("time", 300);
+	$(document).data("time", 180);
 	timedisplay($(document).data("time"));
 	var time = setInterval(timecountdown, 1000);
 	$(document).data("interval", time);
