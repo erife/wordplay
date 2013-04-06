@@ -17,5 +17,6 @@
 ** Ruby
 *** refactor
 *** optimize
+*** static list of seed words/remove while loop
 
 

@@ -7,6 +7,8 @@ set :static => true
 set :public_folder, File.expand_path(File.dirname(__FILE__) + '/public')
 
 MAXWORDLENGTH = 6;
+MINSUBWORDCOUNT = 20;
+MAXSUBWORDCOUNT = 120;
 ALLWORDS = Set.new(File.new("TWL_2006_ALPHA.txt").to_a.map{|word| word.chomp})
 SEED_WORDS = ALLWORDS.select{|word| word.length == MAXWORDLENGTH}
 
@@ -29,12 +31,11 @@ end
 
 get "/data" do
   resultwords = [];
-  while resultwords.length <= 20 || resultwords.length >= 120 do
+  while resultwords.length <= MINSUBWORDCOUNT || resultwords.length >= MAXSUBWORDCOUNT do
     available_letters,  resultwords = get_resultwords()
   end
   available_letters = available_letters.shuffle
   resultwords = resultwords.sort_by{|x| [x.length, x]}
-  puts resultwords
-  json :result_words => resultwords, :availableletters => available_letters
+   json :result_words => resultwords, :availableletters => available_letters
 end
 
