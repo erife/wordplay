@@ -55,8 +55,13 @@ function shuffle(remletters){
 	remletters[J] = remletters[K] ; 
 	remletters[K] = T 
    }
-    return remletters;
+    showletters("#letter", $(document).data("remainingletters"));
 }
+
+function buttonshuffle(){
+    shuffle($(document).data("remainingletters"));
+}
+
 
 function handlekey(event){
     clearerror();
@@ -68,7 +73,6 @@ function handlekey(event){
     else if(event.which == 32){
 	var letters = $(document).data("remainingletters");
 	shuffle(letters);
-	showletters("#letter", $(document).data("remainingletters"));
     }
     else if(event.which >=65 && event.which <=90){
 	var guessletter = String.fromCharCode(event.which);
