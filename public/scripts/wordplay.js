@@ -214,7 +214,9 @@ function timecountdown(){
     else if(timer >= 0){
 	timedisplay(timer);
     }
-        else{
+    else{
+	var time = $(document).data("interval");
+	clearInterval(time);
 	endgame();
     }
 }
@@ -223,9 +225,9 @@ function endgame(){
     if(!$(document).data("win")){
 	$("#losekitten").removeClass("invisible");
 	console.log("lose");
-	// playsound("beep-2.mp3");
     }
     $(document).data("end", true);
+    $(document).data("time", 0);
     timedisplay(0);
     var time = $(document).data("interval");
     clearInterval(time);
@@ -234,6 +236,18 @@ function endgame(){
 	fillword(word, $(document).data("resultwords"));
     });
 }
+
+function startgame(){
+    fillfound($(document).data("resultwords"));
+    showletters("#letter", $(document).data("remainingletters"));
+    $(document).data("time", 180);
+    timedisplay($(document).data("time"));
+    var time = setInterval(timecountdown, 1000);
+    $(document).data("interval", time);
+    displayfound();
+    displayrem();
+}
+
 
 //  function playsound(soundname){
 // 	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
@@ -256,20 +270,22 @@ $(function () {
 	$(document).data("resultwords", resultwords);
 	$(document).data("remainingletters", result["availableletters"].slice(0));
 	$(document).data("wordcopy", resultwords.slice(0));
-	fillfound(resultwords);
-	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("guessword", []);
 	$(document).data("score", 0);
 	$("#dynamicscore").html($(document).data("score"));
 	$(document).data("foundwords", []);
-	displayfound();
-	displayrem();
+	timedisplay(0);
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 50);
+/*	fillfound($(document).data("resultwords"));
+	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("time", 180);
 	timedisplay($(document).data("time"));
 	var time = setInterval(timecountdown, 1000);
 	$(document).data("interval", time);
+	displayfound();
+	displayrem();
+*/
 });
    })
 
