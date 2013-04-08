@@ -30,7 +30,7 @@ erb :index
 end
 
 get "/data" do
-  resultwords = [];
+  resultwords = []
   while resultwords.length <= MINSUBWORDCOUNT || resultwords.length >= MAXSUBWORDCOUNT do
     available_letters,  resultwords = get_resultwords()
   end
@@ -39,3 +39,17 @@ get "/data" do
    json :result_words => resultwords, :availableletters => available_letters
 end
 
+get "/highscore" do
+  highscore = [
+               ["Elaina", 100], 
+               ["Peter", 1]
+              ]
+  json :high_score => highscore
+end
+
+# create set high score action
+# read high scores from a file
+# write new high scores to a file
+# convert file format to ruby list of lists
+# sort high scores
+  

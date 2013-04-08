@@ -74,6 +74,9 @@ function handlekey(event){
 	var letters = $(document).data("remainingletters");
 	shuffle(letters);
     }
+    else if(event.which == 27){
+	endgame();
+    }
     else if(event.which >=65 && event.which <=90){
 	var guessletter = String.fromCharCode(event.which);
 	var remainingletters = $(document).data("remainingletters");
@@ -212,8 +215,6 @@ function timecountdown(){
 	timedisplay(timer);
     }
         else{
-	var time = $(document).data("interval");
-	clearInterval(time);
 	endgame();
     }
 }
@@ -225,6 +226,9 @@ function endgame(){
 	// playsound("beep-2.mp3");
     }
     $(document).data("end", true);
+    timedisplay(0);
+    var time = $(document).data("interval");
+    clearInterval(time);
     var remaining = $(document).data("wordcopy");
     $.map(remaining, function(word){
 	fillword(word, $(document).data("resultwords"));
@@ -237,6 +241,11 @@ function endgame(){
 //      soundfile.appendTo('body');
 // }
 
+function showscore(){
+    $.getJSON("highscore", function(hs){
+	$("#highscore").html(hs["high_score"]);
+    });
+}
 
 $(function () {
     $.getJSON("data",function(result){
@@ -264,3 +273,7 @@ $(function () {
 });
    })
 
+// format list of lists into table
+// send score to server before displaying high score panel
+// display high score panel when handling game end
+//

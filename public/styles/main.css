@@ -145,6 +145,25 @@ width: 245px;
     color: red;
 }
 
+#highscore{
+  	position: fixed;
+  	background-color: white;
+  	width: 500px;
+  	height: 500px;
+  	left: 30%;
+  	top: 25%;
+		font-size: 1.5em;
+    text-align: center;
+}
+
+
+table {
+  padding: 1px;
+	width: 100%;
+	text-align: center;  
+}
+
+
 
 
 

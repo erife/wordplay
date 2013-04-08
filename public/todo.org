@@ -1,4 +1,4 @@
-* To do
+y* To do
 ** CSS
 *** styling for window resize
 ** Javascript
@@ -19,4 +19,12 @@
 *** optimize
 *** static list of seed words/remove while loop
 
+
+High Score
+Start button
+end button
+add time for words > 4
+next level
+chrome
+internet
 
