@@ -23,6 +23,7 @@ function validguess(guessword, words)
 
 function fillfound(words)
 {
+    clearfill();
     $.map(words, function(word, i){
 	fillsingle(word, i);
     });
@@ -43,6 +44,12 @@ function fillsingle(word, index, blank=true)
 	letter_display += "<li>" + filler + "</li>";
     });
     $("#word_" + index).html(letter_display);
+}
+
+function clearfill(){
+    for(i=0; i<=120; i++){
+	$("#word_" + i).html("");
+    }
 }
 
 function Random(X) {
