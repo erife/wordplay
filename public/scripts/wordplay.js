@@ -245,6 +245,12 @@ function endgame(){
 }
 
 function startgame(){
+    startclock();
+}
+
+function startclock(){
+    var time = setInterval(timecountdown, 1000);
+    $(document).data("interval", time);
 }
 
 //  function playsound(soundname){
@@ -260,7 +266,6 @@ function showscore(){
 }
 
 $(function () {
-    big stupid thing that breaks
     $.getJSON("data",function(result){
 	var resultwords = result["result_words"]
 	$(document).data("win", false);
@@ -273,15 +278,12 @@ $(function () {
 	$(document).data("score", 0);
 	$("#dynamicscore").html($(document).data("score"));
 	$(document).data("foundwords", []);
-	timedisplay(0);
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 50);
 	fillfound($(document).data("resultwords"));
 	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("time", 180);
 	timedisplay($(document).data("time"));
-	var time = setInterval(timecountdown, 1000);
-	$(document).data("interval", time);
 	displayfound();
 	displayrem();
 });
