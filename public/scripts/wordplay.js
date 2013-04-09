@@ -229,12 +229,11 @@ function timecountdown(){
 }
 
 function endgame(){
-    if($(document).data("end") == "running"){
+    if($(document).data("state") == "running"){
 	if(!$(document).data("win")){
 	    $("#losekitten").removeClass("invisible");
-	    console.log("lose");
 	}
-	$(document).data("end", true);
+	$(document).data("state", "stopped");
 	$(document).data("time", 0);
 	timedisplay(0);
 	var time = $(document).data("interval");
@@ -253,17 +252,18 @@ function startgame(){
     initializeconstants();
     endgame();
     initializegame();
-    startclock();
     $(document).data("state", "running");
 }
 
 function startclock(){
+    if($(document).data("interval")){
+	clearInterval($(document).data("interval"));
+    }
     var time = setInterval(timecountdown, 1000);
     $(document).data("interval", time);
 }
 
 function initializegame(){
-    initializeconstants();
     $.getJSON("data",function(result){
 	var resultwords = result["result_words"]
 	$(document).data("availableletters", result["availableletters"]);
@@ -276,7 +276,7 @@ function initializegame(){
 	timedisplay($(document).data("time"));
 	displayfound();
 	displayrem();
-	
+	startclock();
     });
 }
 
