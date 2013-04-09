@@ -229,29 +229,68 @@ function timecountdown(){
 }
 
 function endgame(){
-    if(!$(document).data("win")){
-	$("#losekitten").removeClass("invisible");
-	console.log("lose");
+    if($(document).data("end") == "running"){
+	if(!$(document).data("win")){
+	    $("#losekitten").removeClass("invisible");
+	    console.log("lose");
+	}
+	$(document).data("end", true);
+	$(document).data("time", 0);
+	timedisplay(0);
+	var time = $(document).data("interval");
+	clearInterval(time);
+	var remaining = $(document).data("wordcopy");
+	if(remaining){
+	    $.map(remaining, function(word){
+		fillword(word, $(document).data("resultwords"));
+	    });
+	}
+	return;
     }
-    $(document).data("end", true);
-    $(document).data("time", 0);
-    timedisplay(0);
-    var time = $(document).data("interval");
-    clearInterval(time);
-    var remaining = $(document).data("wordcopy");
-    $.map(remaining, function(word){
-	fillword(word, $(document).data("resultwords"));
-    });
 }
 
 function startgame(){
+    initializeconstants();
+    endgame();
+    initializegame();
     startclock();
+    $(document).data("state", "running");
 }
 
 function startclock(){
     var time = setInterval(timecountdown, 1000);
     $(document).data("interval", time);
 }
+
+function initializegame(){
+    initializeconstants();
+    $.getJSON("data",function(result){
+	var resultwords = result["result_words"]
+	$(document).data("availableletters", result["availableletters"]);
+	$(document).data("resultwords", resultwords);
+	$(document).data("remainingletters", result["availableletters"].slice(0));
+	$(document).data("wordcopy", resultwords.slice(0));
+	$("#dynamicscore").html($(document).data("score"));
+	fillfound($(document).data("resultwords"));
+	showletters("#letter", $(document).data("remainingletters"));
+	timedisplay($(document).data("time"));
+	displayfound();
+	displayrem();
+	
+    });
+}
+
+function initializeconstants(){
+    $(document).data("win", false);
+    $(document).data("state", "stopped");
+    $(document).data("guessword", []);
+    $(document).data("score", 0);
+    $(document).data("foundwords", []);
+    $(document).data("winscore", 50);
+    $(document).data("time", 180);
+
+}
+
 
 //  function playsound(soundname){
 // 	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
@@ -266,28 +305,8 @@ function showscore(){
 }
 
 $(function () {
-    $.getJSON("data",function(result){
-	var resultwords = result["result_words"]
-	$(document).data("win", false);
-	$(document).data("end", false);
-	$(document).data("availableletters", result["availableletters"]);
-	$(document).data("resultwords", resultwords);
-	$(document).data("remainingletters", result["availableletters"].slice(0));
-	$(document).data("wordcopy", resultwords.slice(0));
-	$(document).data("guessword", []);
-	$(document).data("score", 0);
-	$("#dynamicscore").html($(document).data("score"));
-	$(document).data("foundwords", []);
-	$(document).keydown(handlekey);
-	$(document).data("winscore", 50);
-	fillfound($(document).data("resultwords"));
-	showletters("#letter", $(document).data("remainingletters"));
-	$(document).data("time", 180);
-	timedisplay($(document).data("time"));
-	displayfound();
-	displayrem();
-});
-   })
+    $(document).keydown(handlekey);
+})
 
 // format list of lists into table
 // send score to server before displaying high score panel
