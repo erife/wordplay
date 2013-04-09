@@ -12,7 +12,7 @@ function initialword(words)
 function validguess(guessword, words)
 {
     var pos = words.indexOf(guessword);
-    if (pos != -1 && !$(document).data("end")){
+    if (pos != -1 && $(document).data("state") == "running"){
 	words.splice(pos, 1);
 	return true;
 	}
@@ -98,6 +98,7 @@ function handlekey(event){
 	}
     }
     else if(event.which == 13){
+	console.log("enter");
 	submitword($(document).data("guessword").join(""));
 	$(document).data("guessword").length = 0;
     }
@@ -179,10 +180,10 @@ function setcorrectclass(guessword, words){
 }
 
 function wincheck(){
- if($(document).data("score") >= $(document).data("winscore")){
+    if($(document).data("score") >= $(document).data("winscore")){
 	$("#winkitten").removeClass("invisible");
-     $(document).data("win", true);
-		}
+	$(document).data("win", true);
+    }
 }
 
 function scorecalc(word){
@@ -249,10 +250,12 @@ function endgame(){
 }
 
 function startgame(){
+    console.log("click");
     initializeconstants();
     endgame();
     initializegame();
     $(document).data("state", "running");
+    $("#start").blur();
 }
 
 function startclock(){
@@ -306,7 +309,7 @@ function showscore(){
 
 $(function () {
     $(document).keydown(handlekey);
-})
+   })
 
 // format list of lists into table
 // send score to server before displaying high score panel
