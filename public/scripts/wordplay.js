@@ -244,6 +244,9 @@ function endgame(){
     });
 }
 
+function startgame(){
+}
+
 //  function playsound(soundname){
 // 	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
 //      console.log(soundfile);
@@ -257,6 +260,7 @@ function showscore(){
 }
 
 $(function () {
+    big stupid thing that breaks
     $.getJSON("data",function(result){
 	var resultwords = result["result_words"]
 	$(document).data("win", false);
