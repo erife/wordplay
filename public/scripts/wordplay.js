@@ -244,18 +244,6 @@ function endgame(){
     });
 }
 
-function startgame(){
-    fillfound($(document).data("resultwords"));
-    showletters("#letter", $(document).data("remainingletters"));
-    $(document).data("time", 180);
-    timedisplay($(document).data("time"));
-    var time = setInterval(timecountdown, 1000);
-    $(document).data("interval", time);
-    displayfound();
-    displayrem();
-}
-
-
 //  function playsound(soundname){
 // 	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
 //      console.log(soundfile);
@@ -284,7 +272,7 @@ $(function () {
 	timedisplay(0);
 	$(document).keydown(handlekey);
 	$(document).data("winscore", 50);
-/*	fillfound($(document).data("resultwords"));
+	fillfound($(document).data("resultwords"));
 	showletters("#letter", $(document).data("remainingletters"));
 	$(document).data("time", 180);
 	timedisplay($(document).data("time"));
@@ -292,7 +280,6 @@ $(function () {
 	$(document).data("interval", time);
 	displayfound();
 	displayrem();
-*/
 });
    })
 
