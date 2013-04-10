@@ -161,6 +161,7 @@ function submitword(guessword){
 	fillword(guessword, $(document).data("resultwords"));
 	$(document).data("foundwords").push(guessword);
 	scorecalc(guessword);
+	addtime(guessword);
 	displayfound();
 	displayrem();
 	wincheck();
@@ -211,6 +212,16 @@ function timedisplay(seconds, blinking = false){
 	$("#timer").html(minute + ":" + second).removeClass("timeout");    
     }
 }
+
+function addtime(word){
+    var time = $(document).data("time");
+    if(word.length > 3){
+	time += 10;
+    }
+    timedisplay(time);
+    $(document).data("time", time);
+}
+
 
 function timecountdown(){
     var timer = $(document).data("time");
