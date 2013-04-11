@@ -49,6 +49,7 @@ function fillsingle(word, index, blank=true)
 function clearfill(){
     for(i=0; i<=120; i++){
 	$("#word_" + i).html("");
+	$("#word_" + i).removeClass("foundword");
     }
 }
 
@@ -279,6 +280,8 @@ function startclock(){
 
 function initializegame(){
     $.getJSON("data",function(result){
+	$("#winkitten").addClass("invisible");
+	$("#losekitten").addClass("invisible");
 	var resultwords = result["result_words"]
 	$(document).data("availableletters", result["availableletters"]);
 	$(document).data("resultwords", resultwords);
@@ -300,7 +303,7 @@ function initializeconstants(){
     $(document).data("guessword", []);
     $(document).data("score", 0);
     $(document).data("foundwords", []);
-    $(document).data("winscore", 50);
+    $(document).data("winscore", 10);
     $(document).data("time", 180);
 
 }
