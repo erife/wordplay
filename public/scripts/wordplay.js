@@ -303,7 +303,7 @@ function initializeconstants(){
     $(document).data("guessword", []);
     $(document).data("score", 0);
     $(document).data("foundwords", []);
-    $(document).data("winscore", 10);
+    $(document).data("winscore", 50);
     $(document).data("time", 180);
 
 }
