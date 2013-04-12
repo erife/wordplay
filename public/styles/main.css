@@ -163,6 +163,11 @@ table {
 	text-align: center;  
 }
 
+#key {
+  clear: both;
+  text-indent: 25px;
+}
+
 
 
 

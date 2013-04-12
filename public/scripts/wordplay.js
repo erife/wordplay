@@ -85,6 +85,15 @@ function handlekey(event){
     else if(event.which == 27){
 	endgame();
     }
+    else if(event.which == 16){
+	if($(document).data("state") == "stopped"){
+	    startgame();
+	}
+	else if($(document).data("win")){
+	    nextword();
+	}
+	else return;
+    }
     else if(event.which >=65 && event.which <=90){
 	var guessletter = String.fromCharCode(event.which);
 	var remainingletters = $(document).data("remainingletters");
@@ -311,12 +320,13 @@ function initializeconstants(){
 
 function nextword(){
     $("#newround").addClass("invisible");
+     $("#newround").blur();
     $(document).data("win", false); 
     $(document).data("guessword", []);
     $(document).data("foundwords", []);
     initializegame();
-    var winscore = $(document).data("winscore");
-    winscore += 50;
+    var score = $(document).data("score");
+    var winscore = score + 50;
     $(document).data("winscore", winscore);
 }
 
@@ -335,6 +345,7 @@ function showscore(){
 
 $(function () {
     $(document).keydown(handlekey);
+    $(document).data("state", "stopped");
    })
 
 // format list of lists into table
