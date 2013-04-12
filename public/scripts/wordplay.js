@@ -184,6 +184,7 @@ function setcorrectclass(guessword, words){
 function wincheck(){
     if($(document).data("score") >= $(document).data("winscore")){
 	$("#winkitten").removeClass("invisible");
+	$("#newround").removeClass("invisible");
 	$(document).data("win", true);
     }
 }
@@ -265,8 +266,9 @@ function startgame(){
     console.log("click");
     initializeconstants();
     endgame();
-    initializegame();
+    nextword();
     $(document).data("state", "running");
+    clockstart();
     $("#start").blur();
 }
 
@@ -290,22 +292,32 @@ function initializegame(){
 	$("#dynamicscore").html($(document).data("score"));
 	fillfound($(document).data("resultwords"));
 	showletters("#letter", $(document).data("remainingletters"));
-	timedisplay($(document).data("time"));
 	displayfound();
 	displayrem();
-	startclock();
     });
 }
 
-function initializeconstants(){
-    $(document).data("win", false);
-    $(document).data("state", "stopped");
-    $(document).data("guessword", []);
-    $(document).data("score", 0);
-    $(document).data("foundwords", []);
-    $(document).data("winscore", 50);
-    $(document).data("time", 180);
+function clockstart(){
+    timedisplay($(document).data("time"));
+    startclock();
+}
 
+function initializeconstants(){
+    $(document).data("state", "stopped");
+    $(document).data("score", 0);
+    $(document).data("winscore", 0);
+    $(document).data("time", 180);
+}
+
+function nextword(){
+    $("#newround").addClass("invisible");
+    $(document).data("win", false); 
+    $(document).data("guessword", []);
+    $(document).data("foundwords", []);
+    initializegame();
+    var winscore = $(document).data("winscore");
+    winscore += 50;
+    $(document).data("winscore", winscore);
 }
 
 
