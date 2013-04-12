@@ -279,6 +279,7 @@ function startgame(){
     $(document).data("state", "running");
     clockstart();
     $("#start").blur();
+    $("#end").blur();
 }
 
 function startclock(){
