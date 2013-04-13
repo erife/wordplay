@@ -25,7 +25,7 @@ function fillfound(words)
 {
     clearfill();
     $.map(words, function(word, i){
-	fillsingle(word, i);
+	fillsingle(word, i, true);
     });
 }
 
@@ -36,7 +36,7 @@ function fillword(guessword, words)
 }
 
 
-function fillsingle(word, index, blank=true)
+function fillsingle(word, index, blank)
 {
     var letter_display = "";
     $.map(word.split(""), function(letter){
@@ -213,7 +213,7 @@ function showletters(id, string){
     });
 }
 
-function timedisplay(seconds, blinking = false){
+function timedisplay(seconds, blinking){
     var minute = Math.floor(seconds/60);
     var second = seconds%60 < 10 ? "0" + seconds%60 : seconds%60;
     if(blinking){
@@ -229,7 +229,7 @@ function addtime(word){
     if(word.length > 3){
 	time += 10;
     }
-    timedisplay(time);
+    timedisplay(time, false);
     $(document).data("time", time);
 }
 
@@ -242,7 +242,7 @@ function timecountdown(){
 	timedisplay(timer, true);
     }
     else if(timer >= 0){
-	timedisplay(timer);
+	timedisplay(timer, false);
     }
     else{
 	var time = $(document).data("interval");
@@ -258,7 +258,7 @@ function endgame(){
 	}
 	$(document).data("state", "stopped");
 	$(document).data("time", 0);
-	timedisplay(0);
+	timedisplay(0, false);
 	var time = $(document).data("interval");
 	clearInterval(time);
 	var remaining = $(document).data("wordcopy");
@@ -308,7 +308,7 @@ function initializegame(){
 }
 
 function clockstart(){
-    timedisplay($(document).data("time"));
+    timedisplay($(document).data("time"), false);
     startclock();
 }
 
@@ -345,6 +345,7 @@ function showscore(){
 }
 
 $(function () {
+    console.log("foo");
     $(document).keydown(handlekey);
     $(document).data("state", "stopped");
    })
