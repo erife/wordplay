@@ -40,19 +40,25 @@ get "/data" do
 end
 
 post "/name" do
+scores =  File.open("scorefile.txt", "w")
+highscores =[["Elaina",77], ["Elaina", 88]]
+  scoreformat = highscores.map{|score| score.join(",")}.join("\n")
+  scores.write(scoreformat)
 end
 
+#load high scores from file into array format
+#sort array by high score
+#return updated scores
+
+
 get "/highscore" do
-  highscore = [
-            {:name => "Elaina", :score => 100}, 
-            {:name => "Peter", :score => 1}, 
-              ]
+  scores = File.open("scorefile.txt").to_a.map{|score| score.chomp.split(",")}
+  highscore = scores.map do |data|
+    {:name => data[0], :score => data[1]} 
+  end
   json :high_score => highscore
 end
 
-# create set high score action
-# read high scores from a file
 # write new high scores to a file
-# convert file format to ruby list of lists
 # sort high scores
   

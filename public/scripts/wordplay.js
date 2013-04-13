@@ -351,9 +351,6 @@ function showscore(){
 	});
     });
 }
-/*
-	$("#highscore").html(hs["high_score"]);
-    });*/
 
 function handlenewhighscore(event){
     event.preventDefault();
@@ -367,8 +364,6 @@ $(function () {
     $(document).keydown(handlekey);
     $(document).data("state", "stopped");
     $("#newhighscoreform").submit(handlenewhighscore);
-    var scores = [{name:"Elaina", score:10}, {name:"Elaina", score:100}];
-    showscore(scores);
    })
 
 // format list of lists into table
