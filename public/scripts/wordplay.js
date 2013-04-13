@@ -341,16 +341,17 @@ function nextword(){
 //      soundfile.appendTo('body');
 // }
 
-function showscore(scores){
-    $.map(scores, function(data, i){
-	var name = data.name;
-	var score = data.score;
-    $("#hs" + i + " td.name").html(name);
-    $("#hs" + i + " td.score").html(score);
+function showscore(){
+    $.getJSON("highscore", function(result){
+	$.map(result["high_score"], function(data, i){
+	    var name = data.name;
+	    var score = data.score;
+	    $("#hs" + i + " td.name").html(name);
+	    $("#hs" + i + " td.score").html(score);
+	});
     });
 }
 /*
-    $.getJSON("highscore", function(hs){
 	$("#highscore").html(hs["high_score"]);
     });*/
 

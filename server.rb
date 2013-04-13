@@ -44,8 +44,8 @@ end
 
 get "/highscore" do
   highscore = [
-               ["Elaina", 100], 
-               ["Peter", 1]
+            {:name => "Elaina", :score => 100}, 
+            {:name => "Peter", :score => 1}, 
               ]
   json :high_score => highscore
 end
