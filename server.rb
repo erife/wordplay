@@ -39,6 +39,9 @@ get "/data" do
    json :result_words => resultwords, :availableletters => available_letters
 end
 
+post "/name" do
+end
+
 get "/highscore" do
   highscore = [
                ["Elaina", 100], 

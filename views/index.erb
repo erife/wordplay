@@ -73,7 +73,7 @@
       </ul>
       <p id="key">Shift to Start Game -- Shift to Move to Next Level -- Space to Shuffle Letters -- Esc to End Game</p>
       <dl id="winkitten" class="invisible">
-	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" /></dt>
+highsc	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" /></dt>
 	<dd>Next Round Available!</dd>
       </dl>
       <dl id="losekitten" class="invisible">
@@ -81,20 +81,27 @@
 	<dd>Game Over!</dd>
       </dl>
     </div>
-    <div id="highscore" class="invisible">
+    <div id="newhighscore" class="invisible">
+      <form method="POST" id="newhighscoreform" action="#">
+	<label for="namebox">Enter Your Name</label>
+	<input type="text" name="namebox" value="" />
+	<button>Submit High Score</button>
+      </form>
+    </div>
+    <div id="highscore">
       <table>
 	<caption>High Score</caption>
 	<tr>
 	  <th>Name</th>
 	  <th>Score</th>
 	</tr>
-	<tr>
-	  <td>Elaina</td>
-	  <td>100000</td>
+	<tr id="hs0">
+	  <td class="name"></td>
+	  <td class="score"></td>
 	  </tr>
-	<tr>
-	<td>Peter</td>
-	<td>1</td>
+	<tr id="hs1">
+	<td class="name"></td>
+	<td class="score"></td>
 	</tr>
       </table>
     </div>

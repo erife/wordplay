@@ -108,9 +108,10 @@ function handlekey(event){
 	}
     }
     else if(event.which == 13){
-	console.log("enter");
-	submitword($(document).data("guessword").join(""));
-	$(document).data("guessword").length = 0;
+	if(event.target.localName != "input"){
+	    submitword($(document).data("guessword").join(""));
+	    $(document).data("guessword").length = 0;
+	}
     }
     else{displayerror("Not A Valid Input");}
 }
@@ -332,22 +333,41 @@ function nextword(){
 }
 
 
+
+
 //  function playsound(soundname){
 // 	var soundfile = $("<embed src='/sounds/" + soundname + "' hidden='true' autostart='true' loop='false' class='playSound'>");
 //      console.log(soundfile);
 //      soundfile.appendTo('body');
 // }
 
-function showscore(){
-    $.getJSON("highscore", function(hs){
-	$("#highscore").html(hs["high_score"]);
+function showscore(scores){
+    $.map(scores, function(data, i){
+	var name = data.name;
+	var score = data.score;
+    $("#hs" + i + " td.name").html(name);
+    $("#hs" + i + " td.score").html(score);
     });
 }
+/*
+    $.getJSON("highscore", function(hs){
+	$("#highscore").html(hs["high_score"]);
+    });*/
+
+function handlenewhighscore(event){
+    event.preventDefault();
+    console.log("foo");
+    $.post("name", "Elaina", showscore);
+    return false;
+}
+
 
 $(function () {
-    console.log("foo");
     $(document).keydown(handlekey);
     $(document).data("state", "stopped");
+    $("#newhighscoreform").submit(handlenewhighscore);
+    var scores = [{name:"Elaina", score:10}, {name:"Elaina", score:100}];
+    showscore(scores);
    })
 
 // format list of lists into table

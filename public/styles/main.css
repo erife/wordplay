@@ -168,6 +168,20 @@ table {
   text-indent: 25px;
 }
 
+#newhighscore {
+ 	position: fixed;
+  background: white;
+  height: 40px;
+  width: 450px;
+  left: 300px;
+  top: 300px;
+  padding-top: 15px;
+  padding-left: 10px;
+  border: solid;
+  box-shadow: 5px 5px 2px grey; 
+  
+}
+
 
 
 
