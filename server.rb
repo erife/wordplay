@@ -40,11 +40,23 @@ get "/data" do
 end
 
 post "/name" do
-scores =  File.open("scorefile.txt", "w")
-highscores =[["Elaina",77], ["Elaina", 88]]
-  scoreformat = highscores.map{|score| score.join(",")}.join("\n")
-  scores.write(scoreformat)
+  highscores = gethighscores
+  puts "highscores = #{highscores}"
+  highscores << [params["name"], params["score"]]
+  highscores.sort_by! {|data| -data[1].to_i}
+  scoreformat = highscores.map{|score| "#{score[0]},#{score[1]}"}.join("\n")
+  File.open("scorefile.txt", "w") do |fp|
+    fp.write(scoreformat)
+  end
+  return nil
 end
+
+def gethighscores 
+  File.open("scorefile.txt") do |fp| 
+    fp.to_a.map{|score| score.chomp.split(",")}
+  end  
+end
+
 
 #load high scores from file into array format
 #sort array by high score
@@ -52,10 +64,12 @@ end
 
 
 get "/highscore" do
-  scores = File.open("scorefile.txt").to_a.map{|score| score.chomp.split(",")}
+  scores = gethighscores
+  puts "scores = #{scores}"
   highscore = scores.map do |data|
     {:name => data[0], :score => data[1]} 
   end
+  puts highscore
   json :high_score => highscore
 end
 

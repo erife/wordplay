@@ -88,22 +88,21 @@ highsc	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chick
 	<button>Submit High Score</button>
       </form>
     </div>
-    <div id="highscore">
+    <div id="highscore" class="invisible">
       <table>
 	<caption>High Score</caption>
 	<tr>
 	  <th>Name</th>
 	  <th>Score</th>
 	</tr>
-	<tr id="hs0">
+	<% 10.times.each do |i| %>
+	<tr id=hs_<%= i %>>
 	  <td class="name"></td>
 	  <td class="score"></td>
-	  </tr>
-	<tr id="hs1">
-	<td class="name"></td>
-	<td class="score"></td>
-	</tr>
+	</tr> 
+	<% end %>
       </table>
     </div>
   </body>
 </html>
+

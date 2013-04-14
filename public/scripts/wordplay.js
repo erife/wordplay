@@ -73,47 +73,47 @@ function buttonshuffle(){
 
 function handlekey(event){
     clearerror();
-    if (event.which == 8 || event.which == 46) 
-    {
-	removeguessletter();
-	return false;
-    }
-    else if(event.which == 32){
-	var letters = $(document).data("remainingletters");
-	shuffle(letters);
-    }
-    else if(event.which == 27){
-	endgame();
-    }
-    else if(event.which == 16){
-	if($(document).data("state") == "stopped"){
-	    startgame();
+    if(event.target.localName != "input"){
+	if (event.which == 8 || event.which == 46) 
+	{
+	    removeguessletter();
+	    return false;
 	}
-	else if($(document).data("win")){
-	    nextword();
+	else if(event.which == 32){
+	    var letters = $(document).data("remainingletters");
+	    shuffle(letters);
 	}
-	else return;
-    }
-    else if(event.which >=65 && event.which <=90){
-	var guessletter = String.fromCharCode(event.which);
-	var remainingletters = $(document).data("remainingletters");
-	var letterpos = remainingletters.indexOf(guessletter.toUpperCase());
-	if(letterpos != -1){ 
-	    addguessletter(guessletter);
-	    remainingletters.splice(letterpos, 1);
-	    showletters("#letter", $(document).data("remainingletters"));
+	else if(event.which == 27){
+	    endgame();
 	}
-	else{
-	    displayerror("Unavailable Letter");
+	else if(event.which == 16){
+	    if($(document).data("state") == "stopped"){
+		startgame();
+	    }
+	    else if($(document).data("win")){
+		nextword();
+	    }
+	    else return;
 	}
-    }
-    else if(event.which == 13){
-	if(event.target.localName != "input"){
+	else if(event.which >=65 && event.which <=90){
+	    var guessletter = String.fromCharCode(event.which);
+	    var remainingletters = $(document).data("remainingletters");
+	    var letterpos = remainingletters.indexOf(guessletter.toUpperCase());
+	    if(letterpos != -1){ 
+		addguessletter(guessletter);
+		remainingletters.splice(letterpos, 1);
+		showletters("#letter", $(document).data("remainingletters"));
+	    }
+	    else{
+		displayerror("Unavailable Letter");
+	    }
+	}
+	else if(event.which == 13){
 	    submitword($(document).data("guessword").join(""));
 	    $(document).data("guessword").length = 0;
 	}
+	else{displayerror("Not A Valid Input");}
     }
-    else{displayerror("Not A Valid Input");}
 }
 
 function displayerror(message){
@@ -227,8 +227,17 @@ function timedisplay(seconds, blinking){
 
 function addtime(word){
     var time = $(document).data("time");
-    if(word.length > 3){
+    switch(word.length)
+    {
+    case 4:
+	time += 5;
+	break;
+    case 5:
 	time += 10;
+	break;	
+    case 6:
+	time += 20;
+	break;
     }
     timedisplay(time, false);
     $(document).data("time", time);
@@ -263,6 +272,7 @@ function endgame(){
 	var time = $(document).data("interval");
 	clearInterval(time);
 	var remaining = $(document).data("wordcopy");
+	$("#newhighscore").removeClass("invisible");
 	if(remaining){
 	    $.map(remaining, function(word){
 		fillword(word, $(document).data("resultwords"));
@@ -317,7 +327,7 @@ function initializeconstants(){
     $(document).data("state", "stopped");
     $(document).data("score", 0);
     $(document).data("winscore", 0);
-    $(document).data("time", 180);
+    $(document).data("time", 10);
 }
 
 function nextword(){
@@ -346,16 +356,26 @@ function showscore(){
 	$.map(result["high_score"], function(data, i){
 	    var name = data.name;
 	    var score = data.score;
-	    $("#hs" + i + " td.name").html(name);
-	    $("#hs" + i + " td.score").html(score);
+	    $("#hs_" + i + " td.name").html(name);
+	    $("#hs_" + i + " td.score").html(score);
 	});
     });
 }
 
 function handlenewhighscore(event){
     event.preventDefault();
-    console.log("foo");
-    $.post("name", "Elaina", showscore);
+    var name = event.target.namebox.value;
+    var score = $(document).data("score");
+    var sendscore = {
+	name: name, 
+	score: score
+	}
+    console.log(name);
+    console.log(score);
+    $.post("name", sendscore, showscore);
+    $("#newhighscore").addClass("invisible");
+    $("#highscore").removeClass("invisible");
+    showscore();
     return false;
 }
 
