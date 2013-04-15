@@ -272,7 +272,7 @@ function endgame(){
 	var time = $(document).data("interval");
 	clearInterval(time);
 	var remaining = $(document).data("wordcopy");
-	$("#newhighscore").removeClass("invisible");
+	validhighscore($(document).data("score"));
 	if(remaining){
 	    $.map(remaining, function(word){
 		fillword(word, $(document).data("resultwords"));
@@ -359,6 +359,7 @@ function showscore(){
 	    $("#hs_" + i + " td.name").html(name);
 	    $("#hs_" + i + " td.score").html(score);
 	});
+	$("#highscore").removeClass("invisible");
     });
 }
 
@@ -374,7 +375,6 @@ function handlenewhighscore(event){
     console.log(score);
     $.post("name", sendscore, showscore);
     $("#newhighscore").addClass("invisible");
-    $("#highscore").removeClass("invisible");
     showscore();
     return false;
 }
@@ -384,7 +384,23 @@ function hidescore(event){
     $("#highscore").addClass("invisible");
 }
 
-
+function validhighscore(score){
+    try{
+    $ .getJSON("validhighscore", {"score":score}, function(result){
+	if(result["valid"]){
+	    console.log(result);
+	    $("#newhighscore").removeClass("invisible");
+	}
+	else{
+	    console.log(result);
+	    showscore();
+	}
+    });
+    }
+    catch(exception){
+	    console.log(exception);
+    }
+}
 
 $(function () {
     $(document).keydown(handlekey);

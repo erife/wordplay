@@ -1,11 +1,10 @@
 Elaina,18
 Elaina,18
 Elaina,16
+Elaina,10
 Elaina,6
 Elaina,6
 Elaina,6
+Elaina,4
 Bob,3
 Danny,3
-Danny,0
-Elaina,0
-Elaina,0

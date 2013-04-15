@@ -6,11 +6,14 @@ require 'set'
 set :static => true
 set :public_folder, File.expand_path(File.dirname(__FILE__) + '/public')
 
-MAXWORDLENGTH = 6;
-MINSUBWORDCOUNT = 20;
-MAXSUBWORDCOUNT = 120;
+MAXWORDLENGTH = 6
+MINSUBWORDCOUNT = 20
+MAXSUBWORDCOUNT = 120
 ALLWORDS = Set.new(File.new("TWL_2006_ALPHA.txt").to_a.map{|word| word.chomp})
 SEED_WORDS = ALLWORDS.select{|word| word.length == MAXWORDLENGTH}
+MAXHIGHSCOREINDEX = 9
+
+
 
 def get_resultwords()
   seed_word = SEED_WORDS.sample(1).first
@@ -44,7 +47,8 @@ post "/name" do
   puts "highscores = #{highscores}"
   highscores << [params["name"], params["score"]]
   highscores.sort_by! {|data| -data[1].to_i}
-  scoreformat = highscores.map{|score| "#{score[0]},#{score[1]}"}.join("\n")
+  trunchighscores = highscores[0..MAXHIGHSCOREINDEX]
+  scoreformat = trunchighscores.map{|score| "#{score[0]},#{score[1]}"}.join("\n")
   File.open("scorefile.txt", "w") do |fp|
     fp.write(scoreformat)
   end
@@ -55,6 +59,12 @@ def gethighscores
   File.open("scorefile.txt") do |fp| 
     fp.to_a.map{|score| score.chomp.split(",")}
   end  
+end
+
+get "/validhighscore" do
+  name, lowestscore = gethighscores[-1]
+  valid = params["score"].to_i > lowestscore.to_i
+  json :valid => valid
 end
 
 
