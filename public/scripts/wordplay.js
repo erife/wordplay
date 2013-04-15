@@ -380,11 +380,18 @@ function handlenewhighscore(event){
 }
 
 
+function hidescore(event){
+    $("#highscore").addClass("invisible");
+}
+
+
+
 $(function () {
     $(document).keydown(handlekey);
     $(document).data("state", "stopped");
     $("#newhighscoreform").submit(handlenewhighscore);
-   })
+    $("#highscore").click(hidescore);
+  })
 
 // format list of lists into table
 // send score to server before displaying high score panel

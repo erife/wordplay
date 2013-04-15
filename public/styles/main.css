@@ -154,6 +154,8 @@ width: 245px;
   	top: 25%;
 		font-size: 1.5em;
 		padding: 10px;
+  	border: 3px solid black;
+  	box-shadow: 5px 5px 2px grey;
 }
 
 .score{
@@ -190,6 +192,8 @@ table {
   box-shadow: 5px 5px 2px grey; 
   
 }
+
+
 
 
 
