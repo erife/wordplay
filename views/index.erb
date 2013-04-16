@@ -90,10 +90,10 @@ highsc	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chick
     </div>
     <div id="highscore" class="invisible">
       <table>
-	<caption>High Score</caption>
+	<caption>High Scores</caption>
 	<tr>
-	  <th>Name</th>
-	  <th>Score</th>
+	  <th class="name">Name</th>
+	  <th class="score">Score</th>
 	</tr>
 	<% 10.times.each do |i| %>
 	<tr id=hs_<%= i %>>
@@ -102,6 +102,7 @@ highsc	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chick
 	</tr> 
 	<% end %>
       </table>
+      <p id="note">Click to Close!</p>
     </div>
   </body>
 </html>
