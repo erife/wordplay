@@ -97,16 +97,7 @@ function handlekey(event){
 	}
 	else if(event.which >=65 && event.which <=90){
 	    var guessletter = String.fromCharCode(event.which);
-	    var remainingletters = $(document).data("remainingletters");
-	    var letterpos = remainingletters.indexOf(guessletter.toUpperCase());
-	    if(letterpos != -1){ 
-		addguessletter(guessletter);
-		remainingletters.splice(letterpos, 1);
-		showletters("#letter", $(document).data("remainingletters"));
-	    }
-	    else{
-		displayerror("Unavailable Letter");
-	    }
+	    handleletter(guessletter);
 	}
 	else if(event.which == 13){
 	    submitword($(document).data("guessword").join(""));
@@ -115,6 +106,44 @@ function handlekey(event){
 	else{displayerror("Not A Valid Input");}
     }
 }
+
+function buttonsubmit(){
+    submitword($(document).data("guessword").join(""));
+    $(document).data("guessword").length = 0;
+}
+
+
+function handleletter(guessletter){
+    var remainingletters = $(document).data("remainingletters");
+    var guessword = $(document).data("guessword");
+    var letterpos = remainingletters.indexOf(guessletter.toUpperCase());
+    var letterpos2 = guessword.indexOf(guessletter.toUpperCase());
+    if(letterpos != -1){ 
+	addguessletter(guessletter);
+	remainingletters.splice(letterpos, 1);
+	showletters("#letter", $(document).data("remainingletters"));
+    }
+    else if(letterpos2 != -1){
+	$(document).data("guessword").splice(letterpos2, 1);
+	removeletter(guessletter);
+    }
+    else{
+	displayerror("Unavailable Letter");
+    }
+}
+
+function handleletterclick(event){
+    var letter = $(event.target).html();
+    handleletter(letter);
+}
+
+function removeletter(letter){
+    $(document).data("remainingletters").push(letter);
+    showletters("#guess", $(document).data("guessword"));
+    showletters("#letter", $(document).data("remainingletters"));
+    console.log("guessword = " + $(document).data("guessword"));
+}
+
 
 function displayerror(message){
     $("#error").html(message);
@@ -134,10 +163,7 @@ function addguessletter(letter){
 function removeguessletter(){
     var removed = $(document).data("guessword").pop();
     if (removed != undefined){
-	$(document).data("remainingletters").push(removed);
-	showletters("#guess", $(document).data("guessword"));
-	showletters("#letter", $(document).data("remainingletters"));
-	console.log("guessword = " + $(document).data("guessword"));
+	removeletter(removed);
     }
     else{
 	return false;
@@ -212,7 +238,8 @@ function showletters(id, string){
     $.map(string, function(letter){
 	$("<li>").html(letter).appendTo(id)
     });
-}
+    $(id + "  li").click(handleletterclick);
+   }
 
 function timedisplay(seconds, blinking){
     var minute = Math.floor(seconds/60);
@@ -407,7 +434,7 @@ $(function () {
     $(document).data("state", "stopped");
     $("#newhighscoreform").submit(handlenewhighscore);
     $("#highscore").click(hidescore);
-  })
+})
 
 // format list of lists into table
 // send score to server before displaying high score panel

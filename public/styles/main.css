@@ -54,7 +54,7 @@ height: 30px;
 }
 
 #words >  li{
-padding: 25px;
+  padding: 25px;
 width: 25%;
 float: left;
 }
@@ -224,7 +224,25 @@ table {
   padding-left: 10px;
   border: solid;
   box-shadow: 5px 5px 2px grey; 
+}
   
+button {
+    margin: 2px;
+    text-align: center;
+    height: 30px;
+  	box-shadow: 3px 3px 2px;
+  	border-radius: 4px;
+		font-size: 1em;
+ 
+}
+
+
+
+
+
+
+
+
 
 
 
