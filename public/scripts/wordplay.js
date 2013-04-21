@@ -434,6 +434,9 @@ $(function () {
     $(document).data("state", "stopped");
     $("#newhighscoreform").submit(handlenewhighscore);
     $("#highscore").click(hidescore);
+    $("#shuffle").click(buttonshuffle);
+    $("#submit").click(buttonsubmit);
+    $("#newround").click(nextword);
 })
 
 // format list of lists into table

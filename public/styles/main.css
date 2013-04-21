@@ -236,6 +236,21 @@ button {
  
 }
 
+#shuffle{
+ background-image:url("../images/shuffle-off.png");
+ background-repeat: no-repeat;
+ width: 45px;
+ height: 45px;
+}
+
+#shuffle:hover{
+ background-image:url("../images/shuffle-on.png");
+ background-repeat: no-repeat;
+ width: 45px;
+ height: 45px;	
+ }
+
+
 
 
 
