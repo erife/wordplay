@@ -1,7 +1,11 @@
+require 'rubygems'
 require 'sinatra'
+require 'sinatra/activerecord'
 require 'sinatra/json'
 require 'multi_json'
 require 'set'
+require './config/environments'
+require './models/model'
 
 set :static => true
 set :public_folder, File.expand_path(File.dirname(__FILE__) + '/public')
@@ -43,27 +47,20 @@ get "/data" do
 end
 
 post "/name" do
-  highscores = gethighscores
-  puts "highscores = #{highscores}"
-  highscores << [params["name"], params["score"]]
-  highscores.sort_by! {|data| -data[1].to_i}
-  trunchighscores = highscores[0..MAXHIGHSCOREINDEX]
-  scoreformat = trunchighscores.map{|score| "#{score[0]},#{score[1]}"}.join("\n")
-  File.open("scorefile.txt", "w") do |fp|
-    fp.write(scoreformat)
-  end
-  return nil
+  puts params.inspect
+  result = Model.create(:name => params["name"], :score =>params["score"])
+  puts result.inspect
+return nil
 end
 
 def gethighscores 
-  File.open("scorefile.txt") do |fp| 
-    fp.to_a.map{|score| score.chomp.split(",")}
-  end  
+  Model.all(:order => "score DESC")
 end
 
 get "/validhighscore" do
-  name, lowestscore = gethighscores[-1]
-  valid = params["score"].to_i > lowestscore.to_i
+  lowestscore = gethighscores[9]
+  lowscore = (lowestscore && lowestscore.score) || 0
+  valid = params["score"].to_i > lowscore
   json :valid => valid
 end
 
@@ -76,8 +73,8 @@ end
 get "/highscore" do
   scores = gethighscores
   puts "scores = #{scores}"
-  highscore = scores.map do |data|
-    {:name => data[0], :score => data[1]} 
+  highscore = scores[0..9].map do |data|
+    {:name => data.name, :score => data.score} 
   end
   puts highscore
   json :high_score => highscore

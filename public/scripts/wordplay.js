@@ -354,7 +354,7 @@ function initializeconstants(){
     $(document).data("state", "stopped");
     $(document).data("score", 0);
     $(document).data("winscore", 0);
-    $(document).data("time", 180);
+    $(document).data("time", 10);
 }
 
 function nextword(){
