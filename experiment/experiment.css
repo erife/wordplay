@@ -1,104 +1,109 @@
 body {
-font-size: 20px;
+    font-size: 20px;
 }
 
 div, h1, li, dd, dt, dl, button {
-outline: 1px dashed black;
+    outline: 1px dashed black;
 }
 
 dt{
-font-size: 1em;
+    font-size: 1em;
 }
 
 dd{
-text-align: center;
-font-size: 2.5em;
-padding-top: .1em;
+    text-align: center;
+    font-size: 2.5em;
+    padding-top: .1em;
 }
 
 #everything {
-width: 80%;
-margin: auto;
-height: 580px;
+    width: 80%;
+    margin: auto;
+    height: 580px;
+    margin-top: 1em;
 }
 
 #status {
-height: 20%;
-width: 100%;
+    height: 20%;
+    width: 100%;
 }
 
 #time, #progress {
-width: 25%;
-height: 100%;
-float: left;
+    width: 25%;
+    height: 100%;
+    float: left;
 }
 
 #time {
-width: 20%;
-height: 90%;
-margin-top: 10px;
-margin-left: 2.5%;
-margin-right: 2.5%;
+    width: 20%;
+    height: 90%;
+    margin-top: 10px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }
 
 #time dt {
-height: 25%;
+    height: 25%;
 }
 
 #time dd {
-height: 50%;
-text-align: center;
+    height: 50%;
+    text-align: center;
 }
 
 h1 {
-width: 50%;
-height: 100%;
-float: left;
-text-align: center;
+    width: 50%;
+    height: 85%;
+    float: left;
+    text-align: center;
+    font-size: 3em;
+    outline: 1px solid green;
+    padding-top: .25em;
 }
 
+
 #found{
-height: 50%;
-width: 100%;
+    height: 50%;
+    width: 100%;
 }
 
 #found > li{
-width: 10%;
-height: 100%;
-float: left;
+    width: 10%;
+    height: 100%;
+    float: left;
 }
 
 #play, #control {
 }
 
 #play {
-float: left;
-width: 50%;
-height: 40%;
+    float: left;
+    width: 50%;
+    height: 40%;
 }
 
 #play > div {
-height: 33.3%;
+    height: 33.3%;
 }
 
 #control {
-float: right;
-padding-top: 5%;
-width: 50%;
-height: 35%;
+    float: right;
+    padding-top: 5%;
+    width: 50%;
+    height: 35%;
 }
 
 #control > button {
-width: 80%;
-margin: 0% 10%;
+    width: 80%;
+    margin: 0% 10%;
 }
 
 #score {
-width: 80%;
-height: 50%;
-margin: auto;
+    width: 80%;
+    height: 50%;
+    margin: auto;
 }
 
 #score dd {
-height: 80%;
+    height: 80%;
 }
