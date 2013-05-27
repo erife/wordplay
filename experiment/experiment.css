@@ -35,21 +35,37 @@ height: 100%;
 float: left;
 }
 
-
 #play, #control {
-width: 50%;
-height: 40%;
 }
 
 #play {
 float: left;
+width: 50%;
+height: 40%;
 }
 
 #play > div {
-height: 33%;
+height: 33.3%;
 }
-
 
 #control {
 float: right;
+padding-top: 5%;
+width: 50%;
+height: 35%;
+}
+
+#control > button {
+width: 80%;
+margin: 0% 10%;
+}
+
+#score {
+width: 80%;
+height: 50%;
+margin: auto;
+}
+
+#score dd {
+height: 80%;
 }
