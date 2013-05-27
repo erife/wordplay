@@ -1,5 +1,19 @@
+body {
+font-size: 20px;
+}
+
 div, h1, li, dd, dt, dl, button {
 outline: 1px dashed black;
+}
+
+dt{
+font-size: 1em;
+}
+
+dd{
+text-align: center;
+font-size: 2.5em;
+padding-top: .1em;
 }
 
 #everything {
@@ -10,12 +24,30 @@ height: 580px;
 
 #status {
 height: 20%;
+width: 100%;
 }
 
 #time, #progress {
 width: 25%;
 height: 100%;
 float: left;
+}
+
+#time {
+width: 20%;
+height: 90%;
+margin-top: 10px;
+margin-left: 2.5%;
+margin-right: 2.5%;
+}
+
+#time dt {
+height: 25%;
+}
+
+#time dd {
+height: 50%;
+text-align: center;
 }
 
 h1 {
@@ -27,6 +59,7 @@ text-align: center;
 
 #found{
 height: 50%;
+width: 100%;
 }
 
 #found > li{
