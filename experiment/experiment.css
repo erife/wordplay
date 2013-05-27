@@ -1,4 +1,4 @@
-div {
+div, h1 {
 outline: 1px dashed black;
 }
 
@@ -11,7 +11,24 @@ margin: auto;
 height: 20%;
 }
 
-#progress{
+#time, #progress {
+width: 25%;
+height: 100%;
+float: left;
+}
+
+h1 {
+width: 50%;
+height: 100%;
+float: left;
+text-align: center;
+}
+
+#progress {
+
+}
+
+#found{
 height: 40%;
 }
 
