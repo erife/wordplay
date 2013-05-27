@@ -1,12 +1,7 @@
 div {
-border: 1px dashed black
+border: 1px dashed black;
 }
 
-li{
-border: 1px dotted red;
-float: left
-}
-
-ul{
-float: left
+#play, #control {
+width: 45%;
 }
