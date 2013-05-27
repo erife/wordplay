@@ -28,7 +28,7 @@ text-align: center;
 height: 40%;
 }
 
-#found li{
+#found > li{
 width: 10%;
 height: 100%;
 float: left;
@@ -40,10 +40,15 @@ width: 50%;
 height: 30%;
 }
 
-#control {
-float: right;
-}
-
 #play {
 float: left;
+}
+
+#play > div {
+height: 33%;
+}
+
+
+#control {
+float: right;
 }
