@@ -1,4 +1,4 @@
-div, h1 {
+div, h1, li {
 outline: 1px dashed black;
 }
 
@@ -24,13 +24,16 @@ float: left;
 text-align: center;
 }
 
-#progress {
-
-}
-
 #found{
 height: 40%;
 }
+
+#found li{
+width: 10%;
+height: 100%;
+float: left;
+}
+
 
 #play, #control {
 width: 50%;
