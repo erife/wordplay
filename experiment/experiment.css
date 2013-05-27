@@ -3,9 +3,9 @@ body {
     
 }
 
-div, h1, li, dd, dt, dl, button {
-    outline: 1px dashed black;
-}
+/* div, h1, li, dd, dt, dl, button { */
+/*     outline: 1px dashed black; */
+/* } */
 
 dt{
     font-size: 1em;
@@ -16,6 +16,15 @@ dd{
     font-size: 2.5em;
     padding-top: .1em;
 }
+
+.letters {
+    clear: left;
+}
+
+.letters > li{
+    float:left;
+}
+
 
 #everything {
     min-width: 900px;
