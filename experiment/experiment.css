@@ -1,7 +1,29 @@
 div {
-border: 1px dashed black;
+outline: 1px dashed black;
+}
+
+#everything {
+width: 80%;
+margin: auto;
+}
+
+#status {
+height: 20%;
+}
+
+#progress{
+height: 40%;
 }
 
 #play, #control {
-width: 45%;
+width: 50%;
+height: 30%;
+}
+
+#control {
+float: right;
+}
+
+#play {
+float: left;
 }
