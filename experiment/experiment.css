@@ -1,10 +1,11 @@
 body {
     font-size: 20px;
+    
 }
 
-/* div, h1, li, dd, dt, dl, button { */
-/*     outline: 1px dashed black; */
-/* } */
+div, h1, li, dd, dt, dl, button {
+    outline: 1px dashed black;
+}
 
 dt{
     font-size: 1em;
@@ -17,6 +18,7 @@ dd{
 }
 
 #everything {
+    min-width: 900px;
     width: 80%;
     margin: auto;
     height: 580px;
@@ -108,19 +110,18 @@ h1 {
     width: 80%;
     height: 1.5em;
     font-size: 1.1em;
+    display: none;
  }
 
 #remaining > p {
     font-size: 1.5em;
     padding-top: .5em;
     padding-left: 1em;
-    display: none;
 }
 
 
 #control {
     float: right;
-    padding-top: 5%;
     width: 50%;
     height: 35%;
 }
@@ -128,9 +129,20 @@ h1 {
 #control > button {
     width: 80%;
     margin: 0% 10%;
+    font-size: 1.1em;
+    height: 2em;
+}
+
+#start {
+    
+}
+
+#pause {
+    display: none;
 }
 
 #score {
+    padding-top: 1em;
     width: 80%;
     height: 50%;
     margin: auto;
