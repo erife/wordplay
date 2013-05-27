@@ -1,10 +1,11 @@
-div, h1, li {
+div, h1, li, dd, dt, dl, button {
 outline: 1px dashed black;
 }
 
 #everything {
 width: 80%;
 margin: auto;
+height: 580px;
 }
 
 #status {
@@ -25,7 +26,7 @@ text-align: center;
 }
 
 #found{
-height: 40%;
+height: 50%;
 }
 
 #found > li{
@@ -37,7 +38,7 @@ float: left;
 
 #play, #control {
 width: 50%;
-height: 30%;
+height: 40%;
 }
 
 #play {
