@@ -2,9 +2,9 @@ body {
     font-size: 20px;
 }
 
-/* div, h1, li, dd, dt, dl, button { */
-/*     outline: 1px dashed black; */
-/* } */
+div, h1, li, dd, dt, dl, button {
+    outline: 1px dashed black;
+}
 
 dt{
     font-size: 1em;
@@ -79,6 +79,7 @@ h1 {
 #found{
     height: 50%;
     width: 100%;
+    font-size: 1.2em;
 }
 
 #found > li{
