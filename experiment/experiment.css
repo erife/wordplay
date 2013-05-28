@@ -19,10 +19,13 @@ dd{
 
 .letters {
     clear: left;
+    font-size: .75em;
+    text-align: center;
 }
 
 .letters > li{
     float:left;
+    width: .75em;
 }
 
 #everything {
@@ -87,7 +90,7 @@ h1 {
 
 
 #found{
-    height: 50%;
+    height: 40%;
     width: 100%;
     font-size: 1.2em;
     margin-bottom: 1em;
@@ -98,6 +101,10 @@ h1 {
     height: 100%;
     float: left;
 }
+
+#found .letters li{
+    margin-bottom: .15em;
+}    
 
 
 #play {
@@ -115,8 +122,8 @@ h1 {
 }
 
 #play .letters li{
-    width: .75em;
     margin: 0px 5px;
+    font-size: 1.25em;
 }
 
 #remaining > button {
