@@ -5,7 +5,7 @@ require 'sinatra/json'
 require 'multi_json'
 require 'set'
 require './config/environments'
-require './models/model'
+require './models/highscore'
 
 set :static => true
 set :public_folder, File.expand_path(File.dirname(__FILE__) + '/public')
@@ -48,13 +48,13 @@ end
 
 post "/name" do
   puts params.inspect
-  result = Model.create(:name => params["name"], :score =>params["score"])
+  result = Highscore.create(:name => params["name"], :score =>params["score"])
   puts result.inspect
 return nil
 end
 
 def gethighscores 
-  Model.all(:order => "score DESC")
+  Highscore.all(:order => "score DESC")
 end
 
 get "/validhighscore" do

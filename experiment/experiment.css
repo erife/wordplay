@@ -136,9 +136,12 @@ h1 {
     margin: 0px 5px;
     font-size: 1.25em;
     background-image: url('../public/images/stone.jpg');
-    box-shadow: .1em .1em .1em;
+    box-shadow: .1em .1em .1em black;
     border-radius: 6px;
     border: 2px solid black;
+    color: grey;
+    text-shadow: 1px 3px 0px white;
+    text-outline: black;
 }
 
 #remaining > button {
@@ -147,13 +150,14 @@ h1 {
     width: 80%;
     height: 1.5em;
     font-size: 1.1em;
-    display: none;
+
  }
 
 #remaining > p {
     font-size: 1.5em;
     padding-top: .5em;
     padding-left: 2em;
+    display: none;
 }
 
 
