@@ -135,6 +135,10 @@ h1 {
 #play .letters li{
     margin: 0px 5px;
     font-size: 1.25em;
+    background-image: url('../public/images/stone.jpg');
+    box-shadow: .1em .1em .1em;
+    border-radius: 6px;
+    border: 2px solid black;
 }
 
 #remaining > button {
