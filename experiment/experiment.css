@@ -1,10 +1,6 @@
 body {
     font-size: 20px;
-    
-}
-
-div, h1, li, dd, dt, dl, button {
-    outline: 1px dashed black;
+    background-image:url('../public/images/wordplay_bg.jpg')
 }
 
 dt{
@@ -19,13 +15,15 @@ dd{
 
 .letters {
     clear: left;
-    font-size: .75em;
+    font-size: .6em;
     text-align: center;
 }
 
 .letters > li{
     float:left;
-    width: .75em;
+    width: 1em;
+    height: 1em;
+    margin: 2px 1px;
 }
 
 #everything {
@@ -90,20 +88,33 @@ h1 {
 
 
 #found{
-    height: 40%;
-    width: 100%;
+    height: 43%;
+    width: 95%;
     font-size: 1.2em;
     margin-bottom: 1em;
+    background: rgba(255, 255, 255, .3);
+    padding: .2em 1em;
 }
 
 #found > li{
-    width: 10%;
+    width: 9.2%;
     height: 100%;
     float: left;
+    margin-right: .25em;
+    
+}
+
+
+#found > li:first-child{
+    margin-left: 1em;
 }
 
 #found .letters li{
     margin-bottom: .15em;
+    opacity: 1;
+    background-color: white;
+    box-shadow: 1px 1px 1px;
+    margin: 3px 1px;
 }    
 
 
