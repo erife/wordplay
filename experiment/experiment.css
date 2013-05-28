@@ -3,9 +3,9 @@ body {
     
 }
 
-/* div, h1, li, dd, dt, dl, button { */
-/*     outline: 1px dashed black; */
-/* } */
+div, h1, li, dd, dt, dl, button {
+    outline: 1px dashed black;
+}
 
 dt{
     font-size: 1em;
@@ -24,7 +24,6 @@ dd{
 .letters > li{
     float:left;
 }
-
 
 #everything {
     min-width: 900px;
@@ -100,8 +99,6 @@ h1 {
     float: left;
 }
 
-#play, #control {
-}
 
 #play {
     float: left;
@@ -111,6 +108,15 @@ h1 {
 
 #play > dl {
     height: 33.3%;
+}
+
+#play .letters{
+    margin-left: 1em;
+}
+
+#play .letters li{
+    width: .75em;
+    margin: 0px 5px;
 }
 
 #remaining > button {
@@ -125,7 +131,7 @@ h1 {
 #remaining > p {
     font-size: 1.5em;
     padding-top: .5em;
-    padding-left: 1em;
+    padding-left: 2em;
 }
 
 
