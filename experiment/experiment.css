@@ -5,6 +5,8 @@ body {
 
 dt{
     font-size: 1em;
+    border-bottom: 2px solid black;
+    width: 80%;
 }
 
 dd{
@@ -12,6 +14,16 @@ dd{
     font-size: 2.5em;
     padding-top: .1em;
 }
+
+button {
+    background-color: #555;
+    color: white;
+    border-color: black;
+    border-radius: 10px;
+    box-shadow: 3px 3px 2px grey;
+}
+
+
 
 .letters {
     clear: left;
@@ -134,7 +146,13 @@ h1 {
 
 #play > dl {
     height: 33.3%;
+    width: 80%;
     margin-bottom: 1em;
+    margin-left: 2.25em;
+}
+
+#play ul {
+    width: 100%
 }
 
 #play .letters{
@@ -180,7 +198,7 @@ h1 {
 #control {
     background: rgba(255, 255, 255, .4);
     float: right;
-    width: 48%;
+    width: 30%;
     height: 45%;
     border-radius: .5em;
     margin-right: .8em;

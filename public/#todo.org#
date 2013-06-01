@@ -1,0 +1,28 @@
+* To do
+** CSS
+** Javascript
+*** dynamic win condition (% of words)
+*** sound effects
+**** correct word
+**** incorrect word
+**** incorrect letter
+**** win
+**** lose
+**** valid letter
+**** timer (out?)
+*** <5 seconds remaining
+**** sound
+** Ruby
+*** refactor
+*** optimize
+*** static list of seed words/remove while loop
+
+
+High Score
+Start button
+end button
+add time for words > 4
+next level
+chrome
+internet
+
