@@ -1,8 +1,6 @@
-y* To do
+* To do
 ** CSS
-*** styling for window resize
 ** Javascript
-*** button to finish game
 *** dynamic win condition (% of words)
 *** sound effects
 **** correct word
