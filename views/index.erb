@@ -1,109 +1,220 @@
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>Wordplay</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="styles/reset.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" />
     <script type="text/javascript" src="scripts/jquery2.js"></script>
+    <script type="text/javascript" src="scripts/underscore.js"></script>
     <script type="text/javascript" src="scripts/json2.js"></script>
-    <script type="text/javascript" src="scripts/playSound.js"></script>
+    <script type="text/javascript" src="scripts/backbone.js"></script>
     <script type="text/javascript" src="scripts/wordplay.js"></script>
-  </head>
+    <title>Wordplay</title>
+</head>
   <body>
-    <div id="main">
-      <h1>Wordplay</h1>
-      <div id="report" class="section">
-        <div id="found">
-	  <% 12.times.each do |j| %>
-          <ul>
-	    <% 10.times.each do |i| %>
-	    <li><ul id= word_<%= (j*10)+i %>></ul> </li>
-	    <% end %>
-	  </ul>
-	  <% end %>
+    <div id="everything">
+      <div id="status">
+	<dl id="time">
+	  <dt>Timer</dt>
+	  <dd>3:00</dd>
+	</dl>
+	<h1>Wordplay</h1>
+	<dl id="progress">
+	  <dt>Words</dt>
+	  <dd id="found_word_count">7</dd>
+	  <span>/</span>
+	  <dd id="total_word_count">30</dd>
+	</dl>
+      </div>
+      <ul id="found">
+	<li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+	    <li>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	      <ul class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    </li>
+      </ul>
+      <div id="play">
+	<dl id="available_control">
+	  <dt>Available</dt>
+	  <dd>
+	      <ul id="available" class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    <img src="images/shuffle-on.png" class="shuffle" alt="shuffle" />
+	  </dd>
+	</dl>
+	<dl id="guess_control">
+	  <dt>Guess</dt>
+	  <dd>
+	    <ul id="guess" class="letters"> <li>w</li><li>o</li><li>r</li><li>d</li><li>l</li><li>a</li> </ul>
+	    <img src="images/submit-off.png" class="submit" alt="submit" />
+	  </dd>
+	</dl>
+	<div id="remaining">
+	  <button>
+	    LEVEL UP!!!
+	    </button>
+	  <p><span>X</span> Points  to Next Level</p>
 	</div>
       </div>
-    </div>
-    <div id="interface" class="section">
-      <ul id="words">
-	<li>
-	  <label for="letters"> Available Letters</label>
-	  <ul id="letter" class="word">
-   	  </ul>
-	  <img src="/images/shuffle-off.png" id="shuffle" alt="Shuffle Letters"/>
-	  <img src="/images/submit-off.png" id="submit" alt="Submit Word"/>
-	  <img src="/images/newround-off.png" id="newround" class="invisible" alt="Next Round" />
-	  <p id="error">
+      <div id="messaging">
+	<p id="message">
+	  error message here
 	  </p>
-	<li>
-	  <label for="guess"> Guessed Letters</label>
-          <ul id="guess" class="word">
-	  </ul>
-	  <button id="start" type="button" onclick="startgame()">Click to Start!</button>
-	  <button id="end" type="button" onclick="endgame()">Game Over</button>
-	</li>
-      </ul>
-      <ul id="result" class="display">
-        <li>
-          <dl id="time">
-	    <dt>Time</dt>
-            <dd id= "timer"></dd>
-          </dl>
-        </li> 
-        <li>
-          <dl id="score">
-            <dt>Score</dt>
-	    <dd id = "dynamicscore"></dd>
-          </dl>
-        </li>
-      </ul>
-      <ul id="status" class="display">
-        <li>
-          <dl id="count">
-            <dt>Words Found</dt>
-            <dd id="foundcount"></dd>
-          </dl>
-        </li>
-        <li>
-          <dl id="remaining">
-            <dt>Remaining</dt>
-            <dd id="remcount"></dd>
-          </dl>
-        </li>
-      </ul>
-      <p id="key">Shift to Start Game -- Shift to Move to Next Level -- Space to Shuffle Letters -- Esc to End Game</p>
-      <dl id="winkitten" class="invisible">
-highsc	<dt>      <img src="/images/kitten.jpeg" class="kitty" alt="two hot chicks having sex" /></dt>
-	<dd>Next Round Available!</dd>
-      </dl>
-      <dl id="losekitten" class="invisible">
-	<dt>      <img src="/images/angrycat.jpeg" class="kitty" alt="two hot chicks having sex" /></dt>
-	<dd>Game Over!</dd>
-      </dl>
-    </div>
-    <div id="newhighscore" class="invisible">
-      <form method="POST" id="newhighscoreform" action="#">
-	<label for="namebox">Enter Your Name</label>
-	<input type="text" name="namebox" value="" />
-	<button>Submit High Score</button>
-      </form>
-    </div>
-    <div id="highscore" class="invisible">
-      <table>
-	<caption>High Scores</caption>
-	<tr>
-	  <th class="name">Name</th>
-	  <th class="score">Score</th>
-	</tr>
-	<% 10.times.each do |i| %>
-	<tr id=hs_<%= i %>>
-	  <td class="name"></td>
-	  <td class="score"></td>
-	</tr> 
-	<% end %>
-      </table>
-      <p id="note">Click to Close!</p>
-    </div>
+      <img src="images/panda_worried.png" id="messanger"  alt="neutral" />
+      </div>
+      <div id="control">
+	<button id="start">
+	  Start
+	  </button>
+	<button id="pause">
+	  Pause
+	  </button>
+	<dl id="score">
+	  <dt>
+	    Score
+	  </dt>
+	  <dd>
+	    1000
+	  </dd>
+	</dl>
+	<button>
+	  Stop
+	  </button>
+      </div>
+    </div>      
   </body>
 </html>
-
