@@ -210,10 +210,48 @@ h1 {
     font-size: 1.1em;
     height: 2em;
 }
+#messaging {
+    float: left;
+    width: 20%;
+    height: 13em;
+    position: relative;
+}
+
+#message{
+    position:relative;
+    padding:15px;
+    margin: 0px 0px 10px 10px;
+    color:#FFF;
+    background:#4a4a4a; /* default background for browsers without gradient support */
+	/* css3 */
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#4a4a4a), to(#A1A1A1));
+    background:-moz-linear-gradient(#4a4a4a, #A1A1A1);
+    background:-o-linear-gradient(#4a4a4a, #A1A1A1);
+    background:linear-gradient(#4a4a4a, #A1A1A1);
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+/*    height: 2.5em; */
+}
+
+#message:after{
+    content:"";
+    position:absolute;
+    bottom:-20px;
+    left:50px; /* controls horizontal position */
+    border-width:20px  0px 0px 20px; /* vary these values to change the angle of the vertex */
+    border-style:solid;
+    border-color:#A1A1A1 transparent;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+}
 
 #messanger {
-height: 10em;
-margin: 3em 2.5em 0em;
+    height: 10em;
+    position: absolute;
+    bottom: 0;
+    left: 20%;
 }
 
 
