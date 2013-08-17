@@ -191,10 +191,6 @@
 	</div>
       </div>
       <div id="messaging">
-	<p id="message">
-	  error message here
-	  </p>
-      <img src="images/panda_worried.png" id="messanger"  alt="neutral" />
       </div>
       <div id="control">
 	<button id="start">
@@ -216,5 +212,11 @@
 	  </button>
       </div>
     </div>      
+    <script id="message-template" type="text/template">
+      <p id="message">
+	{{= message }}
+      </p>
+      <img src="images/panda_{{= status }}.png" id="messanger"  alt="{{= threat }}" />
+    </script>
   </body>
 </html>
