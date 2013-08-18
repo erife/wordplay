@@ -17,6 +17,7 @@ $(function(){
 	
 	initialize: function(app) {
 	    this.listenTo(app,"change:state", this.setState);
+	    this.listenTo(app, "myevent", this.handleBackspace);
 	},
 	
 	states: {
@@ -37,8 +38,14 @@ $(function(){
 	    this.set("message", state["message"]);
 	    this.set("status", state["status"]);
 	    this.set("threat", state["threat"]);
+	},
+
+	handleBackspace: function(event) {
+	    this.set("message", "oops");
+	    this.set("status", "angry");
 	}
 
+	
 
     });		
 
@@ -113,6 +120,10 @@ $(function(){
 	handleKeydown: function(event) {
 	    switch(event.which){
 		case 16: this.model.nextLevel();
+		break;
+		case 8: this.model.trigger("myevent",{type:"correction"});
+		break;
+		default: console.log(event.which);
 		break;
 	    }
 
