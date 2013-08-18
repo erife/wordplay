@@ -5,28 +5,34 @@ $(function(){
 	evaluate: /\{\{(.+?)\}\}/g
     };
     
-    var MessageView = Backbone.View.extend({
-    
-	el: $("#messaging"),
-
-	messageTemplate: _.template($('#message-template').html()),
+    var Message = Backbone.Model.extend({
 	
 	states: {
 	    pending: {
 		message: "welcome to wordplay",
 		status: "worried",
 		threat: "neutral"
-		},
+	    },
 	    running: {
 		message: "start typing",
 		status: "happy",
 		threat: "low"
-		}
-	},
+	    }
+	}
+    });		
+
+    var MessageView = Backbone.View.extend({
+    
+	el: $("#messaging"),
+
+	messageTemplate: _.template($('#message-template').html()),
+	model: new Message(),
+	    
 
 	initialize: function() {
-	    this.state = this.states["pending"];
+	    this.state = this.model.states["pending"];
 	    this.render();
+	    
 	},
 	
 	render: function() {
@@ -39,7 +45,7 @@ $(function(){
 	},
 
 	setState: function(state) {
-	    this.state = this.states[state];
+	    this.state = this.model.states[state];
 	    this.render();
 	}	    
     });
