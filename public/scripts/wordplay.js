@@ -5,6 +5,25 @@ $(function(){
 	evaluate: /\{\{(.+?)\}\}/g
     };
     
+    var TimerView = Backbone.View.extend({
+
+	el: $("#time"),
+	
+	timerTemplate: _.template($('#timer-template').html()),
+
+	initialize: function() {
+	    this.render();
+	},
+
+	render: function() {
+	    var time = "5:00";
+	    this.$el.html(this.timerTemplate({timer: time}));
+	}
+
+
+    });
+
+
     var Message = Backbone.Model.extend({
 
 	defaults: function() {
@@ -113,6 +132,7 @@ $(function(){
 
 	initialize: function() {
 	    this.messaging = new MessageView(this.model);
+	    this.timer = new TimerView();
 	    this.render();
 	},
 

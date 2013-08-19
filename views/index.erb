@@ -15,8 +15,6 @@
     <div id="everything">
       <div id="status">
 	<dl id="time">
-	  <dt>Timer</dt>
-	  <dd>3:00</dd>
 	</dl>
 	<h1>Wordplay</h1>
 	<dl id="progress">
@@ -212,6 +210,12 @@
 	  </button>
       </div>
     </div>      
+    <script id="timer-template" type="text/template">
+      <dt>Timer</dt>
+      <dd>
+	{{= timer }}
+      </dd>
+    </script>
     <script id="message-template" type="text/template">
       <p id="message">
 	{{= message }}
