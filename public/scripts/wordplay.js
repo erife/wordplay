@@ -23,6 +23,30 @@ $(function(){
 
     });
 
+    var ProgressView = Backbone.View.extend({
+
+	el: $("#progress"),
+	
+	progressTemplate: _.template($('#progress-template').html()),
+
+	initialize: function() {
+	    this.render();
+	},
+
+	render: function() {
+	    var context = {
+		found_word_count: 7,
+		total_word_count: 30
+	    }
+	    
+	    this.$el.html(this.progressTemplate(context));
+	}
+
+
+    });
+
+
+
 
     var Message = Backbone.Model.extend({
 
@@ -133,6 +157,7 @@ $(function(){
 	initialize: function() {
 	    this.messaging = new MessageView(this.model);
 	    this.timer = new TimerView();
+	    this.progress = new ProgressView();
 	    this.render();
 	},
 

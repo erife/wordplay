@@ -18,10 +18,6 @@
 	</dl>
 	<h1>Wordplay</h1>
 	<dl id="progress">
-	  <dt>Words</dt>
-	  <dd id="found_word_count">7</dd>
-	  <span>/</span>
-	  <dd id="total_word_count">30</dd>
 	</dl>
       </div>
       <ul id="found">
@@ -214,6 +210,16 @@
       <dt>Timer</dt>
       <dd>
 	{{= timer }}
+      </dd>
+    </script>
+    <script id="progress-template" type="text/template">
+      <dt>Words</dt>
+      <dd id="found_word_count">
+	{{= found_word_count }}
+      </dd>
+      <span>/</span>
+      <dd id="total_word_count">
+	{{= total_word_count }}
       </dd>
     </script>
     <script id="message-template" type="text/template">
