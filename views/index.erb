@@ -194,12 +194,6 @@
 	  Pause
 	  </button>
 	<dl id="score">
-	  <dt>
-	    Score
-	  </dt>
-	  <dd>
-	    1000
-	  </dd>
 	</dl>
 	<button>
 	  Stop
@@ -227,6 +221,14 @@
 	{{= message }}
       </p>
       <img src="images/panda_{{= status }}.png" id="messanger"  alt="{{= threat }}" />
+    </script>
+    <script id="score-template" type="text/template">
+      <dt>
+	Score
+      </dt>
+      <dd>
+	{{= score}}
+      </dd>
     </script>
   </body>
 </html>

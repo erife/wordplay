@@ -118,6 +118,25 @@ $(function(){
 
     });
 
+    var ScoreView = Backbone.View.extend({
+
+	el: $("#score"),
+	
+	scoreTemplate: _.template($('#score-template').html()),
+
+	initialize: function() {
+	    this.render();
+	},
+
+	render: function() {
+	    var score = "5000";
+	    this.$el.html(this.scoreTemplate({score: score}));
+	}
+
+
+    });
+    
+
     var App = Backbone.Model.extend({
 	states: [
 	    "pending",
@@ -151,13 +170,14 @@ $(function(){
 
 	events: {
 	    "keydown":  "handleKeydown"
-	    },
+	},
 	
 
 	initialize: function() {
 	    this.messaging = new MessageView(this.model);
 	    this.timer = new TimerView();
 	    this.progress = new ProgressView();
+	    this.score = new ScoreView();
 	    this.render();
 	},
 
