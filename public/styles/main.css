@@ -275,3 +275,7 @@ h1 {
 #score dd {
     height: 80%;
 }
+
+.outline {
+    outline: 1px solid red;
+}

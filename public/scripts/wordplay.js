@@ -46,6 +46,52 @@ $(function(){
     });
 
 
+    var FoundView = Backbone.View.extend({
+
+	el: $("#found"),
+	
+	initialize: function() {
+	    this.render();
+	},
+
+	render: function() {
+	    var self = this;
+	    var wordlist = 
+		["pea", "see", "far", "fan", "fast", "spar", "hang", "slam",  "stand", 
+		 "fling", "change", "flange", "finger"];
+	    var column_count = 10;
+	    for (var i = 0; i < column_count;  i++){
+		var column = $("<li>",{id: "found_column_" + i});
+		this.$el.append(column);
+	    }
+	    var current_column = -1;
+	    var row_count = 12;
+	    $(wordlist).each(function(i, word){
+		if(i % row_count == 0) {current_column++};
+		var rendered_word = $("<ul>", {id: "found_word_" + i, class: "letters"});
+		$("#found_column_"+ current_column).append(rendered_word);
+		var letters = word.split('');
+		self.renderLetter(rendered_word, letters);
+	    });
+	    
+	},
+	
+	renderLetter: function(rendered_word, letters){
+	    var self = this;
+	    if(letters.length <= 0) {
+		return;
+	    }
+	    var letter = letters.shift();
+	    var rendered_letter = $("<li>").append(letter);
+	    rendered_letter.hide();
+	    rendered_word.append(rendered_letter);
+	    rendered_letter.fadeIn(300, "linear", function(){self.renderLetter(rendered_word, letters)});
+	    
+	}
+    });
+
+
+
 
 
     var Message = Backbone.Model.extend({
@@ -177,7 +223,8 @@ $(function(){
 	    this.messaging = new MessageView(this.model);
 	    this.timer = new TimerView();
 	    this.progress = new ProgressView();
-	    this.score = new ScoreView();
+	    this.score = new ScoreView();	    
+	    this.found = new FoundView();
 	    this.render();
 	},
 
