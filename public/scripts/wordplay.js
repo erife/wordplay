@@ -91,6 +91,24 @@ $(function(){
     });
 
 
+var BucketView = Backbone.View.extend({
+
+
+    initialize: function(options){
+	this.letters = options["letters"] || [];
+	this.render();
+    },
+
+    
+
+    render: function() {
+    	for (var i = 0; i < this.letters.length;  i++){
+    	    var letter = $("<li>",{id: "letter_position_" + i, text:this.letters[i]});
+    	    this.$el.append(letter);
+    	};
+    }
+});				
+
 
 
 
@@ -224,7 +242,9 @@ $(function(){
 	    this.timer = new TimerView();
 	    this.progress = new ProgressView();
 	    this.score = new ScoreView();	    
-	    this.found = new FoundView();
+	    this.found = new FoundView();	  
+	    this.available = new BucketView({el: $("#available"), letters: ["a","s","e","f","g","h"]});
+	    this.guess = new BucketView({el: $("#guess")});
 	    this.render();
 	},
 
