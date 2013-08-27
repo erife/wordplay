@@ -45,20 +45,34 @@ $(function(){
 
     });
 
+    var FoundModel = Backbone.Model.extend({
 
+    });
+    
+
+    var FoundCollection = Backbone.Collection.extend({
+	model: FoundModel,
+	url: '/data'
+    });
+    
     var FoundView = Backbone.View.extend({
 
 	el: $("#found"),
-	
+	model: FoundModel,	
+
 	initialize: function() {
+	    var wordlist = new FoundCollection();
+	    wordlist.fetch;
+	    console.log(wordlist);
 	    this.render();
 	},
 
 	render: function() {
 	    var self = this;
-	    var wordlist = 
-		["pea", "see", "far", "fan", "fast", "spar", "hang", "slam",  "stand", 
-		 "fling", "change", "flange", "finger"];
+	    
+//	    var wordlist = 
+//		["pea", "see", "far", "fan", "fast", "spar", "hang", "slam",  "stand", 
+//		 "fling", "change", "flange", "finger"];
 	    var column_count = 10;
 	    for (var i = 0; i < column_count;  i++){
 		var column = $("<li>",{id: "found_column_" + i});
@@ -66,7 +80,7 @@ $(function(){
 	    }
 	    var current_column = -1;
 	    var row_count = 12;
-	    $(wordlist).each(function(i, word){
+	    $(this.wordlist).each(function(i, word){
 		if(i % row_count == 0) {current_column++};
 		var rendered_word = $("<ul>", {id: "found_word_" + i, class: "letters"});
 		$("#found_column_"+ current_column).append(rendered_word);
