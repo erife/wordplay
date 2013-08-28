@@ -45,57 +45,20 @@ $(function(){
 
     });
 
-    var FoundModel = Backbone.Model.extend({
-	initialize: function(word) {
-	    console.log(word);
-	}
-    });
-    
-
-    var FoundCollection = Backbone.Collection.extend({
-	model: FoundModel,
-	url: '/wordlist'
-    });
-    
-    var FoundView = Backbone.View.extend({
-
-	el: $("#found"),
-	model: FoundModel,	
-
-	initialize: function() {
-	    var wordlist = new FoundCollection();
-	    self = this;
-	    wordlist.fetch(
-		//	success: function (words) {
-		//	    self.wordlist = words;
-		//	    }
-	    );
+    var WordView = Backbone.View.extend({
+	initialize: function(){
+	    this.listenTo(this.model, "change", this.render);
 	    this.render();
-	},
-
-	render: function() {
-	    var self = this;
-	    
-//	    var wordlist = 
-//		["pea", "see", "far", "fan", "fast", "spar", "hang", "slam",  "stand", 
-//		 "fling", "change", "flange", "finger"];
-	    var column_count = 10;
-	    for (var i = 0; i < column_count;  i++){
-		var column = $("<li>",{id: "found_column_" + i});
-		this.$el.append(column);
-	    }
-	    var current_column = -1;
-	    var row_count = 12;
-	    $(this.wordlist).each(function(i, word){
-		if(i % row_count == 0) {current_column++};
-		var rendered_word = $("<ul>", {id: "found_word_" + i, class: "letters"});
-		$("#found_column_"+ current_column).append(rendered_word);
-		var letters = word.split('');
-		self.renderLetter(rendered_word, letters);
-	    });
-	    
-	},
+	    },
 	
+	render: function() {
+	    var i = this.model.get("word");
+	    var rendered_word = $("<ul>", {id: "found_word_" + i, class: "letters"});
+	    $("#found_column_"+ this.model.get("column")).append(rendered_word);
+	    var letters = this.model.getLetters();
+	    this.renderLetter(rendered_word, letters);
+	},
+    
 	renderLetter: function(rendered_word, letters){
 	    var self = this;
 	    if(letters.length <= 0) {
@@ -106,6 +69,52 @@ $(function(){
 	    rendered_letter.hide();
 	    rendered_word.append(rendered_letter);
 	    rendered_letter.fadeIn(300, "linear", function(){self.renderLetter(rendered_word, letters)});
+	}
+    });
+
+
+
+    var FoundModel = Backbone.Model.extend({
+	initialize: function(word) {
+	    this.set("word", word);
+	    this.set("column", 1);
+	    this.view = new WordView({model:this});
+	},
+	
+	getLetters: function(){
+	    return this.get("word").split('');
+	}
+    });
+    
+
+    var FoundCollection = Backbone.Collection.extend({
+	model: FoundModel,
+	url: '/wordlist'
+	
+    });
+    
+    var FoundView = Backbone.View.extend({
+
+	el: $("#found"),
+
+	initialize: function() {
+	    this.render();
+	    this.collection = new FoundCollection();
+	    this.collection.on("fetch", this.render, this);	    
+	    this.collection.fetch();
+	    
+	},
+
+	render: function() {
+	    var self = this;
+	    var column_count = 10;
+	    for (var i = 0; i < column_count;  i++){
+		var column = $("<li>",{id: "found_column_" + i});
+		this.$el.append(column);
+	    }
+	    var current_column = -1;
+	    var row_count = 12;
+	  //  console.log(this.collection);
 	    
 	}
     });
@@ -262,7 +271,7 @@ var BucketView = Backbone.View.extend({
 	    this.timer = new TimerView();
 	    this.progress = new ProgressView();
 	    this.score = new ScoreView();	    
-	    this.found = new FoundView();	  
+	    this.found = new FoundView();
 	    this.available = new BucketView({el: $("#available"), letters: ["a","s","e","f","g","h"]});
 	    this.guess = new BucketView({el: $("#guess")});
 	    this.render();
