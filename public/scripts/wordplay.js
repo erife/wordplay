@@ -46,13 +46,15 @@ $(function(){
     });
 
     var FoundModel = Backbone.Model.extend({
-
+	initialize: function(word) {
+	    console.log(word);
+	}
     });
     
 
     var FoundCollection = Backbone.Collection.extend({
 	model: FoundModel,
-	url: '/data'
+	url: '/wordlist'
     });
     
     var FoundView = Backbone.View.extend({
@@ -62,8 +64,12 @@ $(function(){
 
 	initialize: function() {
 	    var wordlist = new FoundCollection();
-	    wordlist.fetch;
-	    console.log(wordlist);
+	    self = this;
+	    wordlist.fetch(
+		//	success: function (words) {
+		//	    self.wordlist = words;
+		//	    }
+	    );
 	    this.render();
 	},
 

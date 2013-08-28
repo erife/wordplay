@@ -29,21 +29,20 @@ def get_resultwords()
   subwords = permutation_words.uniq.select do |word|
     ALLWORDS.include?(word)
   end
-  return [available_letters, subwords]
+  return subwords
 end
 
 get "/" do
 erb :index
 end
 
-get "/data" do
+get "/wordlist" do
   resultwords = []
   while resultwords.length <= MINSUBWORDCOUNT || resultwords.length >= MAXSUBWORDCOUNT do
-    available_letters,  resultwords = get_resultwords()
+     resultwords = get_resultwords()
   end
-  available_letters = available_letters.shuffle
   resultwords = resultwords.sort_by{|x| [x.length, x]}
-   json :result_words => resultwords, :availableletters => available_letters
+   json resultwords
 end
 
 post "/name" do
