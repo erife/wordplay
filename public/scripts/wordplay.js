@@ -52,7 +52,7 @@ $(function(){
 	    },
 	
 	render: function() {
-	    var i = this.model.get("word");
+	    var i = this.model.get("id");
 	    var rendered_word = $("<ul>", {id: "found_word_" + i, class: "letters"});
 	    $("#found_column_"+ this.model.get("column")).append(rendered_word);
 	    var letters = this.model.getLetters();
@@ -75,9 +75,11 @@ $(function(){
 
 
     var FoundModel = Backbone.Model.extend({
-	initialize: function(word) {
-	    this.set("word", word);
-	    this.set("column", 1);
+	initialize: function(options) {
+	    console.log(options);
+	    this.set("word", options["word"]);
+	    this.set("id", options["id"]);
+	    this.set("column", Math.floor(options["id"]/12));
 	    this.view = new WordView({model:this});
 	},
 	

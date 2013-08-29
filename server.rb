@@ -42,7 +42,8 @@ get "/wordlist" do
      resultwords = get_resultwords()
   end
   resultwords = resultwords.sort_by{|x| [x.length, x]}
-   json resultwords
+  resultwords = resultwords.each_with_index.map{|word, i| {:id => i, :word => word}}  
+  json resultwords
 end
 
 post "/name" do
