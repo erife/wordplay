@@ -316,6 +316,6 @@ var BucketView = Backbone.View.extend({
 
     });
     
-    var App = new AppView; 
+    var game = new AppView; 
     
 });

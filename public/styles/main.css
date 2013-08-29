@@ -175,7 +175,17 @@ h1 {
     width: 60%;
 }
 
+ul#guess {
+    float: left;
+}
+
 .shuffle {
+    float: right;
+    margin-right: 5px;
+}
+
+.submit{
+    float: right;
 }
 
 #remaining > button {
