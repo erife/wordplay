@@ -145,17 +145,31 @@ var BucketView = Backbone.View.extend({
 	this.letters = options["letters"] || [];
 	this.render();
     },
-
     
-
+    
     render: function() {
     	for (var i = 0; i < this.letters.length;  i++){
     	    var letter = $("<li>",{id: "letter_position_" + i, text:this.letters[i]});
     	    this.$el.append(letter);
     	};
+    },
+
+    handleLetter: function(letter){
+	var letter_position = this.letters.indexOf(letter);
+	this.trigger("letter:position", {position: letter_position});
     }
+    
+    
 });				
 
+var GuessView = BucketView.extend({
+    
+    initialize: function(){
+	this.on("letter:position", this.handleLetterPosition, this);
+    }
+
+});
+    
 
 
 
@@ -285,19 +299,21 @@ var BucketView = Backbone.View.extend({
 	
 
 	initialize: function() {
-	    this.messaging = new MessageView(this.model);
-	    this.timer = new TimerView();
-	    this.progress = new ProgressView();
-	    this.score = new ScoreView();	    
-	    this.words = new FoundCollection();
-	    this.found = new FoundView({"collection": this.words});
-	    this.words.fetch({success: function(collection){
-		console.log(collection.length);
+	    var app = this;
+	    app.messaging = new MessageView(app.model);
+	    app.timer = new TimerView();
+	    app.progress = new ProgressView();
+	    app.score = new ScoreView();	    
+	    app.words = new FoundCollection();
+	    app.found = new FoundView({"collection": app.words});
+	    app.words.fetch({success: function(collection){
 		var letters = collection.getAvailableLetters();
-		this.available = new BucketView({el: $("#available"), letters: letters});
+		app.available = new BucketView({el: $("#available"), letters: letters});
 	    }});
-	    this.guess = new BucketView({el: $("#guess")});
-	    this.render();
+//	    app.listenTo(app.available, "letter:position", function(event){
+//		app.trigger
+	    app.guess = new GuessView({el: $("#guess")});
+	    app.render();
 	},
 
 
@@ -307,7 +323,11 @@ var BucketView = Backbone.View.extend({
 		break;
 		case 8: this.model.trigger("myevent",{type:"correction"});
 		break;
-		default: console.log(event.which);
+		default: 
+		if(event.which >=65 && event.which <=90){
+		    var guessletter = String.fromCharCode(event.which);
+		    this.available.handleLetter(guessletter);
+		};
 		break;
 	    }
 
