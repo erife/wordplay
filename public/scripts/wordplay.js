@@ -93,11 +93,24 @@ $(function(){
 	url: '/wordlist',
 	
 	getAvailableLetters: function(){
-	    var lastword = this.pluck("word").pop();
+	    var lastword = this.pluck("word").pop().split("");
+	    lastword = this.shuffle(lastword);
 	    return lastword;
+	},
+	
+	random: function(x) {
+	    return Math.floor(x*(Math.random()%1)) 
+	},
+
+	shuffle: function(letters){
+	    for (J=letters.length-1 ; J>0 ; J--){
+		K = this.random(J+1) ; 
+		T = letters[J] ; 
+		letters[J] = letters[K] ; 
+		letters[K] = T; 
+	    }
+	    return letters;
 	}
-	
-	
     });
     
     var FoundView = Backbone.View.extend({
