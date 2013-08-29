@@ -76,7 +76,6 @@ $(function(){
 
     var FoundModel = Backbone.Model.extend({
 	initialize: function(options) {
-	    console.log(options);
 	    this.set("word", options["word"]);
 	    this.set("id", options["id"]);
 	    this.set("column", Math.floor(options["id"]/12));
@@ -91,7 +90,13 @@ $(function(){
 
     var FoundCollection = Backbone.Collection.extend({
 	model: FoundModel,
-	url: '/wordlist'
+	url: '/wordlist',
+	
+	getAvailableLetters: function(){
+	    var lastword = this.pluck("word").pop();
+	    return lastword;
+	}
+	
 	
     });
     
@@ -101,10 +106,8 @@ $(function(){
 
 	initialize: function() {
 	    this.render();
-	    this.collection = new FoundCollection();
 	    this.collection.on("fetch", this.render, this);	    
-	    this.collection.fetch();
-	    
+	   	    
 	},
 
 	render: function() {
@@ -273,8 +276,13 @@ var BucketView = Backbone.View.extend({
 	    this.timer = new TimerView();
 	    this.progress = new ProgressView();
 	    this.score = new ScoreView();	    
-	    this.found = new FoundView();
-	    this.available = new BucketView({el: $("#available"), letters: ["a","s","e","f","g","h"]});
+	    this.words = new FoundCollection();
+	    this.found = new FoundView({"collection": this.words});
+	    this.words.fetch({success: function(collection){
+		console.log(collection.length);
+		var letters = collection.getAvailableLetters();
+		this.available = new BucketView({el: $("#available"), letters: letters});
+	    }});
 	    this.guess = new BucketView({el: $("#guess")});
 	    this.render();
 	},
