@@ -132,7 +132,6 @@ $(function(){
 	    }
 	    var current_column = -1;
 	    var row_count = 12;
-	  //  console.log(this.collection);
 	    
 	}
     });
@@ -141,15 +140,39 @@ var LetterView = Backbone.View.extend({
 
     initialize: function(options){
 	this.letter = options["letter"];
+	this.state = "new";
     },
 
     render: function(){
-    	var letter_display = $("<li>",{id: "letter_position_" + this.id, text:this.letter});
-    	this.$el.append(letter_display);
-    }
+	var element_id = "letter_position_" + this.id;
+	switch(this.state) {
+	case "new":     	
+	    var letter_display = $("<li>",{id: element_id, text:this.letter});
+	    this.$el.append(letter_display);
+	    this.setStatic();
+	    break;
+	case "removed": 
+	    $('#' + element_id).remove();
+	    break;
+	case "static":
+	    break;
+	}
+	return this.state;
+    },
+
+
+    getLetter: function(){
+	return this.letter;
+    },
+
+
+    setRemoved: function(){
+	this.state = "removed";
+    },
     
-
-
+    setStatic: function(){
+	this.state = "static";
+    }
 });
 
 
@@ -167,17 +190,23 @@ var AvailableView = Backbone.View.extend({
     
     
     render: function() {
+	var removed = undefined;
 	$.each(this.letters, function(index, letter){
-	    letter.render();
+	    var state = letter.render();
+	    if(state == "removed"){
+		removed = index;
+	    }
 	});
+	if(typeof(removed)!="undefined"){this.letters.splice(removed, 1)};
+	var letters = $.map(this.letters, function(letterview){return letterview.getLetter()});
     },
 
     handleLetter: function(letter){
-	var letter_position = this.letters.indexOf(letter);
-	var removed_letter = this.letters.splice(letter_position, 1);
+	var letter_position = $.map(this.letters, function(letterview){return letterview.getLetter()});
+	letter_position = letter_position.indexOf(letter);
+	var removed_letter = this.letters[letter_position];
+	if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
 	this.render();
-	console.log(removed_letter);
-	console.log(this.letters);
 //	this.app.trigger("letter:position", {position: letter_position});
 //	console.log(letter);
     }
