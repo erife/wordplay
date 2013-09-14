@@ -137,41 +137,72 @@ $(function(){
 	}
     });
 
-
-var BucketView = Backbone.View.extend({
-
+var LetterView = Backbone.View.extend({
 
     initialize: function(options){
-	this.letters = options["letters"] || [];
+	this.letter = options["letter"];
+    },
+
+    render: function(){
+    	var letter_display = $("<li>",{id: "letter_position_" + this.id, text:this.letter});
+    	this.$el.append(letter_display);
+    }
+    
+
+
+});
+
+
+
+
+var AvailableView = Backbone.View.extend({
+
+    el: $("#available"),
+    
+    initialize: function(options){
+	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({el: $("#available"), id: index, letter: letter});});
+	this.app = options["app"];
 	this.render();
     },
     
     
     render: function() {
-    	for (var i = 0; i < this.letters.length;  i++){
-    	    var letter = $("<li>",{id: "letter_position_" + i, text:this.letters[i]});
-    	    this.$el.append(letter);
-    	};
+	$.each(this.letters, function(index, letter){
+	    letter.render();
+	});
     },
 
     handleLetter: function(letter){
 	var letter_position = this.letters.indexOf(letter);
-	this.trigger("letter:position", {position: letter_position});
+	var removed_letter = this.letters.splice(letter_position, 1);
+	this.render();
+	console.log(removed_letter);
+	console.log(this.letters);
+//	this.app.trigger("letter:position", {position: letter_position});
+//	console.log(letter);
     }
     
     
 });				
 
-var GuessView = BucketView.extend({
+var GuessView = Backbone.View.extend({
+
+    el: $("#guess"),
     
-    initialize: function(){
-	this.on("letter:position", this.handleLetterPosition, this);
+    initialize: function(options){
+	this.letters = options["letters"] || [];
+	this.app = options["app"];
+	this.render();
+    },
+
+    handleLetterPosition: function(event){
+	console.log(event);
+	console.log("handleLetterPosition");
     }
+
 
 });
     
-
-
 
     var Message = Backbone.Model.extend({
 
@@ -308,11 +339,9 @@ var GuessView = BucketView.extend({
 	    app.found = new FoundView({"collection": app.words});
 	    app.words.fetch({success: function(collection){
 		var letters = collection.getAvailableLetters();
-		app.available = new BucketView({el: $("#available"), letters: letters});
+		app.available = new AvailableView({letters: letters, app: app});
 	    }});
-//	    app.listenTo(app.available, "letter:position", function(event){
-//		app.trigger
-	    app.guess = new GuessView({el: $("#guess")});
+	    app.guess = new GuessView({app:app});
 	    app.render();
 	},
 
