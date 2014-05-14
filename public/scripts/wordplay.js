@@ -185,6 +185,8 @@ var AvailableView = Backbone.View.extend({
     initialize: function(options){
 	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({el: $("#available"), id: index, letter: letter});});
 	this.app = options["app"];
+	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
+	this.listenTo(this.app, 'letter:typed', this.handleLetter);
 	this.render();
     },
     
@@ -198,20 +200,23 @@ var AvailableView = Backbone.View.extend({
 	    }
 	});
 	if(typeof(removed)!="undefined"){this.letters.splice(removed, 1)};
-	var letters = $.map(this.letters, function(letterview){return letterview.getLetter()});
     },
 
-    handleLetter: function(letter){
+    handleLetter: function(event){
+	var letter = event.value;
 	var letter_position = $.map(this.letters, function(letterview){return letterview.getLetter()});
 	letter_position = letter_position.indexOf(letter);
 	var removed_letter = this.letters[letter_position];
 	if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
 	this.render();
-//	this.app.trigger("letter:position", {position: letter_position});
-//	console.log(letter);
+	this.app.trigger("letter:position", {position: letter_position});
+	console.log(letter_position);	
+    },
+
+    handleLetterPosition: function(event){
+	console.log(event);
+	console.log("handleLetterPosition");
     }
-    
-    
 });				
 
 var GuessView = Backbone.View.extend({
@@ -221,6 +226,7 @@ var GuessView = Backbone.View.extend({
     initialize: function(options){
 	this.letters = options["letters"] || [];
 	this.app = options["app"];
+	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
 	this.render();
     },
 
@@ -363,7 +369,7 @@ var GuessView = Backbone.View.extend({
 	    app.messaging = new MessageView(app.model);
 	    app.timer = new TimerView();
 	    app.progress = new ProgressView();
-	    app.score = new ScoreView();	    
+    app.score = new ScoreView();	    
 	    app.words = new FoundCollection();
 	    app.found = new FoundView({"collection": app.words});
 	    app.words.fetch({success: function(collection){
@@ -383,8 +389,9 @@ var GuessView = Backbone.View.extend({
 		break;
 		default: 
 		if(event.which >=65 && event.which <=90){
-		    var guessletter = String.fromCharCode(event.which);
-		    this.available.handleLetter(guessletter);
+		    var typed_letter = String.fromCharCode(event.which);
+		    this.trigger("letter:typed", {value:typed_letter});
+		    
 		};
 		break;
 	    }
@@ -394,6 +401,6 @@ var GuessView = Backbone.View.extend({
 
     });
     
-    var game = new AppView; 
+    game = new AppView; 
     
 });
