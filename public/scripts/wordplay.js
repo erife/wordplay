@@ -138,6 +138,9 @@ $(function(){
 
 var LetterView = Backbone.View.extend({
 
+    tagName: "li", 
+
+
     events: {
 	"click": "handleClick"
     },
@@ -146,18 +149,18 @@ var LetterView = Backbone.View.extend({
 	this.letter = options["letter"];
 	this.app = options["app"];
 	this.state = "new";
+	this.parent = options["parent"];
     },
 
     render: function(){
-	var element_id = "letter_position_" + this.id;
 	switch(this.state) {
 	case "new":     	
-	    var letter_display = $("<li>",{id: element_id, text:this.letter});
-	    this.$el.append(letter_display);
+	    $(this.el).text(this.letter);
+	    this.parent.append(this.el);
 	    this.setStatic();
 	    break;
 	case "removed": 
-	    $('#' + element_id).remove();
+	    $('#' + this.id).remove();
 	    break;
 	case "static":
 	    break;
@@ -180,24 +183,22 @@ var LetterView = Backbone.View.extend({
     },
 
     handleClick: function(event){
-	console.log("click");
-	if('letter_position_' + this.id == $(event.target).attr('id'))
-	{
-	    this.app.trigger("letter:position", {position: this.id});
-	}
+	console.log(this.$el.index());
+	    this.app.trigger("letter:position", {position: this.$el.index()});
     }
 });
-
-
 
 
 var AvailableView = Backbone.View.extend({
 
     el: $("#available"),
+
+//    events:{
+//	"click": "handleClick"},
     
     initialize: function(options){
 	this.app = options["app"];
-	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({el: $("#available"), id: index, letter: letter, app: options["app"]});});
+	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({parent: $("#available"), id: "letter_position_" + index, letter: letter, app: options["app"]});});
 	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
 	this.listenTo(this.app, 'letter:typed', this.handleTypedLetter);
 	this.render();
@@ -207,7 +208,7 @@ var AvailableView = Backbone.View.extend({
     render: function() {
 	var removed = undefined;
 	$.each(this.letters, function(index, letter){
-	    var state = letter.render();
+	    var state = letter.render(index);
 	    if(state == "removed"){
 		removed = index;
 	    }
@@ -224,24 +225,16 @@ var AvailableView = Backbone.View.extend({
 	console.log(letter_position);	
     },
 
-    handleLetter: function(event){
-	var letter = event.value;
-	var letter_position = $.map(this.letters, function(letterview){return letterview.getLetter()});
-	letter_position = letter_position.indexOf(letter);
-	var removed_letter = this.letters[letter_position];
-	if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
-	this.render();
-	this.app.trigger("letter:position", {position: letter_position});
-	console.log(letter_position);	
-    },
-
     handleLetterPosition: function(event){
 	var removed_letter = this.letters[event.position];
 	if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
 	this.render();
-	console.log(event.position);
-	console.log("handleLetterPosition");
+	this.app.trigger("letter:guessed", {letter: removed_letter.letter});
     }
+
+
+
+
 });				
 
 var GuessView = Backbone.View.extend({
@@ -251,13 +244,13 @@ var GuessView = Backbone.View.extend({
     initialize: function(options){
 	this.letters = options["letters"] || [];
 	this.app = options["app"];
-	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
+	this.listenTo(this.app, 'letter:guessed', this.handleLetter);
 	this.render();
     },
 
-    handleLetterPosition: function(event){
-	console.log(event);
-	console.log("handleLetterPosition");
+    handleLetter: function(event){
+	console.log("G handle letter")
+	console.log(event.letter);
     }
 
 
