@@ -138,8 +138,13 @@ $(function(){
 
 var LetterView = Backbone.View.extend({
 
+    events: {
+	"click": "handleClick"
+    },
+    
     initialize: function(options){
 	this.letter = options["letter"];
+	this.app = options["app"];
 	this.state = "new";
     },
 
@@ -172,6 +177,14 @@ var LetterView = Backbone.View.extend({
     
     setStatic: function(){
 	this.state = "static";
+    },
+
+    handleClick: function(event){
+	console.log("click");
+	if('letter_position_' + this.id == $(event.target).attr('id'))
+	{
+	    this.app.trigger("letter:position", {position: this.id});
+	}
     }
 });
 
@@ -183,10 +196,10 @@ var AvailableView = Backbone.View.extend({
     el: $("#available"),
     
     initialize: function(options){
-	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({el: $("#available"), id: index, letter: letter});});
 	this.app = options["app"];
+	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({el: $("#available"), id: index, letter: letter, app: options["app"]});});
 	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
-	this.listenTo(this.app, 'letter:typed', this.handleLetter);
+	this.listenTo(this.app, 'letter:typed', this.handleTypedLetter);
 	this.render();
     },
     
@@ -202,6 +215,15 @@ var AvailableView = Backbone.View.extend({
 	if(typeof(removed)!="undefined"){this.letters.splice(removed, 1)};
     },
 
+
+    handleTypedLetter: function(event){
+	var letter = event.value;
+	var letter_position = $.map(this.letters, function(letterview){return letterview.getLetter()});
+	letter_position = letter_position.indexOf(letter);
+	this.app.trigger("letter:position", {position: letter_position});
+	console.log(letter_position);	
+    },
+
     handleLetter: function(event){
 	var letter = event.value;
 	var letter_position = $.map(this.letters, function(letterview){return letterview.getLetter()});
@@ -214,7 +236,10 @@ var AvailableView = Backbone.View.extend({
     },
 
     handleLetterPosition: function(event){
-	console.log(event);
+	var removed_letter = this.letters[event.position];
+	if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
+	this.render();
+	console.log(event.position);
 	console.log("handleLetterPosition");
     }
 });				
@@ -360,7 +385,7 @@ var GuessView = Backbone.View.extend({
 	model: new App(),
 
 	events: {
-	    "keydown":  "handleKeydown"
+	    "keydown":  "handleKeydown",
 	},
 	
 
