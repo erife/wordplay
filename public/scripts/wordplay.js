@@ -184,7 +184,7 @@ var LetterView = Backbone.View.extend({
 
     handleClick: function(event){
 	console.log(this.$el.index());
-	    this.app.trigger("letter:position", {position: this.$el.index()});
+	    this.app.trigger("letter:position", {position: this.$el.index(), parent: this.parent});
     }
 });
 
@@ -202,6 +202,7 @@ var AvailableView = Backbone.View.extend({
 	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
 	this.listenTo(this.app, 'letter:typed', this.handleTypedLetter);
 	this.render();
+
     },
     
     
@@ -229,12 +230,10 @@ var AvailableView = Backbone.View.extend({
 	var removed_letter = this.letters[event.position];
 	if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
 	this.render();
-	this.app.trigger("letter:guessed", {letter: removed_letter.letter});
+	if(event.parent.attr('id') == 'available'){
+	    this.app.trigger("letter:guessed", {letter: removed_letter.letter});
+	}
     }
-
-    
-
-
 });				
 
 var GuessView = Backbone.View.extend({
@@ -259,8 +258,6 @@ var GuessView = Backbone.View.extend({
 	var id = this.letters.length -1;
 	this.letters.push(new LetterView({parent: $("#guess"), id: id, letter: event.letter, app: this.app}));
 	this.render();
-	console.log("G handle letter");
-	console.log(event.letter);
     }
 
 
