@@ -156,7 +156,7 @@ var LetterView = Backbone.View.extend({
 	switch(this.state) {
 	case "new":     	
 	    this.$el.text(this.letter);
-	    this.parent.append(this.el);
+	    this.parent.append(this.$el);
 	    this.setStatic();
 	    break;
 	case "removed": 
@@ -183,8 +183,8 @@ var LetterView = Backbone.View.extend({
     },
 
     handleClick: function(event){
-	console.log(this.$el.index());
-	    this.app.trigger("letter:position", {position: this.$el.index(), parent: this.parent});
+
+	    this.app.trigger("letter:position", {position: this.$el.index(), parent_id: this.parent.attr('id')});
     }
 });
 
@@ -195,16 +195,15 @@ var AvailableView = Backbone.View.extend({
 
     initialize: function(options){
 	this.app = options["app"];
-	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({parent: $("#available"),  letter: letter, app: options["app"]});});
+	var el = this.$el;
+	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({parent: el,  letter: letter, app: options["app"]});});
 	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
 	this.listenTo(this.app, 'letter:typed', this.handleTypedLetter);
 	this.listenTo(this.app, 'letter:selected', this.handleLetter);
 	this.render();
-
     },
     
-    
-    render: function() {
+     render: function() {
 	var removed = undefined;
 	$.each(this.letters, function(index, letter){
 	    var state = letter.render();
@@ -215,28 +214,26 @@ var AvailableView = Backbone.View.extend({
 	if(typeof(removed)!="undefined"){this.letters.splice(removed, 1)};
     },
 
-
     handleTypedLetter: function(event){
 	var letter = event.value;
 	var letter_position = $.map(this.letters, function(letterview){return letterview.getLetter()});
 	letter_position = letter_position.indexOf(letter);
-	this.app.trigger("letter:position", {position: letter_position});
-	console.log(letter_position);	
+	this.app.trigger("letter:position", {position: letter_position, parent_id: this.$el.attr('id')});
     },
     
     handleLetterPosition: function(event){
-	if(event.parent.attr('id') == 'available'){
+	if(event.parent_id == this.$el.attr('id')){
 	    var removed_letter = this.letters[event.position];
 	    if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
 	    this.render();
-	    this.app.trigger("letter:selected", {letter: removed_letter.letter, parent: this.$el});
+	    this.app.trigger("letter:selected", {letter: removed_letter.letter, parent_id: this.$el.attr('id')});
 	}
 	
     },
 
     handleLetter: function(event){
-	if(event.parent.attr('id') == 'guess'){
-	this.letters.push(new LetterView({parent: $("#available"), letter: event.letter, app: this.app}));
+	if(event.parent_id != this.$el.attr('id')){
+	this.letters.push(new LetterView({parent: this.$el, letter: event.letter, app: this.app}));
 	this.render();
 	}
     }
@@ -267,17 +264,17 @@ var GuessView = Backbone.View.extend({
     },
     
     handleLetterPosition: function(event){
-	if(event.parent.attr('id') == 'guess'){
+	if(event.parent_id == this.$el.attr('id')){
 	    var removed_letter = this.letters[event.position];
 	    if(typeof(removed_letter)!="undefined"){removed_letter.setRemoved()};
 	    this.render();
-	    this.app.trigger("letter:selected", {letter: removed_letter.letter, parent: this.$el});
+	    this.app.trigger("letter:selected", {letter: removed_letter.letter, parent_id: this.$el.attr('id')});
 	}
     },
 		
     handleLetter: function(event){
-	if(event.parent.attr('id') == 'available'){
-	this.letters.push(new LetterView({parent: $("#guess"), letter: event.letter, app: this.app}));
+	if(event.parent_id != this.$el.attr('id')){
+	this.letters.push(new LetterView({parent: this.$el, letter: event.letter, app: this.app}));
 	this.render();
 	}
     }
