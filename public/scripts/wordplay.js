@@ -386,7 +386,7 @@ var LetterContainerView = Backbone.View.extend({
 	    switch(event.which){
 		case 16: this.model.nextLevel();
 		break;
-		case 8: this.trigger("myevent",{type:"correction"});
+		case 8: this.model.trigger("myevent",{type:"correction"});
 		break;
 		default: 
 		if(event.which >=65 && event.which <=90){
