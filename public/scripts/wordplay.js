@@ -198,6 +198,7 @@ var LetterContainerView = Backbone.View.extend({
 	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
 	if(options["type"]){this.listenTo(this.app, 'letter:typed', this.handleTypedLetter)};
 	this.listenTo(this.app, 'letter:selected', this.handleLetter);
+	if(options["backspace"]){this.listenTo(this.app, 'backspace', this.handleBackspace)};
 	this.render();
     },
     
@@ -236,8 +237,13 @@ var LetterContainerView = Backbone.View.extend({
 	this.letters.push(new LetterView({parent: this.$el, letter: event.letter, app: this.app}));
 	this.render();
 	}
+    },
+    handleBackspace: function(event){
+	var array_length = this.letters.length;
+	if(array_length != 0){
+	    this.app.trigger("letter:position", {position: array_length-1, parent_id: this.$el.attr('id')}); 
+	}
     }
-    
 });				
 
     var Message = Backbone.Model.extend({
@@ -252,7 +258,7 @@ var LetterContainerView = Backbone.View.extend({
 	
 	initialize: function(app) {
 	    this.listenTo(app,"change:state", this.setState);
-	    this.listenTo(app, "myevent", this.handleBackspace);
+	    this.listenTo(app, "backspace", this.handleBackspace);
 	},
 	
 	states: {
@@ -370,14 +376,14 @@ var LetterContainerView = Backbone.View.extend({
 	    app.messaging = new MessageView(app.model);
 	    app.timer = new TimerView();
 	    app.progress = new ProgressView();
-    app.score = new ScoreView();	    
+	    app.score = new ScoreView();	    
 	    app.words = new FoundCollection();
 	    app.found = new FoundView({"collection": app.words});
 	    app.words.fetch({success: function(collection){
 		var letters = collection.getAvailableLetters();
-		app.available = new LetterContainerView({letters: letters, app: app, type: true, el:$('#available')});
+		app.available = new LetterContainerView({letters: letters, app: app.model, type: true, el:$('#available')});
 	    }});
-	    app.guess = new LetterContainerView({letters: [], app:app, el:$('#guess')});
+	    app.guess = new LetterContainerView({letters: [], app:app.model, backspace: true, el:$('#guess')});
 	    app.render();
 	},
 
@@ -386,12 +392,13 @@ var LetterContainerView = Backbone.View.extend({
 	    switch(event.which){
 		case 16: this.model.nextLevel();
 		break;
-		case 8: this.model.trigger("myevent",{type:"correction"});
+		case 8: 
+		this.model.trigger("backspace");
 		break;
 		default: 
 		if(event.which >=65 && event.which <=90){
 		    var typed_letter = String.fromCharCode(event.which);
-		    this.trigger("letter:typed", {value:typed_letter});
+		    this.model.trigger("letter:typed", {value:typed_letter});
 		    
 		};
 		break;
