@@ -11,16 +11,24 @@ $(function(){
 	
 	timerTemplate: _.template($('#timer-template').html()),
 
-	initialize: function() {
-	    this.render();
+	initialize: function(options) {
+	    var app = options["app"]
+	    this.count = options["count"];
+	    this.timer = setInterval(function(){app.trigger("tic");}, 1000);
+	    this.listenTo(app, "tic", this.startTimer);
 	},
 
 	render: function() {
-	    var time = "5:00";
-	    this.$el.html(this.timerTemplate({timer: time}));
+	    this.$el.html(this.timerTemplate({timer: this.count}));
+	},
+	
+	startTimer: function(){
+	    this.count = this.count -1;
+	    if(this.count >= 0){
+	    this.render();
+	    }
+	    else{clearInterval(this.timer);}
 	}
-
-
     });
 
     var ProgressView = Backbone.View.extend({
@@ -374,7 +382,7 @@ var LetterContainerView = Backbone.View.extend({
 	initialize: function() {
 	    var app = this;
 	    app.messaging = new MessageView(app.model);
-	    app.timer = new TimerView();
+	    app.timer = new TimerView({app: app.model, count: 30});
 	    app.progress = new ProgressView();
 	    app.score = new ScoreView();	    
 	    app.words = new FoundCollection();
