@@ -38,22 +38,23 @@ $(function(){
 	
 	progressTemplate: _.template($('#progress-template').html()),
 
-	initialize: function() {
-	    this.render();
+	initialize: function(options) {
+	    this.app = options["app"];
+	    this.listenTo(this.app, "words:loaded", this.render);
 	},
-
-	render: function() {
+	
+	render: function(event) {
+	    console
 	    var context = {
 		found_word_count: 7,
-		total_word_count: 30
+		total_word_count: event['value']
 	    }
+
 	    
-	    this.$el.html(this.progressTemplate(context));
+	this.$el.html(this.progressTemplate(context));
 	}
-
-
     });
-
+    
     var WordView = Backbone.View.extend({
 	initialize: function(){
 	    this.listenTo(this.model, "change", this.render);
@@ -102,8 +103,9 @@ $(function(){
 	model: FoundModel,
 	url: '/wordlist',
 
-	initialize: function() {
-},
+	initialize: function(models, options) {
+	    this.app = options["app"];
+	},
 	
 	getAvailableLetters: function(){
 	    var lastword = this.pluck("word").pop().split("");
@@ -126,7 +128,8 @@ $(function(){
 	},
 
 	handleFetch: function(event){
-	    console.log("handleFetch");
+	    var word_count = this.length;
+	    this.app.trigger("words:loaded", {value:word_count});
 	}
 	
     });
@@ -137,7 +140,7 @@ $(function(){
 	
 
 	initialize: function() {
-	    this.collection.bind("change reset add remove", this.collection.handleFetch, this);
+	    this.collection.bind("reset", this.collection.handleFetch, this.app);
 	    this.render();
 	},
 
@@ -396,9 +399,9 @@ var LetterContainerView = Backbone.View.extend({
 	    var app = this;
 	    app.messaging = new MessageView(app.model);
 	    app.timer = new TimerView({app: app.model, count: 30});
-	    app.progress = new ProgressView();
+	    app.progress = new ProgressView({app: app.model});
 	    app.score = new ScoreView();	    
-	    app.words = new FoundCollection();
+	    app.words = new FoundCollection([], {app: app.model});
 	    app.found = new FoundView({"collection": app.words});
 	    app.words.fetch({success: function(collection){
 		var letters = collection.getAvailableLetters();
