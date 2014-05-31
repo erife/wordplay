@@ -102,13 +102,9 @@ $(function(){
 	model: FoundModel,
 	url: '/wordlist',
 
-
 	initialize: function() {
-	    console.log("peter");
-
-	},
+},
 	
-
 	getAvailableLetters: function(){
 	    var lastword = this.pluck("word").pop().split("");
 	    lastword = this.shuffle(lastword);
@@ -127,17 +123,21 @@ $(function(){
 		letters[K] = T; 
 	    }
 	    return letters;
+	},
+
+	handleFetch: function(event){
+	    console.log("handleFetch");
 	}
+	
     });
     
     var FoundView = Backbone.View.extend({
 
 	el: $("#found"),
-	events: {
-	    "sync": "handleFetch"
-	},
+	
 
 	initialize: function() {
+	    this.collection.bind("change reset add remove", this.collection.handleFetch, this);
 	    this.render();
 	},
 
@@ -150,12 +150,8 @@ $(function(){
 	    }
 	    var current_column = -1;
 	    var row_count = 12;
-	},
-
-	handleFetch: function(event){
-	    console.log("handleFetch");
-	    
 	}
+	
 
 
 
