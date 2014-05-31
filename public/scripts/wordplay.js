@@ -1,3 +1,4 @@
+
 $(function(){
 
     _.templateSettings = {
@@ -88,6 +89,7 @@ $(function(){
 	    this.set("id", options["id"]);
 	    this.set("column", Math.floor(options["id"]/12));
 	    this.view = new WordView({model:this});
+	    
 	},
 	
 	getLetters: function(){
@@ -99,7 +101,14 @@ $(function(){
     var FoundCollection = Backbone.Collection.extend({
 	model: FoundModel,
 	url: '/wordlist',
+
+
+	initialize: function() {
+	    console.log("peter");
+
+	},
 	
+
 	getAvailableLetters: function(){
 	    var lastword = this.pluck("word").pop().split("");
 	    lastword = this.shuffle(lastword);
@@ -124,11 +133,12 @@ $(function(){
     var FoundView = Backbone.View.extend({
 
 	el: $("#found"),
+	events: {
+	    "sync": "handleFetch"
+	},
 
 	initialize: function() {
 	    this.render();
-	    this.collection.on("fetch", this.render, this);	    
-	   	    
 	},
 
 	render: function() {
@@ -140,8 +150,15 @@ $(function(){
 	    }
 	    var current_column = -1;
 	    var row_count = 12;
+	},
+
+	handleFetch: function(event){
+	    console.log("handleFetch");
 	    
 	}
+
+
+
     });
 
 var LetterView = Backbone.View.extend({
@@ -401,14 +418,17 @@ var LetterContainerView = Backbone.View.extend({
 		case 16: this.model.nextLevel();
 		break;
 		case 8: 
-		this.model.trigger("backspace");
+		if(!$(event.target).is("input, textarea")){
+		    event.preventDefault();
+		    this.model.trigger("backspace");
+		}
 		break;
 		default: 
 		if(event.which >=65 && event.which <=90){
 		    var typed_letter = String.fromCharCode(event.which);
 		    this.model.trigger("letter:typed", {value:typed_letter});
 		    
-		};
+		}
 		break;
 	    }
 
