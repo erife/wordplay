@@ -358,6 +358,59 @@ var LetterContainerView = Backbone.View.extend({
 
     });
     
+    var StatusView = Backbone.View.extend({
+	
+	el: $("#start"),
+
+	statusTemplate: _.template($('#status-template').html()),
+
+	events: {
+	    "click": "handleClick"
+	},
+   
+	initialize: function(options){
+	    this.app = options["app"];
+	    this.status = 'pending';
+	    this.listenTo(this.app, "status:change", this.handleStatus);
+	    this.render();
+	},
+	
+	render:function(){
+	    
+	    var button_text = "default";
+	    switch(this.status){
+	    case "pending": button_text = "Start";
+		break;
+	    case "running": button_text = "Pause";
+		break;
+	    case "paused": button_text = "Resume";
+		break;
+	    }
+		
+		
+	    this.$el.html(this.statusTemplate({button_text: button_text}));
+	},
+
+	handleClick: function(event){
+	    this.app.trigger("status:change", {status: this.status});
+	},
+	
+
+	handleStatus: function(event){
+	    console.log(event.status);
+	    switch(event.status){
+		case "pending" : this.status = "running";
+		break;
+		case "running" : this.status = "paused";
+		break;
+		case "paused" : this.status = "running";
+		break;
+	    }
+	    this.render();
+	}
+
+    });
+
 
     var App = Backbone.Model.extend({
 	states: [
@@ -397,6 +450,7 @@ var LetterContainerView = Backbone.View.extend({
 
 	initialize: function() {
 	    var app = this;
+	    app.status = new StatusView({app: app.model});
 	    app.messaging = new MessageView(app.model);
 	    app.timer = new TimerView({app: app.model, count: 30});
 	    app.progress = new ProgressView({app: app.model});
@@ -433,7 +487,7 @@ var LetterContainerView = Backbone.View.extend({
 
 	}
 	
-
+	
     });
     
     game = new AppView; 

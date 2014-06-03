@@ -49,11 +49,7 @@
       </div>
       <div id="control">
 	<button id="start">
-	  Start
-	  </button>
-	<button id="pause">
-	  Pause
-	  </button>
+	</button>
 	<dl id="score">
 	</dl>
 	<button>
@@ -82,6 +78,9 @@
 	{{= message }}
       </p>
       <img src="images/panda_{{= status }}.png" id="messanger"  alt="{{= threat }}" />
+    </script>
+    <script id="status-template" type="text/template">
+      {{= button_text }}
     </script>
     <script id="score-template" type="text/template">
       <dt>
