@@ -13,14 +13,24 @@ $(function(){
 	timerTemplate: _.template($('#timer-template').html()),
 
 	initialize: function(options) {
-	    var app = options["app"]
+	    this.app = options["app"]
 	    this.count = options["count"];
-	    this.timer = setInterval(function(){app.trigger("tic");}, 1000);
-	    this.listenTo(app, "tic", this.startTimer);
+	    this.listenTo(this.app, "tic", this.startTimer);
+	    this.listenTo(this.app, "status:change_approved", this.handleStatus);
 	},
 
 	render: function() {
 	    this.$el.html(this.timerTemplate({timer: this.count}));
+	},
+
+	handleStatus: function(event){
+	    var app = this.app;
+	    switch(event.status){
+	    case "running": this.timer = setInterval(function(){app.trigger("tic");}, 1000);
+		break;
+	    case "paused": clearInterval(this.timer);
+		break;
+	    }
 	},
 	
 	startTimer: function(){
@@ -371,7 +381,7 @@ var LetterContainerView = Backbone.View.extend({
 	initialize: function(options){
 	    this.app = options["app"];
 	    this.status = 'pending';
-	    this.listenTo(this.app, "status:change", this.handleStatus);
+	    this.listenTo(this.app, "status:change_requested", this.handleStatus);
 	    this.render();
 	},
 	
@@ -392,12 +402,11 @@ var LetterContainerView = Backbone.View.extend({
 	},
 
 	handleClick: function(event){
-	    this.app.trigger("status:change", {status: this.status});
+	    this.app.trigger("status:change_requested", {status: this.status});
 	},
 	
 
 	handleStatus: function(event){
-	    console.log(event.status);
 	    switch(event.status){
 		case "pending" : this.status = "running";
 		break;
@@ -406,6 +415,7 @@ var LetterContainerView = Backbone.View.extend({
 		case "paused" : this.status = "running";
 		break;
 	    }
+	    this.app.trigger("status:change_approved", {status: this.status});
 	    this.render();
 	}
 
