@@ -115,8 +115,17 @@ $(function(){
 
 	initialize: function(models, options) {
 	    this.app = options["app"];
+	    this.getWord();
 	},
 	
+	getWord: function(){
+	    var app = this.app;
+	    this.fetch({success: function(collection){
+		var letters = collection.getAvailableLetters();
+		app.available = new LetterContainerView({letters: letters, app: app, type: true, el:$('#available')});
+	    }});
+	},
+
 	getAvailableLetters: function(){
 	    var lastword = this.pluck("word").pop().split("");
 	    lastword = this.shuffle(lastword);
@@ -467,10 +476,6 @@ var LetterContainerView = Backbone.View.extend({
 	    app.score = new ScoreView();	    
 	    app.words = new FoundCollection([], {app: app.model});
 	    app.found = new FoundView({"collection": app.words});
-	    app.words.fetch({success: function(collection){
-		var letters = collection.getAvailableLetters();
-		app.available = new LetterContainerView({letters: letters, app: app.model, type: true, el:$('#available')});
-	    }});
 	    app.guess = new LetterContainerView({letters: [], app:app.model, backspace: true, el:$('#guess')});
 	    app.render();
 	},
