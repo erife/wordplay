@@ -72,6 +72,7 @@ $(function(){
 	    },
 	
 	render: function() {
+	    console.log("wordview");
 	    var i = this.model.get("id");
 	    var rendered_word = $("<ul>", {id: "found_word_" + i, class: "letters"});
 	    $("#found_column_"+ this.model.get("column")).append(rendered_word);
@@ -115,7 +116,7 @@ $(function(){
 
 	initialize: function(models, options) {
 	    this.app = options["app"];
-	    this.getWord();
+	    this.listenTo(this.app, "reset:triggered", this.getWord);
 	},
 	
 	getWord: function(){
@@ -149,6 +150,7 @@ $(function(){
 	handleFetch: function(event){
 	    var word_count = this.length;
 	    this.app.trigger("words:loaded", {value:word_count});
+	    console.log("handlefetch");
 	}
 	
     });
@@ -158,8 +160,10 @@ $(function(){
 	el: $("#found"),
 	
 
-	initialize: function() {
-	    this.collection.bind("reset", this.collection.handleFetch, this.app);
+	initialize: function(options) {
+	    this.app = options["app"];
+	    this.listenTo(this.app, "status:change_approved", this.handleReset);
+//	    this.collection.bind("reset", this.collection.handleFetch, this.app);
 	    this.render();
 	},
 
@@ -172,8 +176,13 @@ $(function(){
 	    }
 	    var current_column = -1;
 	    var row_count = 12;
-	}
+	},
 	
+	handleReset: function() {
+	    console.log("handlereset");
+	    this.$el.find('> li').empty();
+	    this.app.trigger("reset:triggered");
+	}
 
 
 
@@ -475,7 +484,7 @@ var LetterContainerView = Backbone.View.extend({
 	    app.progress = new ProgressView({app: app.model});
 	    app.score = new ScoreView();	    
 	    app.words = new FoundCollection([], {app: app.model});
-	    app.found = new FoundView({"collection": app.words});
+	    app.found = new FoundView({"collection": app.words, app:app.model});
 	    app.guess = new LetterContainerView({letters: [], app:app.model, backspace: true, el:$('#guess')});
 	    app.render();
 	},
