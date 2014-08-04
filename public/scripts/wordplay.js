@@ -123,7 +123,7 @@ $(function(){
 	    var app = this.app;
 	    this.fetch({success: function(collection){
 		var letters = collection.getAvailableLetters();
-		app.available = new LetterContainerView({letters: letters, app: app, type: true, el:$('#available')});
+		app.trigger("new_available_letters", {letters: letters, el:$('#available')});
 	    }});
 	},
 
@@ -149,7 +149,7 @@ $(function(){
 
 	handleFetch: function(event){
 	    var word_count = this.length;
-	    this.app.trigger("words:loaded", {value:word_count});
+	    this.trigger("words:loaded", {value:word_count});
 	    console.log("handlefetch");
 	}
 	
@@ -179,7 +179,6 @@ $(function(){
 	},
 	
 	handleReset: function() {
-	    console.log("handlereset");
 	    this.$el.find('> li').empty();
 	    this.app.trigger("reset:triggered");
 	}
@@ -238,6 +237,8 @@ var LetterView = Backbone.View.extend({
 
 	    this.app.trigger("letter:position", {position: this.$el.index(), parent_id: this.parent.attr('id')});
     }
+
+	
 });
 
 
@@ -246,12 +247,11 @@ var LetterContainerView = Backbone.View.extend({
     initialize: function(options){
 	this.app = options["app"];
 	var el = this.$el;
-	this.letters = $.map(options["letters"], function(letter, index){return new LetterView({parent: el,  letter: letter, app: options["app"]});});
+	this.listenTo(this.app, "new_available_letters", this.handleLetters);
 	this.listenTo(this.app, 'letter:position', this.handleLetterPosition);
 	if(options["type"]){this.listenTo(this.app, 'letter:typed', this.handleTypedLetter)};
 	this.listenTo(this.app, 'letter:selected', this.handleLetter);
 	if(options["backspace"]){this.listenTo(this.app, 'backspace', this.handleBackspace)};
-	this.render();
     },
     
      render: function() {
@@ -295,7 +295,22 @@ var LetterContainerView = Backbone.View.extend({
 	if(array_length != 0){
 	    this.app.trigger("letter:position", {position: array_length-1, parent_id: this.$el.attr('id')}); 
 	}
+    },
+
+    handleLetters: function(options){
+	console.log(options.el);
+	var el = this.$el;
+	var matching = (el.attr("id") == options.el.attr("id"));
+
+	if(matching){
+	    this.letters = $.map(options.letters, function(letter, index){return new LetterView({parent: el,  letter: letter, app: options["app"]});});}
+	else{
+	    this.letters = [];
+	}
+	this.render();
     }
+
+    
 });				
 
     var Message = Backbone.Model.extend({
@@ -485,6 +500,7 @@ var LetterContainerView = Backbone.View.extend({
 	    app.score = new ScoreView();	    
 	    app.words = new FoundCollection([], {app: app.model});
 	    app.found = new FoundView({"collection": app.words, app:app.model});
+	    app.available = new LetterContainerView({letters: [], app: app.model, type: true, el:$('#available')});
 	    app.guess = new LetterContainerView({letters: [], app:app.model, backspace: true, el:$('#guess')});
 	    app.render();
 	},
