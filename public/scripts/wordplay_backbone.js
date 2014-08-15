@@ -40,14 +40,23 @@ $(function(){
 	el: '#everything', 
 	
 	initialize: function(){
-	    var letterOne = Letters.create({letter: "W"});
-	    this.render(letterOne);
+	    var letterSet = ["E", "L", "A", "I", "N", "A"];
+	    var app = this;
+	    $.each(letterSet, function(i, letter){
+		var letterModel = Letters.create({letter: letter});
+		app.addLetter(letterModel);
+	    });
 	},
 
-	render: function(letterOne){
-	    var view = new LetterView({model: letterOne});
+	render: function(){
+	 },
+
+	addLetter: function(letterModel){
+	    var view = new LetterView({model: letterModel});
 	    $('#available').append(view.render().el);
 	}
+
+
 
     });
 
