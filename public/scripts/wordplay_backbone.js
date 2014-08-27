@@ -44,8 +44,12 @@ $(function(){
 	model: Word, 
 	url: '/wordlist',
 
-	letterSet: function(){
-	    return this.where({id: this.length-1});
+	letterSet: function(index){
+	    return this
+		.at(this.length-1)
+		.get('word')
+		.split("");
+	    
 	}
 
 
@@ -91,14 +95,13 @@ $(function(){
 	},
 
 	wordInitalize: function(){
-	    var seedWord = Words.letterSet()[0].get('word');
-	    App.letterGenerate(seedWord);
+	    App.letterGenerate(Words.letterSet());
 	    App.render();
 	},
 
 	letterGenerate: function(letterSet){
 	    var app = this;
-	    $.each(letterSet.split(""), function(i, letter){
+	    $.each(letterSet, function(i, letter){
 		var letterModel = Letters.create({letter: letter});
 		app.addLetter(letterModel);
 	    });
