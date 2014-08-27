@@ -42,7 +42,13 @@ $(function(){
     var WordList = Backbone.Collection.extend({
 	
 	model: Word, 
-	url: '/wordlist'
+	url: '/wordlist',
+
+	letterSet: function(){
+	    return this.where({id: this.length-1});
+	}
+
+
     });
     
     var WordView = Backbone.View.extend({
@@ -65,12 +71,11 @@ $(function(){
 	el: '#everything', 
 	
 	initialize: function(){
-	    this.letterGenerate("PUPPY");
-	    Words.fetch({success: this.render});
+	    Words.fetch({success: this.wordInitalize});
 	},
 
 	render: function(){
-	    
+	    console.log("render");
 	    Words.each(function(word, i){
 		var wordview = new WordView({model: word});
 		var column_id = "column"+Math.floor(i/10);
@@ -83,6 +88,12 @@ $(function(){
 		
 	    });
 	    
+	},
+
+	wordInitalize: function(){
+	    var seedWord = Words.letterSet()[0].get('word');
+	    App.letterGenerate(seedWord);
+	    App.render();
 	},
 
 	letterGenerate: function(letterSet){
