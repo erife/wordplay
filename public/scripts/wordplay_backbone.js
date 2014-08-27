@@ -25,9 +25,6 @@ $(function(){
 	
 	template: _.template("<%= letter %>"),
 	
-	initialize: function(){
-	},
-
 	render: function(){
 	    this.$el.html(this.template(this.model.toJSON()));
 	    return this;
@@ -35,12 +32,31 @@ $(function(){
 	
     });
 
+    var Word = Backbone.Model.extend({
+
+	defaults: function(){
+	return{word: "noword"};
+	}
+    });
+
+    var WordList = Backbone.Collection.extend({
+	
+	model: Word, 
+	url: '/wordlist'
+
+	
+	
+    });
+
+    var Words = new WordList;
+
     var AppView = Backbone.View.extend({
 
 	el: '#everything', 
 	
 	initialize: function(){
 	    this.letterGenerate("PUPPY");
+	    Words.fetch();
 	},
 
 	render: function(){

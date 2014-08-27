@@ -19,7 +19,7 @@ MAXHIGHSCOREINDEX = 9
 
 
 
-def get_resultwords()
+def get_subwords()
   seed_word = SEED_WORDS.sample(1).first
   available_letters = seed_word.split("")
   permutation_words = []
@@ -39,7 +39,7 @@ end
 get "/wordlist" do
   resultwords = []
   while resultwords.length <= MINSUBWORDCOUNT || resultwords.length >= MAXSUBWORDCOUNT do
-     resultwords = get_resultwords()
+     resultwords = get_subwords()
   end
   resultwords = resultwords.sort_by{|x| [x.length, x]}
   resultwords = resultwords.each_with_index.map{|word, i| {:id => i, :word => word}}  
