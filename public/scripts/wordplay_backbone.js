@@ -14,6 +14,7 @@ $(function(){
 	model: Letter, 
 	
 	localStorage: new Backbone.LocalStorage("storage")
+
 	
     });
 
@@ -102,9 +103,13 @@ $(function(){
 	letterGenerate: function(letterSet){
 	    var app = this;
 	    $.each(letterSet, function(i, letter){
-		var letterModel = Letters.create({letter: letter});
-		app.addLetter(letterModel);
+		Letters.create({letter: letter});
 	    });
+	    Letters.reset(Letters.shuffle(), {silent: true});
+	    Letters.each(function(letter, i){
+		app.addLetter(letter);
+	    });
+			 
 	},
 
 
