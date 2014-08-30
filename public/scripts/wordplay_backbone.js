@@ -60,10 +60,15 @@ $(function(){
 	
 	tagName: "li",
 	
-	template: _.template("<%= word %>"),	
+	template: _.template($("#word-template").html()), 
 
 	render: function(){
-	    this.$el.html(this.template(this.model.toJSON()));
+
+	    var word = this.model.get('word');
+	    var container = $("<ul>", {class: "letters"});
+	    $.map(word.split(""), function(x){
+		container.append($("<li>", {html: x}))})
+	    this.$el.append(container);
 	    return this;
 	}
 
@@ -80,7 +85,6 @@ $(function(){
 	},
 
 	render: function(){
-	    console.log("render");
 	    Words.each(function(word, i){
 		var wordview = new WordView({model: word});
 		var column_id = "column"+Math.floor(i/10);

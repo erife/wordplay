@@ -12,3 +12,8 @@ configure :production, :development do
                                           :encoding => 'utf8'
                                           )
 end
+
+class App < Sinatra::Base
+  register Sinatra::JstPages
+  serve_jst '/jst.js'
+end

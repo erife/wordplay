@@ -2,10 +2,12 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/json'
+require 'sinatra/jstpages'
 require 'multi_json'
 require 'set'
 require './config/environments'
 require './models/highscore'
+
 
 set :static => true
 set :public_folder, File.expand_path(File.dirname(__FILE__) + '/public')
@@ -33,7 +35,7 @@ def get_subwords()
 end
 
 get "/" do
-erb :index
+File.open("./views/index.html").read()
 end
 
 get "/wordlist" do
