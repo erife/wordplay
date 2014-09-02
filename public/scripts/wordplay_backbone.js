@@ -26,6 +26,11 @@ $(function(){
 	
 	template: _.template("<%= letter %>"),
 	
+	initialize:function(){
+	    this.listenTo(this.model, 'destroy', this.remove);
+	    this.listenTo(this.model, 'change', this.render);
+	},
+
 	render: function(){
 	    this.$el.html(this.template(this.model.toJSON()));
 	    return this;
@@ -80,6 +85,10 @@ $(function(){
 
 	el: '#everything', 
 	
+	events: {
+	    "click .shuffle" : "handleShuffle"
+	},
+	
 	initialize: function(){
 	    Words.fetch({success: this.wordInitalize});
 	},
@@ -116,16 +125,23 @@ $(function(){
 			 
 	},
 
-
 	addLetter: function(letterModel){
 	    var view = new LetterView({model: letterModel});
 	    $('#available').append(view.render().el);
+	},
+
+	handleShuffle: function(){
+	    var app = this;
+	    var LetterCopy = Letters.shuffle();
+	    _.invoke(Letters.toArray(), "destroy");
+	    Letters.reset(LetterCopy);
+	    Letters.each(function(letter, i){
+		app.addLetter(letter);
+	    });
 	}
-
-
-
+	
     });
-
+    
     var App = new AppView();
     
     
