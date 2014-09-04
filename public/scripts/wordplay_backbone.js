@@ -86,11 +86,11 @@ $(function(){
 	el: '#everything', 
 	
 	events: {
-	    "click .shuffle" : "handleShuffle"
+	    "click .shuffle" : "handleShuffle",
+	    "click #start" : "startGame"
 	},
 	
 	initialize: function(){
-	    Words.fetch({success: this.wordInitalize});
 	},
 
 	render: function(){
@@ -114,15 +114,10 @@ $(function(){
 	},
 
 	letterGenerate: function(letterSet){
-	    var app = this;
 	    $.each(letterSet, function(i, letter){
 		Letters.create({letter: letter});
 	    });
-	    Letters.reset(Letters.shuffle(), {silent: true});
-	    Letters.each(function(letter, i){
-		app.addLetter(letter);
-	    });
-			 
+	    this.handleShuffle();
 	},
 
 	addLetter: function(letterModel){
@@ -138,6 +133,10 @@ $(function(){
 	    Letters.each(function(letter, i){
 		app.addLetter(letter);
 	    });
+	},
+
+	startGame: function(){
+	    Words.fetch({success: this.wordInitalize});
 	}
 	
     });
