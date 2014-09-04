@@ -65,10 +65,12 @@ $(function(){
 	
 	tagName: "li",
 	
-	template: _.template($("#word-template").html()), 
-
+	initialize:function(){
+	    this.listenTo(this.model, 'remove', this.remove);
+	    this.listenTo(this.model, 'change', this.render);
+	},
+	
 	render: function(){
-
 	    var word = this.model.get('word');
 	    var container = $("<ul>", {class: "letters"});
 	    $.map(word.split(""), function(x){
@@ -84,16 +86,18 @@ $(function(){
     var AppView = Backbone.View.extend({
 
 	el: '#everything', 
-	
+
 	events: {
 	    "click .shuffle" : "handleShuffle",
 	    "click #start" : "startGame"
 	},
 	
 	initialize: function(){
+	    $("#start").html("Start");
 	},
 
 	render: function(){
+	    $("#found").empty();
 	    Words.each(function(word, i){
 		var wordview = new WordView({model: word});
 		var column_id = "column"+Math.floor(i/10);
@@ -136,6 +140,8 @@ $(function(){
 	},
 
 	startGame: function(){
+	    _.invoke(Letters.toArray(), "destroy");
+	    Words.remove(Words.toArray());
 	    Words.fetch({success: this.wordInitalize});
 	}
 	
