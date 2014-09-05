@@ -3,7 +3,7 @@ $(function(){
     var Letter = Backbone.Model.extend({
 	
 	defaults: function(){
-	    return{letter: "A"};
+	    return{letter: "A", location: "available"};
 	}
 
     });
@@ -13,8 +13,11 @@ $(function(){
 
 	model: Letter, 
 	
-	localStorage: new Backbone.LocalStorage("storage")
+	localStorage: new Backbone.LocalStorage("storage"),
 
+	availableLetters: function(){
+	    return this.where({location: "available"});
+	}
 	
     });
 
@@ -134,9 +137,13 @@ $(function(){
 	    var LetterCopy = Letters.shuffle();
 	    _.invoke(Letters.toArray(), "destroy");
 	    Letters.reset(LetterCopy);
-	    Letters.each(function(letter, i){
-		app.addLetter(letter);
+	    $.map(Letters.availableLetters(), function(i){
+		app.addLetter(i);
 	    });
+//	    Letters.each(function(letter, i){
+//		console.log(letter);
+//		app.addLetter(letter);
+//	    });
 	},
 
 	startGame: function(){
