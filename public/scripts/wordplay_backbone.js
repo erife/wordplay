@@ -4,9 +4,12 @@ $(function(){
 	
 	defaults: function(){
 	    return{letter: "A", location: "available"};
-	}
+	},
 
-    });
+	toggle: function(){
+	    this.save({location: (this.get('location')=='available' ? 'guess' : 'available')});
+	}
+  });
 
 
     var LetterList = Backbone.Collection.extend({
@@ -14,10 +17,16 @@ $(function(){
 	model: Letter, 
 	
 	localStorage: new Backbone.LocalStorage("storage"),
-
+	
+	
 	availableLetters: function(){
 	    return this.where({location: "available"});
+	},
+
+	guessLetters: function(){
+	    return this.where({location: "guess"});
 	}
+
 	
     });
 
@@ -29,6 +38,10 @@ $(function(){
 	
 	template: _.template("<%= letter %>"),
 	
+	events: {
+	    "click" : "toggleGuessed"
+	},
+
 	initialize:function(){
 	    this.listenTo(this.model, 'destroy', this.remove);
 	    this.listenTo(this.model, 'change', this.render);
@@ -37,6 +50,10 @@ $(function(){
 	render: function(){
 	    this.$el.html(this.template(this.model.toJSON()));
 	    return this;
+	},
+
+	toggleGuessed: function(){
+	    this.model.toggle();
 	}
 	
     });
@@ -96,6 +113,7 @@ $(function(){
 	},
 	
 	initialize: function(){
+	    this.listenTo(Letters, 'change', this.collectionChange);
 	    $("#start").html("Start");
 	},
 
@@ -127,23 +145,37 @@ $(function(){
 	    this.handleShuffle();
 	},
 
-	addLetter: function(letterModel){
+	addAvailableLetter: function(letterModel){
 	    var view = new LetterView({model: letterModel});
 	    $('#available').append(view.render().el);
 	},
 
-	handleShuffle: function(){
+	addGuessLetter: function(letterModel){
+	    var view = new LetterView({model: letterModel});
+	    $('#guess').append(view.render().el);
+	},
+	
+	addCollection: function(){
 	    var app = this;
+	    $.map(Letters.availableLetters(), function(i){
+		app.addAvailableLetter(i);
+	    });
+	    $.map(Letters.guessLetters(), function(i){
+		app.addGuessLetter(i);
+	    });
+	},
+
+	collectionChange: function(){
+	    $('#available').empty();
+	    $('#guess').empty();
+	    this.addCollection();	    
+	},
+
+	handleShuffle: function(){
 	    var LetterCopy = Letters.shuffle();
 	    _.invoke(Letters.toArray(), "destroy");
 	    Letters.reset(LetterCopy);
-	    $.map(Letters.availableLetters(), function(i){
-		app.addLetter(i);
-	    });
-//	    Letters.each(function(letter, i){
-//		console.log(letter);
-//		app.addLetter(letter);
-//	    });
+	    this.collectionChange();
 	},
 
 	startGame: function(){
