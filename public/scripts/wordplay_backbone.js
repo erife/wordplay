@@ -25,7 +25,14 @@ $(function(){
 
 	guessLetters: function(){
 	    return this.where({location: "guess"});
+	},
+	
+	moveLetter: function(model){
+	    this.remove(model);
+	    this.push(model);
+	    console.log(Letters);
 	}
+	
 
 	
     });
@@ -53,6 +60,7 @@ $(function(){
 	},
 
 	toggleGuessed: function(){
+	    Letters.moveLetter(this.model);
 	    this.model.toggle();
 	}
 	
