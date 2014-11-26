@@ -18,25 +18,6 @@ $(function(){
 	
 	localStorage: new Backbone.LocalStorage("storage"),
 	
-	
-	availableLetters: function(){
-	    return this.where({location: "available"});
-	},
-
-	guessLetters: function(){
-	    return this.where({location: "guess"});
-	},
-	
-	removeLetter: function(model){
-	    this.remove(model);
-	},
-	
-	addLetter: function(model){
-	    this.push(model);
-	}
-	
-
-	
     });
 
     var Letters = new LetterList;
@@ -64,14 +45,14 @@ $(function(){
 
 	toggleGuessed: function(){
 	    if(this.model.get('location') == 'available'){
-		Letters.removeLetter(this.model);
-		GuessedLetters.addLetter(this.model);
+		Letters.remove(this.model);
+		GuessedLetters.add(this.model);
 		this.model.toggle();
 	    }
 	    else{
-		console.log('not available');
-		
-		//	GuessedLetters.moveLetter(this.model);
+		GuessedLetters.remove(this.model);
+		Letters.add(this.model);
+		this.model.toggle();
 	    }
 
 	}
@@ -178,11 +159,12 @@ $(function(){
 	
 	addCollection: function(){
 	    var app = this;
-	    $.map(Letters.availableLetters(), function(i){
-		app.addAvailableLetter(i);
+	    Letters.each(function(model, i){
+		app.addAvailableLetter(model);
 	    });
-	    $.map(GuessedLetters.guessLetters(), function(i){
-		app.addGuessLetter(i);
+
+	    GuessedLetters.each(function(model, i){
+		app.addGuessLetter(model);
 	    });
 	},
 
@@ -201,6 +183,7 @@ $(function(){
 
 	startGame: function(){
 	    _.invoke(Letters.toArray(), "destroy");
+	    _.invoke(GuessedLetters.toArray(), "destroy");
 	    Words.remove(Words.toArray());
 	    Words.fetch({success: this.wordInitalize});
 	}
