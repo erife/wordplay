@@ -1,0 +1,9 @@
+horse
+goose
+
+* shuffle button
+* DONE event handler - click .shuffle - handle shuffle
+* DONE function call from eh - shuffle fuction - no inputs backbone shuffle collection thing
+* DONE store shuffled letters - delete letter models and save reordered collection
+* DONE render - letter models
+* letters shuffled
