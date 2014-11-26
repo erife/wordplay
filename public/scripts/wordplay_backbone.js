@@ -4,12 +4,9 @@ $(function(){
 	
 	defaults: function(){
 	    return{letter: "A", location: "available"};
-	},
-
-	toggle: function(){
-	    this.save({location: (this.get('location')=='available' ? 'guess' : 'available')});
 	}
-  });
+
+    });
 
 
     var LetterList = Backbone.Collection.extend({
@@ -33,9 +30,11 @@ $(function(){
 	    "click" : "toggleGuessed"
 	},
 
-	initialize:function(){
+	initialize:function(params){
 	    this.listenTo(this.model, 'destroy', this.remove);
 	    this.listenTo(this.model, 'change', this.render);
+	    this.source = params.source;
+	    this.target = params.target;
 	},
 
 	render: function(){
@@ -44,17 +43,8 @@ $(function(){
 	},
 
 	toggleGuessed: function(){
-	    if(this.model.get('location') == 'available'){
-		Letters.remove(this.model);
-		GuessedLetters.add(this.model);
-		this.model.toggle();
-	    }
-	    else{
-		GuessedLetters.remove(this.model);
-		Letters.add(this.model);
-		this.model.toggle();
-	    }
-
+	    this.source.remove(this.model);
+	    this.target.add(this.model);
 	}
 	
     });
@@ -114,8 +104,10 @@ $(function(){
 	},
 	
 	initialize: function(){
-	    this.listenTo(Letters, 'change', this.collectionChange);
-	    this.listenTo(GuessedLetters, 'change', this.collectionChange);
+	    this.listenTo(Letters, 'add', this.collectionChange);
+	    this.listenTo(Letters, 'remove', this.collectionChange);
+	    this.listenTo(GuessedLetters, 'add', this.collectionChange);
+	    this.listenTo(GuessedLetters, 'remove', this.collectionChange);
 	    $("#start").html("Start");
 	},
 
@@ -148,12 +140,12 @@ $(function(){
 	},
 
 	addAvailableLetter: function(letterModel){
-	    var view = new LetterView({model: letterModel});
+	    var view = new LetterView({model: letterModel, source: Letters, target: GuessedLetters});
 	    $('#available').append(view.render().el);
 	},
 
 	addGuessLetter: function(letterModel){
-	    var view = new LetterView({model: letterModel});
+	    var view = new LetterView({model: letterModel, source: GuessedLetters, target: Letters});
 	    $('#guess').append(view.render().el);
 	},
 	
