@@ -94,80 +94,44 @@ $(function(){
 
     var Words = new WordList;
 
-    var AvailableView = Backbone.View.extend({
+    var PlayableView = Backbone.View.extend({
 
-	initialize: function(){
+	initialize: function(params){
 	    this.listenTo(Letters, 'add', this.collectionChange);
 	    this.listenTo(Letters, 'remove', this.collectionChange);
+	    this.listenTo(GuessedLetters, 'add', this.collectionChange);
+	    this.listenTo(GuessedLetters, 'remove', this.collectionChange);
+	    this.target = params.target;
 	},
 
 	render: function(){
 	},
 
-	letterGenerate: function(letterSet){
-	    $.each(letterSet, function(i, letter){
-		Letters.create({letter: letter});
-	    });
-	    this.handleShuffle();
-	},
-
 	addAvailableLetter: function(letterModel){
-	    var view = new LetterView({model: letterModel, source: Letters, target: GuessedLetters});
-	    $('#available').append(view.render().el);
+	    var view = new LetterView({model: letterModel, source: this.collection, target: this.target});
+	    this.$el.append(view.render().el);
 	},
 	
 	addCollection: function(){
 	    var app = this;
-	    Letters.each(function(model, i){
+	    this.collection.each(function(model, i){
 		app.addAvailableLetter(model);
 	    });
 	},
 	
 	collectionChange: function(){
-	    $('#available').empty();
+	    this.$el.empty();
 	    this.addCollection();	    
 	},
 
 	handleShuffle: function(){
-	    var LetterCopy = Letters.shuffle();
-	    _.invoke(Letters.toArray(), "destroy");
-	    Letters.reset(LetterCopy);
+	    var LetterCopy = this.collection.shuffle();
+	    _.invoke(this.collection.toArray(), "destroy");
+	    this.collection.reset(LetterCopy);
 	    this.collectionChange();
 	}
 
     });
-
-    var GuessedView = Backbone.View.extend({
-
-	initialize: function(){
-	    this.listenTo(GuessedLetters, 'add', this.collectionChange);
-	    this.listenTo(GuessedLetters, 'remove', this.collectionChange);
-	},
-
-	render: function(){
-	},
-
-	addGuessLetter: function(letterModel){
-	    var view = new LetterView({model: letterModel, source: GuessedLetters, target: Letters});
-	    $('#guess').append(view.render().el);
-	},
-	
-	addCollection: function(){
-	    var app = this;
-	    GuessedLetters.each(function(model, i){
-		app.addGuessLetter(model);
-	    });
-	},
-
-	collectionChange: function(){
-	    $('#guess').empty();
-	    this.addCollection();	    
-	}
-    });
-
-
-
-
 
     var AppView = Backbone.View.extend({
 
@@ -179,8 +143,8 @@ $(function(){
 	},
 	
 	initialize: function(){
-	    this.availableView = new AvailableView({collection: Letters});
-	    this.guessedView = new GuessedView({collection: GuessedLetters});
+	    this.availableView = new PlayableView({collection: Letters, el: '#available', target: GuessedLetters});
+	    this.guessedView = new PlayableView({collection: GuessedLetters, el: '#guess', target: Letters});
 	    $("#start").html("Start");
 	},
 
