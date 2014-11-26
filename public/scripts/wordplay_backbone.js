@@ -27,10 +27,12 @@ $(function(){
 	    return this.where({location: "guess"});
 	},
 	
-	moveLetter: function(model){
+	removeLetter: function(model){
 	    this.remove(model);
+	},
+	
+	addLetter: function(model){
 	    this.push(model);
-	    console.log(Letters);
 	}
 	
 
@@ -38,6 +40,7 @@ $(function(){
     });
 
     var Letters = new LetterList;
+    var GuessedLetters = new LetterList;
 
     var LetterView = Backbone.View.extend({
 
@@ -60,8 +63,17 @@ $(function(){
 	},
 
 	toggleGuessed: function(){
-	    Letters.moveLetter(this.model);
-	    this.model.toggle();
+	    if(this.model.get('location') == 'available'){
+		Letters.removeLetter(this.model);
+		GuessedLetters.addLetter(this.model);
+		this.model.toggle();
+	    }
+	    else{
+		console.log('not available');
+		
+		//	GuessedLetters.moveLetter(this.model);
+	    }
+
 	}
 	
     });
@@ -122,6 +134,7 @@ $(function(){
 	
 	initialize: function(){
 	    this.listenTo(Letters, 'change', this.collectionChange);
+	    this.listenTo(GuessedLetters, 'change', this.collectionChange);
 	    $("#start").html("Start");
 	},
 
@@ -168,7 +181,7 @@ $(function(){
 	    $.map(Letters.availableLetters(), function(i){
 		app.addAvailableLetter(i);
 	    });
-	    $.map(Letters.guessLetters(), function(i){
+	    $.map(GuessedLetters.guessLetters(), function(i){
 		app.addGuessLetter(i);
 	    });
 	},
