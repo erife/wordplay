@@ -97,17 +97,15 @@ $(function(){
     var PlayableView = Backbone.View.extend({
 
 	initialize: function(params){
-	    this.listenTo(Letters, 'add', this.collectionChange);
-	    this.listenTo(Letters, 'remove', this.collectionChange);
-	    this.listenTo(GuessedLetters, 'add', this.collectionChange);
-	    this.listenTo(GuessedLetters, 'remove', this.collectionChange);
 	    this.target = params.target;
+	    this.listenTo(this.collection, 'all', this.collectionChange);
+	    this.listenTo(this.target, 'all', this.collectionChange);
 	},
-
+	
 	render: function(){
 	},
 
-	addAvailableLetter: function(letterModel){
+	addLetter: function(letterModel){
 	    var view = new LetterView({model: letterModel, source: this.collection, target: this.target});
 	    this.$el.append(view.render().el);
 	},
@@ -115,7 +113,7 @@ $(function(){
 	addCollection: function(){
 	    var app = this;
 	    this.collection.each(function(model, i){
-		app.addAvailableLetter(model);
+		app.addLetter(model);
 	    });
 	},
 	
